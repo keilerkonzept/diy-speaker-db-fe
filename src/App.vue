@@ -323,7 +323,16 @@ export default {
     class="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-200"
   >
 
-      <div class="text-xl bg-black text-white font-black mb-4 py-2 px-4">DIY Speaker DB</div>
+      <div class="text-xl bg-black text-white font-black mb-4 py-2 px-4">
+        <div class="w-full flex items-center justify-between">
+          <a href="/">
+          DIY Speaker DB
+          </a>
+          <a href="https://keilerkonzept.com">
+          <svg class="size-5 color-white mr-2 inline-block" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 124.51 104.87" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414"><path fill-rule="nonzero" d="M41.404,23.741 C41.186,23.74 40.969,23.768 40.758,23.823 C16.619,30.18 0.002,46.714 0.002,65.818 C0.002,72.678 2.197,79.433 6.326,85.509 C6.491,85.752 6.698,85.964 6.937,86.136 C12.685,90.258 22.877,94.118 31.031,96.766 C39.775,101.998 50.832,104.866 62.256,104.866 C73.682,104.866 84.74,101.998 93.485,96.766 C101.639,94.117 111.831,90.257 117.578,86.136 C117.816,85.965 118.022,85.753 118.187,85.511 C122.316,79.435 124.512,72.679 124.511,65.818 C124.511,46.714 107.896,30.181 83.758,23.823 C83.55,23.769 83.336,23.742 83.121,23.742 L83.119,23.741 C82.016,23.742 81.043,24.466 80.726,25.522 C80.409,26.579 80.822,27.719 81.742,28.327 C88.122,32.54 93.195,38.675 96.502,45.881 C87.408,39.434 75.094,35.815 62.257,35.815 C62.186,35.815 62.114,35.815 62.043,35.815 C49.28,35.855 37.054,39.472 28.012,45.881 C31.32,38.676 36.393,32.54 42.773,28.327 C43.692,27.72 44.106,26.583 43.791,25.527 C43.476,24.472 42.508,23.746 41.406,23.741 L41.404,23.741 Z M30.26,33.03 C25.534,38.735 22.097,45.6 20.25,53.058 C15.982,58.311 13.734,64.272 13.734,70.34 C13.734,76.222 15.846,82.006 19.87,87.145 C16,85.545 12.538,83.885 10.219,82.286 C6.772,77.064 5,71.471 5,65.817 C5,52.694 14.592,40.412 30.259,33.03 L30.26,33.03 Z M94.256,33.032 C109.922,40.415 119.512,52.694 119.512,65.817 C119.512,71.47 117.741,77.062 114.295,82.283 C111.975,83.882 108.514,85.544 104.644,87.144 C108.667,82.006 110.779,76.221 110.779,70.339 C110.779,64.271 108.531,58.309 104.261,53.056 C102.415,45.6 98.98,38.735 94.256,33.032 Z M44.984,53.799 C50.591,53.8 55.136,61.204 55.136,70.338 C55.136,79.471 50.591,86.876 44.984,86.876 C39.376,86.876 34.831,79.472 34.831,70.338 C34.831,61.204 39.376,53.799 44.984,53.799 Z M79.538,53.799 C85.145,53.8 89.69,61.204 89.69,70.338 C89.69,79.471 85.145,86.876 79.538,86.876 C73.931,86.876 69.385,79.472 69.385,70.338 C69.385,61.204 73.931,53.799 79.538,53.799 Z M43.014,7.7 C43.014,10.653 40.412,13.048 37.202,13.048 C33.992,13.048 31.39,10.653 31.39,7.7 C31.39,4.747 33.992,2.353 37.202,2.353 C40.412,2.353 43.014,4.747 43.014,7.7 Z M87,15.625 C82.787,15.625 79.375,12.213 79.375,8 C79.375,3.787 82.787,0.375 87,0.375 C91.213,0.375 94.625,3.787 94.625,8 C94.625,12.213 91.213,15.625 87,15.625 Z M37.13,15.935 C32.917,15.935 29.505,12.523 29.505,8.31 C29.505,4.097 32.917,0.685 37.13,0.685 C41.343,0.685 44.755,4.097 44.755,8.31 C44.755,12.523 41.343,15.935 37.13,15.935 Z"></path></svg>
+          </a>
+        </div>
+      </div>
 
     <!-- Main Content -->
     <div class="container max-w-fit mx-auto px-4">
@@ -337,119 +346,118 @@ export default {
 
       <!-- Table -->
       <div
-        class="overflow-x-auto max-w-fit rounded-md border border-gray-200 dark:border-gray-700"
+        class="h-[100vh] relative max-w-fit rounded-md border border-gray-200 dark:border-gray-700"
       >
         <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-          <thead class="bg-gray-100 dark:bg-gray-800">
+          <thead class="sticky top-0 bg-gray-100 dark:bg-gray-800">
             <!-- Header Row -->
             <tr>
               <th
                 scope="col"
-                class="px-3 py-3 text-left text-s font-medium text-black dark:text-gray-400 uppercase text-xs tracking-wider"
+                class="wsticky top-0 px-3 py-3  text-left text-s font-medium text-black dark:text-gray-400 uppercase text-xs tracking-wider"
               >
                 Name
               </th>
               <th
                 scope="col"
-                class="px-3 py-3 text-left text-s font-medium text-black dark:text-gray-400 uppercase text-xs tracking-wider"
+                class="sticky top-0 px-3 py-3  text-left text-s font-medium text-black dark:text-gray-400 uppercase text-xs tracking-wider"
               >
                 Developer
               </th>
               <th
                 scope="col"
-                class="px-3 py-3 text-left text-s font-medium text-black dark:text-gray-400 uppercase text-xs tracking-wider"
+                class="sticky top-0 px-3 py-3  text-left text-s font-medium text-black dark:text-gray-400 uppercase text-xs tracking-wider"
               >
                 Price / pair
               </th>
               <th
                 scope="col"
-                class="px-3 py-3 text-left text-s font-medium text-black dark:text-gray-400 uppercase text-xs tracking-wider"
+                class="sticky top-0 px-3 py-3  text-left text-s font-medium text-black dark:text-gray-400 uppercase text-xs tracking-wider"
               >
                 Enclosure
               </th>
               <th
                 scope="col"
-                class="px-3 py-3 text-left text-s font-medium text-black dark:text-gray-400 uppercase text-xs tracking-wider"
+                class="sticky top-0 px-3 py-3  text-left text-s font-medium text-black dark:text-gray-400 uppercase text-xs tracking-wider"
               >
                 Range
               </th>
               <th
                 scope="col"
-                class="px-3 py-3 text-left text-s font-medium text-black dark:text-gray-400 uppercase text-xs tracking-wider"
+                class="sticky top-0 px-3 py-3  text-left text-s font-medium text-black dark:text-gray-400 uppercase text-xs tracking-wider"
               >
                 F₃
               </th>
               <th
                 scope="col"
-                class="px-3 py-3 text-left text-s font-medium text-black dark:text-gray-400 uppercase text-xs tracking-wider"
+                class="sticky top-0 px-3 py-3  text-left text-s font-medium text-black dark:text-gray-400 uppercase text-xs tracking-wider"
               >
                 Specialty
               </th>
               <th
                 scope="col"
-                class="px-3 py-3 text-left text-s font-medium text-black dark:text-gray-400 uppercase text-xs tracking-wider"
+                class="sticky top-0 px-3 py-3  text-left text-s font-medium text-black dark:text-gray-400 uppercase text-xs tracking-wider"
               >
                 Height
               </th>
               <th
                 scope="col"
-                class="px-3 py-3 text-left text-s font-medium text-black dark:text-gray-400 uppercase text-xs tracking-wider"
+                class="sticky top-0 px-3 py-3  text-left text-s font-medium text-black dark:text-gray-400 uppercase text-xs tracking-wider"
               >
                 Width
               </th>
               <th
                 scope="col"
-                class="px-3 py-3 text-left text-s font-medium text-black dark:text-gray-400 uppercase text-xs tracking-wider"
+                class="sticky top-0 px-3 py-3  text-left text-s font-medium text-black dark:text-gray-400 uppercase text-xs tracking-wider"
               >
                 Depth
               </th>
               <th
                 scope="col"
-                class="px-3 py-3 text-left text-s font-medium text-black dark:text-gray-400 uppercase text-xs tracking-wider"
+                class="sticky top-0 px-3 py-3  text-left text-s font-medium text-black dark:text-gray-400 uppercase text-xs tracking-wider"
               >
                 Volume (L)
               </th>
               <th
                 scope="col"
-                class="px-3 py-3 text-left text-s font-medium text-black dark:text-gray-400 uppercase text-xs tracking-wider"
+                class="sticky top-0 px-3 py-3  text-left text-s font-medium text-black dark:text-gray-400 uppercase text-xs tracking-wider"
               >
-
               </th>
             </tr>
 
             <!-- Filter Row -->
             <tr class="bg-gray-100 dark:bg-gray-800 align-baseline">
-              <th class="px-3 py-3">
+              <th class="  px-3 py-3">
                 <input
                   type="text"
                   v-model="filters.name"
                   @input="applyFilters"
                   @keyup.esc="clearFilter('name')"
-                  class="w-full font-normal rounded-md px-2 py-1 text-sm bg-white border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-green-500 dark:focus:border-green-600"
+                  class="w-full font-normal rounded-md px-2 py-1 text-sm bg-white border-gray-300 dark:border-gray-700 dark:bg-gray-900 text-gray-900 dark:text-gray-300 focus:border-green-500 dark:focus:border-green-600"
                   placeholder="Filter by name"
                 />
               </th>
-              <th class="px-3 py-3">
+              <th class="  px-3 py-3">
                 <input
                   type="text"
                   v-model="filters.developer"
                   @input="applyFilters"
                   @keyup.esc="clearFilter('developer')"
-                  class="w-full font-normal rounded-md px-2 py-1 text-sm bg-white border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-green-500 dark:focus:border-green-600"
+                  class="w-full font-normal rounded-md px-2 py-1 text-sm bg-white border-gray-300 dark:border-gray-700 dark:bg-gray-900 text-gray-900 dark:text-gray-300 focus:border-green-500 dark:focus:border-green-600"
                   placeholder="Filter by developer"
                 />
               </th>
-              <th class="px-3 py-3">
+              <th class="  px-3 py-3">
                 <input
                   type="number"
                   v-model.number="filters.price"
                   @input="applyFilters"
                   @keyup.esc="clearFilter('price')"
-                 class="w-full font-normal rounded-md px-2 py-1 text-sm bg-white border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-green-500 dark:focus:border-green-600"
+                 class="w-full font-normal rounded-md px-2 py-1 text-sm text-gray-900 bg-white border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-green-500 dark:focus:border-green-600"
                   placeholder="< €"
                 />
               </th>
-              <th class="px-3 py-3">
+              <th class="  px-3 py-3">
                 <div class="relative">
                   <select
                     v-model="selectedEnclosure"
@@ -482,7 +490,7 @@ export default {
                   </div>
                 </div>
               </th>
-              <th class="px-3 py-3">
+              <th class="  px-3 py-3">
                 <div class="relative">
                   <select
                     v-model="selectedRange"
@@ -515,17 +523,17 @@ export default {
                   </div>
                 </div>
               </th>
-              <th class="px-3 py-3">
+              <th class="  px-3 py-3">
                 <input
                   type="number"
                   v-model.number="filters.f3"
                   @input="applyFilters"
                   @keyup.esc="clearFilter('f3')"
-                  class="w-full font-normal rounded-md px-2 py-1 text-sm bg-white border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-green-500 dark:focus:border-green-600"
+                  class="w-full font-normal text-gray-900 rounded-md px-2 py-1 text-sm bg-white border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-green-500 dark:focus:border-green-600"
                   placeholder="> F₃"
                 />
               </th>
-              <th class="px-3 py-3">
+              <th class="  px-3 py-3">
                 <div class="relative ">
                   <select
                     v-model="selectedSpecialty"
@@ -557,52 +565,52 @@ export default {
                   </div>
                 </div>
               </th>
-              <th class="px-3 py-3">
+              <th class="  px-3 py-3">
                 <input
                   type="number"
                   v-model.number="filters.height"
                   @input="applyFilters"
                   @keyup.esc="clearFilter('height')"
-                  class="w-full font-normal rounded-md px-2 py-1 text-sm bg-white border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-green-500 dark:focus:border-green-600"
+                  class="w-full font-normal rounded-md px-2 py-1 text-sm bg-white text-gray-900 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-green-500 dark:focus:border-green-600"
                   placeholder="< H"
                 />
               </th>
-              <th class="px-3 py-3">
+              <th class="  px-3 py-3">
                 <input
                   type="number"
                   v-model.number="filters.width"
                   @input="applyFilters"
                   @keyup.esc="clearFilter('width')"
-                  class="w-full font-normal rounded-md px-2 py-1 text-sm bg-white border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-green-500 dark:focus:border-green-600"
+                  class="w-full font-normal rounded-md px-2 py-1 text-sm bg-white text-gray-900 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-green-500 dark:focus:border-green-600"
                   placeholder="< W"
                 />
               </th>
-              <th class="px-3 py-3">
+              <th class="  px-3 py-3">
                 <input
                   type="number"
                   v-model.number="filters.depth"
                   @input="applyFilters"
                   @keyup.esc="clearFilter('depth')"
-                  class="w-full font-normal rounded-md px-2 py-1 text-sm bg-white border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-green-500 dark:focus:border-green-600"
+                  class="w-full font-normal rounded-md px-2 py-1 text-sm bg-white text-gray-900 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-green-500 dark:focus:border-green-600"
                   placeholder="< D"
                 />
               </th>
-              <th class="px-3 py-3">
+              <th class="  px-3 py-3">
                 <input
                   type="number"
                   v-model.number="filters.volume"
                   @input="applyFilters"
                   @keyup.esc="clearFilter('volume')"
-                  class="w-full font-normal rounded-md px-2 py-1 text-sm bg-white border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-green-500 dark:focus:border-green-600"
+                  class="w-full font-normal rounded-md px-2 py-1 text-sm bg-white text-gray-900 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-green-500 dark:focus:border-green-600"
                   placeholder="< L"
                 />
               </th>
-              <th class="px-3 py-3"></th>
+              <th class="  px-3 py-3"></th>
             </tr>
           </thead>
 
           <tbody
-            class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700"
+            class="table-row-group bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700"
           >
             <tr class="hover:bg-gray-100 dark:hover:bg-gray-800" v-for="(item, index) in displayedItems" :key="index">
               <td class="px-3 py-4 whitespace-nowrap">
