@@ -56,7 +56,10 @@ export default {
         url: false,
         enclosure: false,
         range: false
-      }
+      },
+      selectedEnclosure: '',
+      selectedRange: '',
+      selectedSpecialty: '',
     }
   },
   methods: {
@@ -103,10 +106,28 @@ export default {
       });
     },
 
+    addFilter(filterType, value) {
+      if (!value) return;
+      if (!this.filters[filterType].includes(value)) {
+        this.filters[filterType].push(value);
+        this.applyFilters();
+      }
+      // Reset the select
+      this[`selected${filterType.slice(0, -1).charAt(0).toUpperCase() + filterType.slice(1, -1)}`] = '';
+    },
+    
+    removeFilter(filterType, value) {
+      const index = this.filters[filterType].indexOf(value);
+      if (index > -1) {
+        this.filters[filterType].splice(index, 1);
+        this.applyFilters();
+      }
+    },
+
     clearFilter(filterName) {
       if (['enclosures', 'ranges', 'specialties'].includes(filterName)) {
         this.filters[filterName] = [];
-        document.querySelector(`[name='filter-${filterName}']`).selectedIndex = 0;
+        this[`selected${filterName.slice(0, -1).charAt(0).toUpperCase() + filterName.slice(1, -1)}`] = '';
       } else if (['price', 'height', 'width', 'depth', 'volume', 'f3'].includes(filterName)) {
         this.filters[filterName] = null;
       } else {
@@ -266,6 +287,7 @@ export default {
                   v-model="filters.name" 
                   placeholder="Filter by name"
                   @input="applyFilters"
+                  @keyup.esc="clearFilter('name')"
                 >
                 <button 
                   v-if="filters.name" 
@@ -282,6 +304,7 @@ export default {
                   v-model="filters.developer" 
                   placeholder=""
                   @input="applyFilters"
+                  @keyup.esc="clearFilter('developer')"
                 >
                 <button 
                   v-if="filters.developer" 
@@ -298,6 +321,7 @@ export default {
                   v-model.number="filters.price" 
                   placeholder="< €"
                   @input="applyFilters"
+                  @keyup.esc="clearFilter('price')"
                 >
                 <button 
                   v-if="filters.price" 
@@ -309,47 +333,57 @@ export default {
             <th class="col-enclosure">
               <div class="input-wrapper filter-wrapper">
                 <select 
-                  multiple
                   name="filter-enclosures"
-                  v-model="filters.enclosures"
-                  @change="applyFilters"
+                  v-model="selectedEnclosure"
+                  @change="addFilter('enclosures', selectedEnclosure)"
                   class="filter-select"
                 >
-                  <option value="" disabled selected>Select...</option>
+                  <option value="">Select...</option>
                   <option v-for="enclosure in availableEnclosures" 
                           :key="enclosure" 
                           :value="enclosure">
                     {{ enclosure }}
                   </option>
                 </select>
-                <button 
-                  v-if="filters.enclosures.length"
-                  class="clear-button"
-                  @click.prevent="clearFilter('enclosures')"
-                >×</button>
+                <div class="selected-items">
+                  <div v-for="item in filters.enclosures" 
+                       :key="item" 
+                       class="filter-tag">
+                    {{ item }}
+                    <button 
+                      class="tag-remove"
+                      @click="removeFilter('enclosures', item)"
+                    >×</button>
+                  </div>
+                </div>
               </div>
             </th>
             <th class="col-range">
               <div class="input-wrapper filter-wrapper">
                 <select 
-                  multiple
                   name="filter-ranges"
-                  v-model="filters.ranges"
-                  @change="applyFilters"
+                  v-model="selectedRange"
+                  @change="addFilter('ranges', selectedRange)"
                   class="filter-select"
                 >
-                  <option value="" disabled selected>Select...</option>
+                  <option value="">Select...</option>
                   <option v-for="range in availableRanges" 
                           :key="range" 
                           :value="range">
                     {{ range }}
                   </option>
                 </select>
-                <button 
-                  v-if="filters.ranges.length"
-                  class="clear-button"
-                  @click.prevent="clearFilter('ranges')"
-                >×</button>
+                <div class="selected-items">
+                  <div v-for="item in filters.ranges" 
+                       :key="item" 
+                       class="filter-tag">
+                    {{ item }}
+                    <button 
+                      class="tag-remove"
+                      @click="removeFilter('ranges', item)"
+                    >×</button>
+                  </div>
+                </div>
               </div>
             </th>
             <th class="col-f3">
@@ -360,6 +394,7 @@ export default {
                   v-model.number="filters.f3" 
                   placeholder="> F₃"
                   @input="applyFilters"
+                  @keyup.esc="clearFilter('f3')"
                 >
                 <button 
                   v-if="filters.f3" 
@@ -371,24 +406,29 @@ export default {
             <th class="col-specialty">
               <div class="input-wrapper filter-wrapper">
                 <select 
-                  multiple
                   name="filter-specialties"
-                  v-model="filters.specialties"
-                  @change="applyFilters"
+                  v-model="selectedSpecialty"
+                  @change="addFilter('specialties', selectedSpecialty)"
                   class="filter-select"
                 >
-                  <option value="" disabled selected>Select...</option>
+                  <option value="">Select...</option>
                   <option v-for="specialty in availableSpecialties" 
                           :key="specialty" 
                           :value="specialty">
                     {{ specialty }}
                   </option>
                 </select>
-                <button 
-                  v-if="filters.specialties.length"
-                  class="clear-button"
-                  @click.prevent="clearFilter('specialties')"
-                >×</button>
+                <div class="selected-items">
+                  <div v-for="item in filters.specialties" 
+                       :key="item" 
+                       class="filter-tag">
+                    {{ item }}
+                    <button 
+                      class="tag-remove"
+                      @click="removeFilter('specialties', item)"
+                    >×</button>
+                  </div>
+                </div>
               </div>
             </th>
             <th class="col-height">
@@ -399,6 +439,7 @@ export default {
                   v-model.number="filters.height" 
                   placeholder="< H"
                   @input="applyFilters"
+                  @keyup.esc="clearFilter('height')"
                 >
                 <button 
                   v-if="filters.height" 
@@ -415,6 +456,7 @@ export default {
                   v-model.number="filters.width" 
                   placeholder="< W"
                   @input="applyFilters"
+                  @keyup.esc="clearFilter('width')"
                 >
                 <button 
                   v-if="filters.width" 
@@ -431,6 +473,7 @@ export default {
                   v-model.number="filters.depth" 
                   placeholder="< D"
                   @input="applyFilters"
+                  @keyup.esc="clearFilter('depth')"
                 >
                 <button 
                   v-if="filters.depth" 
@@ -447,6 +490,7 @@ export default {
                   v-model.number="filters.volume" 
                   placeholder="< L"
                   @input="applyFilters"
+                  @keyup.esc="clearFilter('volume')"
                 >
                 <button 
                   v-if="filters.volume" 
@@ -767,69 +811,50 @@ input[type="number"] {
 }
 
 .filter-wrapper {
-  position: relative;  /* Create positioning context for absolute select */
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .filter-select {
   width: 100%;
-  height: 34px;
-  padding: 6px 32px 6px 8px;
+  padding: 6px 8px;
   border: 1px solid #ddd;
   border-radius: 4px;
   background-color: white;
   cursor: pointer;
-  appearance: none;
-  -webkit-appearance: none;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-  background-repeat: no-repeat;
-  background-position: right 8px center;
-  background-size: 16px;
-  font-size: inherit;
-  line-height: 1.4;
-}
-
-.filter-select:focus {
-  outline: none;
-  border-color: #aaa;
-}
-
-.filter-select[multiple] {
   height: 34px;
-  overflow: hidden;
-  width: 100%;  /* Ensure consistent width */
 }
 
-.filter-select[multiple]:focus {
-  position: absolute;
-  height: 150px;
-  overflow: auto;
-  background: white;
-  z-index: 1000;
-  border: 1px solid #ddd;
+.selected-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.filter-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  background: #f0f0f0;
   border-radius: 4px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  width: 100%;  /* Maintain width when expanded */
-  left: 0;      /* Align to left edge of container */
+  font-size: 0.9em;
+  border: 1px solid #ddd;
 }
 
-.filter-select option {
-  padding: 4px 8px;
+.tag-remove {
+  background: none;
+  border: none;
+  padding: 0 2px;
+  cursor: pointer;
+  color: #666;
+  font-size: 1.1em;
+  line-height: 1;
 }
 
-.filter-select option:checked {
-  background-color: #e0e0e0;
-}
-
-.filter-select option[value=""][disabled] {
-  color: #999;
-}
-
-.filter input,
-.filter select {
-  height: 34px;
-  padding: 6px 32px 6px 8px;
-  font-size: inherit;
-  line-height: 1.4;
+.tag-remove:hover {
+  color: #ff4444;
 }
 
 .dialog-overlay {
@@ -1070,6 +1095,7 @@ input[type="number"] {
 
 .filter-row th {
   position: sticky;
+  align-content: start;
   background: white;
   z-index: 2;
   padding: 10px;
