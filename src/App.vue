@@ -477,12 +477,12 @@ export default {
                     <span
                       v-for="item in filters.enclosures"
                       :key="item"
-                      class="inline-flex items-center px-1 pl-2 py-1 rounded-md text-sm bg-gray-300 dark:bg-green-900 text-gray-900 dark:text-green-300"
+                      class="inline-flex items-center pl-2 py-1 rounded-md text-xs bg-gray-300 dark:bg-green-900 text-gray-900 dark:text-green-300"
                     >
                       {{ item }}
                       <button
                         @click="removeFilter('enclosures', item)"
-                        class="mx-2 font-normal text-gray-500 hover:cursor-pointer hover:text-red-700 dark:text-green-400 dark:hover:text-green-200"
+                        class="ml-1 mr-2 font-normal text-gray-500 hover:cursor-pointer hover:text-red-700 dark:text-green-400 dark:hover:text-green-200"
                       >
                         ×
                       </button>
@@ -510,12 +510,12 @@ export default {
                     <span
                       v-for="item in filters.ranges"
                       :key="item"
-                      class="inline-flex items-center px-1 pl-2 py-1 rounded-md text-sm bg-gray-300 dark:bg-green-900 text-gray-900 dark:text-green-300"
+                      class="inline-flex items-center pl-2 py-1 rounded-md text-xs bg-gray-300 dark:bg-green-900 text-gray-900 dark:text-green-300"
                     >
                       {{ item }}
                       <button
                         @click="removeFilter('ranges', item)"
-                        class="mx-2 font-normal text-gray-500 hover:cursor-pointer hover:text-red-700 dark:text-green-400 dark:hover:text-green-200"
+                        class="ml-1 mr-2 font-normal text-gray-500 hover:cursor-pointer hover:text-red-700 dark:text-green-400 dark:hover:text-green-200"
                       >
                         ×
                       </button>
@@ -538,7 +538,7 @@ export default {
                   <select
                     v-model="selectedSpecialty"
                     @change="addFilter('specialties', selectedSpecialty)"
-                    class="w-full font-normal text-gray-500 rounded-md mt-1 px-2 py-1 text-sm bg-white border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-green-500 dark:focus:border-green-600"
+                    class="w-full text-sm font-normal text-gray-500 rounded-md mt-1 px-2 py-1 bg-white border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-green-500 dark:focus:border-green-600"
                   >
                     <option value="">Select...</option>
                     <option
@@ -553,11 +553,11 @@ export default {
                     <span
                       v-for="item in filters.specialties"
                       :key="item"
-                      class="inline-flex items-center px-1 pl-2 py-1 rounded-md text-sm bg-gray-300 dark:bg-green-900 text-gray-900 dark:text-green-300">
+                      class="inline-flex items-center pl-2 py-1 rounded-md text-xs bg-gray-300 dark:bg-green-900 text-gray-900 dark:text-green-300">
                       {{ item }}
                       <button
                         @click="removeFilter('specialties', item)"
-                        class="mx-2 font-normal text-gray-500 hover:cursor-pointer hover:text-red-700 dark:text-green-400 dark:hover:text-green-200"
+                        class="ml-1 mr-2 font-normal text-gray-500 hover:cursor-pointer hover:text-red-700 dark:text-green-400 dark:hover:text-green-200"
                       >
                         ×
                       </button>
