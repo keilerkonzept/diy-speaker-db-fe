@@ -640,7 +640,8 @@ body {
 
 .app {
   width: 100%;
-  margin: 0;
+  max-width: fit-content;
+  margin: 0 auto;     /* This centers the app */
   padding: 0;
 }
 
@@ -1101,13 +1102,13 @@ input[type="number"] {
 }
 
 /* Column widths with semantic classes */
-.col-name { width: 15%; }      /* Name */
-.col-developer { width: 12%; }  /* Developer */
+.col-name { width: 315px; }      /* Name */
+.col-developer { width: 250px; }  /* Developer */
 .col-price { width: 90px; }      /* Price */
-.col-enclosure { width: 12%; }  /* Enclosure */
-.col-range { width: 8%; }       /* Range */
+.col-enclosure { width: 134px }  /* Enclosure */
+.col-range { width: 90px }       /* Range */
 .col-f3 { width: 90px; }         /* F3 */
-.col-specialty { width: 10%; }  /* Specialty */
+.col-specialty { width: 145px; }  /* Specialty */
 .col-height { width: 90px; }      /* Height */
 .col-width { width: 90px; }       /* Width */
 .col-depth { width: 90px; }       /* Depth */

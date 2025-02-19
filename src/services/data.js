@@ -198,7 +198,7 @@ const getData = () => {
     },
     {
       name: "55 plus, K+T 6/2019",
-      developer: "Thomas Schmidt und Holger Barske",
+      developer: "Thomas Schmidt & Holger Barske",
       price: 522,
       enclosure: "Closed Box",
       range: "Full Range",
@@ -341,7 +341,7 @@ const getData = () => {
     },
     {
       name: "In Between",
-      developer: "Der Akustische Untergrund",
+      developer: "Don Highend & Gazza",
       price: null,
       enclosure: "TQWT",
       range: "Full Range",
