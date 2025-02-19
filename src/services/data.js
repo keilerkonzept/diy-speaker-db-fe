@@ -377,6 +377,19 @@ const getData = () => {
       width: 290,
       depth: 390,
       url: "https://www.donhighend.de/?page_id=8664"
+    },
+    {
+      name: "El Compacto",
+      developer: "Wilke Borchers",
+      price: null,
+      enclosure: "Bass Reflex",
+      range: "Full Range",
+      f3: 43,
+      specialty: "",
+      height: 380,
+      width: 200,
+      depth: 308,
+      url: "https://www.der-akustische-untergrund.de/speakers/d-a-u-fb-group-members-projects/el-compacto/"
     }
   ];
 
