@@ -112,8 +112,14 @@ export default {
         this.filters[filterType].push(value);
         this.applyFilters();
       }
-      // Reset the select
-      this[`selected${filterType.slice(0, -1).charAt(0).toUpperCase() + filterType.slice(1, -1)}`] = '';
+      // Reset the select more explicitly
+      if (filterType === 'specialties') {
+        this.selectedSpecialty = '';
+      } else if (filterType === 'ranges') {
+        this.selectedRange = '';
+      } else if (filterType === 'enclosures') {
+        this.selectedEnclosure = '';
+      }
     },
     
     removeFilter(filterType, value) {
