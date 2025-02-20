@@ -383,7 +383,7 @@ export default {
               </th>
               <th
                 scope="col"
-                class="w-[100pt] px-3 py-3 text-left font-medium text-black uppercase tracking-wider"
+                class="min-w-[100pt] w-[100pt] px-3 py-3 text-left font-medium text-black uppercase tracking-wider"
               >
                 Enclosure
               </th>
@@ -401,7 +401,7 @@ export default {
               </th>
               <th
                 scope="col"
-                class="w-[100pt] px-3 py-3 text-left font-medium text-black uppercase tracking-wider"
+                class="min-w-[120pt] w-[120pt] px-3 py-3 text-left font-medium text-black uppercase tracking-wider"
               >
                 Specialty
               </th>
@@ -667,10 +667,10 @@ export default {
               <td class="px-3 py-4 text-right">
                 {{ calculateVolume(item) }} L
               </td>
-              <td class="px-1 py-2 text-right text-sm font-normal">
+              <td class="px-1 py-2 text-left text-sm font-normal">
                 <button
                   @click="editItem(item)"
-                  class="border-1 border-gray-500 hover:bg-black cursor-pointer hover:text-white text-black px-2 py-1 rounded-md transition-colors duration-200 font-normal"
+                  class="ml-2 border-1 border-gray-500 hover:bg-black cursor-pointer hover:text-white text-black px-2 py-1 rounded-md transition-colors duration-200 font-normal"
                 >
                   Edit
                 </button>
