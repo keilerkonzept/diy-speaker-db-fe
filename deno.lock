@@ -7,7 +7,6 @@
     "npm:@vitejs/plugin-vue@^5.2.1": "5.2.1_vite@6.1.0_vue@3.5.13",
     "npm:@vitest/eslint-plugin@1.1.25": "1.1.25_@typescript-eslint+utils@8.24.0__eslint@9.20.1__typescript@5.7.3_eslint@9.20.1_vitest@3.0.6__jsdom@26.0.0__vite@6.1.0_jsdom@26.0.0",
     "npm:@vue/test-utils@^2.4.6": "2.4.6",
-    "npm:@vueuse/core@^12.7.0": "12.7.0",
     "npm:eslint-plugin-oxlint@~0.15.6": "0.15.11",
     "npm:eslint-plugin-vue@^9.32.0": "9.32.0_eslint@9.20.1",
     "npm:eslint@^9.18.0": "9.20.1",
@@ -673,9 +672,6 @@
     "@types/json-schema@7.0.15": {
       "integrity": "sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA=="
     },
-    "@types/web-bluetooth@0.0.20": {
-      "integrity": "sha512-g9gZnnXVq7gM7v3tJCWV/qw7w+KeOlSHAhgF9RytFyifW6AF61hdT2ucrYhPq9hLs5JIryeupHV3qGk95dH9ow=="
-    },
     "@typescript-eslint/scope-manager@8.24.0": {
       "integrity": "sha512-HZIX0UByphEtdVBKaQBgTDdn9z16l4aTUz8e8zPQnyxwHBtf5vtl1L+OhH+m1FGV9DrRmoDuYKqzVrvWDcDozw==",
       "dependencies": [
@@ -925,24 +921,6 @@
       "dependencies": [
         "js-beautify",
         "vue-component-type-helpers"
-      ]
-    },
-    "@vueuse/core@12.7.0": {
-      "integrity": "sha512-jtK5B7YjZXmkGNHjviyGO4s3ZtEhbzSgrbX+s5o+Lr8i2nYqNyHuPVOeTdM1/hZ5Tkxg/KktAuAVDDiHMraMVA==",
-      "dependencies": [
-        "@types/web-bluetooth",
-        "@vueuse/metadata",
-        "@vueuse/shared",
-        "vue"
-      ]
-    },
-    "@vueuse/metadata@12.7.0": {
-      "integrity": "sha512-4VvTH9mrjXqFN5LYa5YfqHVRI6j7R00Vy4995Rw7PQxyCL3z0Lli86iN4UemWqixxEvYfRjG+hF9wL8oLOn+3g=="
-    },
-    "@vueuse/shared@12.7.0": {
-      "integrity": "sha512-coLlUw2HHKsm7rPN6WqHJQr18WymN4wkA/3ThFaJ4v4gWGWAQQGK+MJxLuJTBs4mojQiazlVWAKNJNpUWGRkNw==",
-      "dependencies": [
-        "vue"
       ]
     },
     "abbrev@3.0.0": {
@@ -2610,7 +2588,6 @@
         "npm:@vitejs/plugin-vue@^5.2.1",
         "npm:@vitest/eslint-plugin@1.1.25",
         "npm:@vue/test-utils@^2.4.6",
-        "npm:@vueuse/core@^12.7.0",
         "npm:eslint-plugin-oxlint@~0.15.6",
         "npm:eslint-plugin-vue@^9.32.0",
         "npm:eslint@^9.18.0",

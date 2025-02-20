@@ -617,10 +617,9 @@ export default {
                 <a
                   :href="item.url"
                   target="_blank"
-                  class="text-black text-sm font-normaltext-gray-800 dark:gray-800-400 hover:underline"
+                  class="text-black underline text-sm font-normaltext-gray-800 dark:gray-800-400"
                 >
                   {{ item.name }}
-                  <LinkIcon class="inline size-4" />
                 </a>
               </td>
               <td
