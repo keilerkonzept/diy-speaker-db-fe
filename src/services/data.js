@@ -381,7 +381,7 @@ const getData = () => {
     {
       name: "El Compacto",
       developer: "Wilke Borchers",
-      price: null,
+      price: 180,
       enclosure: "Bass Reflex",
       range: "Full Range",
       f3: 43,
