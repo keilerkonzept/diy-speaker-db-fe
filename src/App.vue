@@ -319,9 +319,7 @@ export default {
 </script>
 
 <template>
-  <div
-    class="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-200"
-  >
+  <div class="bg-white">
 
       <div class="text-xl bg-black text-white font-black mb-4 py-2 px-4">
         <div class="w-full flex items-center justify-between">
@@ -329,7 +327,7 @@ export default {
           DIY Speaker DB
           </a>
           <a href="https://keilerkonzept.com">
-          <svg class="size-5 color-white mr-2 inline-block" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 124.51 104.87" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414"><path fill-rule="nonzero" d="M41.404,23.741 C41.186,23.74 40.969,23.768 40.758,23.823 C16.619,30.18 0.002,46.714 0.002,65.818 C0.002,72.678 2.197,79.433 6.326,85.509 C6.491,85.752 6.698,85.964 6.937,86.136 C12.685,90.258 22.877,94.118 31.031,96.766 C39.775,101.998 50.832,104.866 62.256,104.866 C73.682,104.866 84.74,101.998 93.485,96.766 C101.639,94.117 111.831,90.257 117.578,86.136 C117.816,85.965 118.022,85.753 118.187,85.511 C122.316,79.435 124.512,72.679 124.511,65.818 C124.511,46.714 107.896,30.181 83.758,23.823 C83.55,23.769 83.336,23.742 83.121,23.742 L83.119,23.741 C82.016,23.742 81.043,24.466 80.726,25.522 C80.409,26.579 80.822,27.719 81.742,28.327 C88.122,32.54 93.195,38.675 96.502,45.881 C87.408,39.434 75.094,35.815 62.257,35.815 C62.186,35.815 62.114,35.815 62.043,35.815 C49.28,35.855 37.054,39.472 28.012,45.881 C31.32,38.676 36.393,32.54 42.773,28.327 C43.692,27.72 44.106,26.583 43.791,25.527 C43.476,24.472 42.508,23.746 41.406,23.741 L41.404,23.741 Z M30.26,33.03 C25.534,38.735 22.097,45.6 20.25,53.058 C15.982,58.311 13.734,64.272 13.734,70.34 C13.734,76.222 15.846,82.006 19.87,87.145 C16,85.545 12.538,83.885 10.219,82.286 C6.772,77.064 5,71.471 5,65.817 C5,52.694 14.592,40.412 30.259,33.03 L30.26,33.03 Z M94.256,33.032 C109.922,40.415 119.512,52.694 119.512,65.817 C119.512,71.47 117.741,77.062 114.295,82.283 C111.975,83.882 108.514,85.544 104.644,87.144 C108.667,82.006 110.779,76.221 110.779,70.339 C110.779,64.271 108.531,58.309 104.261,53.056 C102.415,45.6 98.98,38.735 94.256,33.032 Z M44.984,53.799 C50.591,53.8 55.136,61.204 55.136,70.338 C55.136,79.471 50.591,86.876 44.984,86.876 C39.376,86.876 34.831,79.472 34.831,70.338 C34.831,61.204 39.376,53.799 44.984,53.799 Z M79.538,53.799 C85.145,53.8 89.69,61.204 89.69,70.338 C89.69,79.471 85.145,86.876 79.538,86.876 C73.931,86.876 69.385,79.472 69.385,70.338 C69.385,61.204 73.931,53.799 79.538,53.799 Z M43.014,7.7 C43.014,10.653 40.412,13.048 37.202,13.048 C33.992,13.048 31.39,10.653 31.39,7.7 C31.39,4.747 33.992,2.353 37.202,2.353 C40.412,2.353 43.014,4.747 43.014,7.7 Z M87,15.625 C82.787,15.625 79.375,12.213 79.375,8 C79.375,3.787 82.787,0.375 87,0.375 C91.213,0.375 94.625,3.787 94.625,8 C94.625,12.213 91.213,15.625 87,15.625 Z M37.13,15.935 C32.917,15.935 29.505,12.523 29.505,8.31 C29.505,4.097 32.917,0.685 37.13,0.685 C41.343,0.685 44.755,4.097 44.755,8.31 C44.755,12.523 41.343,15.935 37.13,15.935 Z"></path></svg>
+          <svg class="size-5 color-blue-200 mr-2 inline-block" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 124.51 104.87" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414"><path fill-rule="nonzero" d="M41.404,23.741 C41.186,23.74 40.969,23.768 40.758,23.823 C16.619,30.18 0.002,46.714 0.002,65.818 C0.002,72.678 2.197,79.433 6.326,85.509 C6.491,85.752 6.698,85.964 6.937,86.136 C12.685,90.258 22.877,94.118 31.031,96.766 C39.775,101.998 50.832,104.866 62.256,104.866 C73.682,104.866 84.74,101.998 93.485,96.766 C101.639,94.117 111.831,90.257 117.578,86.136 C117.816,85.965 118.022,85.753 118.187,85.511 C122.316,79.435 124.512,72.679 124.511,65.818 C124.511,46.714 107.896,30.181 83.758,23.823 C83.55,23.769 83.336,23.742 83.121,23.742 L83.119,23.741 C82.016,23.742 81.043,24.466 80.726,25.522 C80.409,26.579 80.822,27.719 81.742,28.327 C88.122,32.54 93.195,38.675 96.502,45.881 C87.408,39.434 75.094,35.815 62.257,35.815 C62.186,35.815 62.114,35.815 62.043,35.815 C49.28,35.855 37.054,39.472 28.012,45.881 C31.32,38.676 36.393,32.54 42.773,28.327 C43.692,27.72 44.106,26.583 43.791,25.527 C43.476,24.472 42.508,23.746 41.406,23.741 L41.404,23.741 Z M30.26,33.03 C25.534,38.735 22.097,45.6 20.25,53.058 C15.982,58.311 13.734,64.272 13.734,70.34 C13.734,76.222 15.846,82.006 19.87,87.145 C16,85.545 12.538,83.885 10.219,82.286 C6.772,77.064 5,71.471 5,65.817 C5,52.694 14.592,40.412 30.259,33.03 L30.26,33.03 Z M94.256,33.032 C109.922,40.415 119.512,52.694 119.512,65.817 C119.512,71.47 117.741,77.062 114.295,82.283 C111.975,83.882 108.514,85.544 104.644,87.144 C108.667,82.006 110.779,76.221 110.779,70.339 C110.779,64.271 108.531,58.309 104.261,53.056 C102.415,45.6 98.98,38.735 94.256,33.032 Z M44.984,53.799 C50.591,53.8 55.136,61.204 55.136,70.338 C55.136,79.471 50.591,86.876 44.984,86.876 C39.376,86.876 34.831,79.472 34.831,70.338 C34.831,61.204 39.376,53.799 44.984,53.799 Z M79.538,53.799 C85.145,53.8 89.69,61.204 89.69,70.338 C89.69,79.471 85.145,86.876 79.538,86.876 C73.931,86.876 69.385,79.472 69.385,70.338 C69.385,61.204 73.931,53.799 79.538,53.799 Z M43.014,7.7 C43.014,10.653 40.412,13.048 37.202,13.048 C33.992,13.048 31.39,10.653 31.39,7.7 C31.39,4.747 33.992,2.353 37.202,2.353 C40.412,2.353 43.014,4.747 43.014,7.7 Z M87,15.625 C82.787,15.625 79.375,12.213 79.375,8 C79.375,3.787 82.787,0.375 87,0.375 C91.213,0.375 94.625,3.787 94.625,8 C94.625,12.213 91.213,15.625 87,15.625 Z M37.13,15.935 C32.917,15.935 29.505,12.523 29.505,8.31 C29.505,4.097 32.917,0.685 37.13,0.685 C41.343,0.685 44.755,4.097 44.755,8.31 C44.755,12.523 41.343,15.935 37.13,15.935 Z"></path></svg>
           </a>
         </div>
       </div>
@@ -339,101 +337,101 @@ export default {
       <!-- New Entry Button -->
       <button
         @click="createNewEntry"
-        class="mb-6 text-sm border-1 cursor-pointer border-gray-500 hover:bg-black hover:text-white dark:bg-green-600 dark:hover:bg-green-700 text-black dark:text-white px-2 py-1 rounded-md transition-colors duration-200"
+        class="mb-6 text-sm border-1 cursor-pointer border-gray-500 hover:bg-black hover:text-white text-black  px-2 py-1 rounded-md transition-colors duration-200"
       >
         Submit New Entry
       </button>
 
       <!-- Table -->
       <div
-        class="h-[100vh] relative max-w-fit rounded-md border border-gray-200 dark:border-gray-700"
+        class="h-[100vh] p-1 relative w-fit rounded-md border border-gray-100 bg-gray-100"
       >
-        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-          <thead class="sticky top-0 bg-gray-100 dark:bg-gray-800">
+        <table class="min-w-full w-full divide-y divide-gray-200">
+          <thead class="sticky top-0 bg-gray-100">
             <!-- Header Row -->
             <tr>
               <th
                 scope="col"
-                class="wsticky top-0 px-3 py-3  text-left text-s font-medium text-black dark:text-gray-400 uppercase text-xs tracking-wider"
+                class="wsticky top-0 px-3 py-3  text-left text-s font-medium text-black uppercase text-xs tracking-wider"
               >
                 Name
               </th>
               <th
                 scope="col"
-                class="sticky top-0 px-3 py-3  text-left text-s font-medium text-black dark:text-gray-400 uppercase text-xs tracking-wider"
+                class="sticky top-0 px-3 py-3  text-left text-s font-medium text-black uppercase text-xs tracking-wider"
               >
                 Developer
               </th>
               <th
                 scope="col"
-                class="sticky top-0 px-3 py-3  text-left text-s font-medium text-black dark:text-gray-400 uppercase text-xs tracking-wider"
+                class="sticky top-0 px-3 py-3  text-left text-s font-medium text-black uppercase text-xs tracking-wider"
               >
                 Price / pair
               </th>
               <th
                 scope="col"
-                class="sticky top-0 px-3 py-3  text-left text-s font-medium text-black dark:text-gray-400 uppercase text-xs tracking-wider"
+                class="sticky top-0 px-3 py-3  text-left text-s font-medium text-black uppercase text-xs tracking-wider"
               >
                 Enclosure
               </th>
               <th
                 scope="col"
-                class="sticky top-0 px-3 py-3  text-left text-s font-medium text-black dark:text-gray-400 uppercase text-xs tracking-wider"
+                class="sticky top-0 px-3 py-3  text-left text-s font-medium text-black uppercase text-xs tracking-wider"
               >
                 Range
               </th>
               <th
                 scope="col"
-                class="sticky top-0 px-3 py-3  text-left text-s font-medium text-black dark:text-gray-400 uppercase text-xs tracking-wider"
+                class="sticky top-0 px-3 py-3  text-left text-s font-medium text-black uppercase text-xs tracking-wider"
               >
                 F₃
               </th>
               <th
                 scope="col"
-                class="sticky top-0 px-3 py-3  text-left text-s font-medium text-black dark:text-gray-400 uppercase text-xs tracking-wider"
+                class="sticky top-0 px-3 py-3  text-left text-s font-medium text-black uppercase text-xs tracking-wider"
               >
                 Specialty
               </th>
               <th
                 scope="col"
-                class="sticky top-0 px-3 py-3  text-left text-s font-medium text-black dark:text-gray-400 uppercase text-xs tracking-wider"
+                class="sticky top-0 px-3 py-3  text-left text-s font-medium text-black uppercase text-xs tracking-wider"
               >
                 Height
               </th>
               <th
                 scope="col"
-                class="sticky top-0 px-3 py-3  text-left text-s font-medium text-black dark:text-gray-400 uppercase text-xs tracking-wider"
+                class="sticky top-0 px-3 py-3  text-left text-s font-medium text-black uppercase text-xs tracking-wider"
               >
                 Width
               </th>
               <th
                 scope="col"
-                class="sticky top-0 px-3 py-3  text-left text-s font-medium text-black dark:text-gray-400 uppercase text-xs tracking-wider"
+                class="sticky top-0 px-3 py-3  text-left text-s font-medium text-black uppercase text-xs tracking-wider"
               >
                 Depth
               </th>
               <th
                 scope="col"
-                class="sticky top-0 px-3 py-3  text-left text-s font-medium text-black dark:text-gray-400 uppercase text-xs tracking-wider"
+                class="sticky top-0 px-3 py-3  text-left text-s font-medium text-black uppercase text-xs tracking-wider"
               >
                 Volume (L)
               </th>
               <th
                 scope="col"
-                class="sticky top-0 px-3 py-3  text-left text-s font-medium text-black dark:text-gray-400 uppercase text-xs tracking-wider"
+                class="sticky top-0 px-3 py-3  text-left text-s font-medium text-black uppercase text-xs tracking-wider"
               >
               </th>
             </tr>
 
             <!-- Filter Row -->
-            <tr class="bg-gray-100 dark:bg-gray-800 align-baseline">
+            <tr class="bg-gray-100 align-baseline">
               <th class="  px-3 py-3">
                 <input
                   type="text"
                   v-model="filters.name"
                   @input="applyFilters"
                   @keyup.esc="clearFilter('name')"
-                  class="w-full font-normal rounded-md px-2 py-1 text-sm bg-white border-gray-300 dark:border-gray-700 dark:bg-gray-900 text-gray-900 dark:text-gray-300 focus:border-green-500 dark:focus:border-green-600"
+                  class="w-full font-normal rounded-md px-2 py-1 text-sm bg-white border-gray-300 text-gray-900 focus:border-green-500"
                   placeholder="Filter by name"
                 />
               </th>
@@ -443,7 +441,7 @@ export default {
                   v-model="filters.developer"
                   @input="applyFilters"
                   @keyup.esc="clearFilter('developer')"
-                  class="w-full font-normal rounded-md px-2 py-1 text-sm bg-white border-gray-300 dark:border-gray-700 dark:bg-gray-900 text-gray-900 dark:text-gray-300 focus:border-green-500 dark:focus:border-green-600"
+                  class="w-full font-normal rounded-md px-2 py-1 text-sm bg-white border-gray-300 text-gray-900 focus:border-green-500"
                   placeholder="Filter by developer"
                 />
               </th>
@@ -453,7 +451,7 @@ export default {
                   v-model.number="filters.price"
                   @input="applyFilters"
                   @keyup.esc="clearFilter('price')"
-                 class="w-full font-normal rounded-md px-2 py-1 text-sm text-gray-900 bg-white border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-green-500 dark:focus:border-green-600"
+                 class="w-full font-normal rounded-md px-2 py-1 text-sm text-gray-900 bg-white border-gray-300 focus:border-green-500"
                   placeholder="< €"
                 />
               </th>
@@ -462,7 +460,7 @@ export default {
                   <select
                     v-model="selectedEnclosure"
                     @change="addFilter('enclosures', selectedEnclosure)"
-                    class="w-full font-normal text-gray-500 rounded-md mt-1 px-2 py-1 text-sm bg-white border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-green-500 dark:focus:border-green-600"
+                    class="w-full font-normal text-gray-500 rounded-md mt-1 px-2 py-1 text-sm bg-white border-gray-300 focus:border-green-500"
                   >
                     <option class="" value="">Select...</option>
                     <option
@@ -477,12 +475,12 @@ export default {
                     <span
                       v-for="item in filters.enclosures"
                       :key="item"
-                      class="inline-flex items-center pl-2 py-1 rounded-md text-xs bg-gray-300 dark:bg-green-900 text-gray-900 dark:text-green-300"
+                      class="inline-flex items-center pl-2 py-1 rounded-md text-xs bg-gray-300 text-gray-900"
                     >
                       {{ item }}
                       <button
                         @click="removeFilter('enclosures', item)"
-                        class="ml-1 mr-2 font-normal text-gray-500 hover:cursor-pointer hover:text-red-700 dark:text-green-400 dark:hover:text-green-200"
+                        class="ml-1 mr-2 font-normal text-gray-500 hover:cursor-pointer hover:text-red-700"
                       >
                         ×
                       </button>
@@ -495,7 +493,7 @@ export default {
                   <select
                     v-model="selectedRange"
                     @change="addFilter('ranges', selectedRange)"
-                    class="w-full font-normal text-gray-500 rounded-md mt-1 px-2 py-1 text-sm bg-white border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-green-500 dark:focus:border-green-600"
+                    class="w-full font-normal text-gray-500 rounded-md mt-1 px-2 py-1 text-sm bg-white border-gray-300 focus:border-green-500"
                   >
                     <option value="">Select...</option>
                     <option
@@ -510,12 +508,12 @@ export default {
                     <span
                       v-for="item in filters.ranges"
                       :key="item"
-                      class="inline-flex items-center pl-2 py-1 rounded-md text-xs bg-gray-300 dark:bg-green-900 text-gray-900 dark:text-green-300"
+                      class="inline-flex items-center pl-2 py-1 rounded-md text-xs bg-gray-300 text-gray-900"
                     >
                       {{ item }}
                       <button
                         @click="removeFilter('ranges', item)"
-                        class="ml-1 mr-2 font-normal text-gray-500 hover:cursor-pointer hover:text-red-700 dark:text-green-400 dark:hover:text-green-200"
+                        class="ml-1 mr-2 font-normal text-gray-500 hover:cursor-pointer hover:text-red-700 "
                       >
                         ×
                       </button>
@@ -529,7 +527,7 @@ export default {
                   v-model.number="filters.f3"
                   @input="applyFilters"
                   @keyup.esc="clearFilter('f3')"
-                  class="w-full font-normal text-gray-900 rounded-md px-2 py-1 text-sm bg-white border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-green-500 dark:focus:border-green-600"
+                  class="w-full font-normal text-gray-900 rounded-md px-2 py-1 text-sm bg-white border-gray-300 focus:border-green-500"
                   placeholder="> F₃"
                 />
               </th>
@@ -538,7 +536,7 @@ export default {
                   <select
                     v-model="selectedSpecialty"
                     @change="addFilter('specialties', selectedSpecialty)"
-                    class="w-full text-sm font-normal text-gray-500 rounded-md mt-1 px-2 py-1 bg-white border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-green-500 dark:focus:border-green-600"
+                    class="w-full text-sm font-normal text-gray-500 rounded-md mt-1 px-2 py-1 bg-white border-gray-300 focus:border-green-500"
                   >
                     <option value="">Select...</option>
                     <option
@@ -553,11 +551,11 @@ export default {
                     <span
                       v-for="item in filters.specialties"
                       :key="item"
-                      class="inline-flex items-center pl-2 py-1 rounded-md text-xs bg-gray-300 dark:bg-green-900 text-gray-900 dark:text-green-300">
+                      class="inline-flex items-center pl-2 py-1 rounded-md text-xs bg-gray-300 text-gray-900">
                       {{ item }}
                       <button
                         @click="removeFilter('specialties', item)"
-                        class="ml-1 mr-2 font-normal text-gray-500 hover:cursor-pointer hover:text-red-700 dark:text-green-400 dark:hover:text-green-200"
+                        class="ml-1 mr-2 font-normal text-gray-500 hover:cursor-pointer hover:text-red-700 "
                       >
                         ×
                       </button>
@@ -571,7 +569,7 @@ export default {
                   v-model.number="filters.height"
                   @input="applyFilters"
                   @keyup.esc="clearFilter('height')"
-                  class="w-full font-normal rounded-md px-2 py-1 text-sm bg-white text-gray-900 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-green-500 dark:focus:border-green-600"
+                  class="w-full font-normal rounded-md px-2 py-1 text-sm bg-white text-gray-900 border-gray-300 focus:border-green-500"
                   placeholder="< H"
                 />
               </th>
@@ -581,7 +579,7 @@ export default {
                   v-model.number="filters.width"
                   @input="applyFilters"
                   @keyup.esc="clearFilter('width')"
-                  class="w-full font-normal rounded-md px-2 py-1 text-sm bg-white text-gray-900 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-green-500 dark:focus:border-green-600"
+                  class="w-full font-normal rounded-md px-2 py-1 text-sm bg-white text-gray-900 border-gray-300 focus:border-green-500"
                   placeholder="< W"
                 />
               </th>
@@ -591,7 +589,7 @@ export default {
                   v-model.number="filters.depth"
                   @input="applyFilters"
                   @keyup.esc="clearFilter('depth')"
-                  class="w-full font-normal rounded-md px-2 py-1 text-sm bg-white text-gray-900 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-green-500 dark:focus:border-green-600"
+                  class="w-full font-normal rounded-md px-2 py-1 text-sm bg-white text-gray-900 border-gray-300 focus:border-green-500"
                   placeholder="< D"
                 />
               </th>
@@ -601,7 +599,7 @@ export default {
                   v-model.number="filters.volume"
                   @input="applyFilters"
                   @keyup.esc="clearFilter('volume')"
-                  class="w-full font-normal rounded-md px-2 py-1 text-sm bg-white text-gray-900 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-green-500 dark:focus:border-green-600"
+                  class="w-full font-normal rounded-md px-2 py-1 text-sm bg-white text-gray-900 border-gray-300 focus:border-green-500"
                   placeholder="< L"
                 />
               </th>
@@ -610,65 +608,65 @@ export default {
           </thead>
 
           <tbody
-            class="table-row-group bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700"
+            class="table-row-group bg-white divide-y divide-gray-200"
           >
-            <tr class="hover:bg-gray-100 dark:hover:bg-gray-800" v-for="(item, index) in displayedItems" :key="index">
+            <tr class="hover:bg-gray-50 " v-for="(item, index) in displayedItems" :key="index">
               <td class="px-3 py-4 whitespace-nowrap">
                 <a
                   :href="item.url"
                   target="_blank"
-                  class="text-black underline text-sm font-normaltext-gray-800 dark:gray-800-400"
+                  class="text-black underline text-sm font-normal text-gray-800"
                 >
                   {{ item.name }}
                 </a>
               </td>
               <td
-                class="px-3 py-4 whitespace-nowrap text-sm font-normal text-gray-800 dark:text-gray-300"
+                class="px-3 py-4 whitespace-nowrap text-sm font-normal text-gray-800"
               >
                 {{ item.developer }}
               </td>
               <td
-                class="px-3 py-4 whitespace-nowrap text-right text-sm font-normal text-gray-800 dark:text-gray-300"
+                class="px-3 py-4 whitespace-nowrap text-right text-sm font-normal text-gray-800"
               >
                 {{ formatPrice(item.price) }}
               </td>
               <td
-                class="px-3 py-4 whitespace-nowrap text-sm font-normal text-gray-800 dark:text-gray-300"
+                class="px-3 py-4 whitespace-nowrap text-sm font-normal text-gray-800"
               >
                 {{ item.enclosure }}
               </td>
               <td
-                class="px-3 py-4 whitespace-nowrap text-sm font-normal text-gray-800 dark:text-gray-300"
+                class="px-3 py-4 whitespace-nowrap text-sm font-normal text-gray-800"
               >
                 {{ item.range }}
               </td>
               <td
-                class="px-3 py-4 whitespace-nowrap text-right text-sm font-normal text-gray-800 dark:text-gray-300"
+                class="px-3 py-4 whitespace-nowrap text-right text-sm font-normal text-gray-800"
               >
                 <span v-if="item.f3">{{ item.f3 }} Hz</span>
               </td>
               <td
-                class="px-3 py-4 whitespace-nowrap text-sm font-normal text-gray-800 dark:text-gray-300"
+                class="px-3 py-4 whitespace-nowrap text-sm font-normal text-gray-800"
               >
                 {{ item.specialty }}
               </td>
               <td
-                class="px-3 py-4 whitespace-nowrap text-right  text-sm font-normal text-gray-800 dark:text-gray-300"
+                class="px-3 py-4 whitespace-nowrap text-right  text-sm font-normal text-gray-800"
               >
                 {{ item.height }}
               </td>
               <td
-                class="px-3 py-4 whitespace-nowrap text-right text-sm font-normal text-gray-800 dark:text-gray-300"
+                class="px-3 py-4 whitespace-nowrap text-right text-sm font-normal text-gray-800"
               >
                 {{ item.width }}
               </td>
               <td
-                class="px-3 py-4 whitespace-nowrap text-right text-sm font-normal text-gray-800 dark:text-gray-300"
+                class="px-3 py-4 whitespace-nowrap text-right text-sm font-normal text-gray-800"
               >
                 {{ item.depth }}
               </td>
               <td
-                class="px-3 py-4 whitespace-nowrap text-sm font-normal text-gray-800 text-right dark:text-gray-300"
+                class="px-3 py-4 whitespace-nowrap text-sm font-normal text-gray-800 text-right"
               >
                 {{ calculateVolume(item) }} L
               </td>
@@ -677,7 +675,7 @@ export default {
               >
                 <button
                   @click="editItem(item)"
-                  class="border-1 border-gray-500 dark:bg-green-800 hover:bg-black cursor-pointer hover:text-white dark:hover:bg-green-700 text-black px-2 py-1 rounded-md transition-colors duration-200 font-normal"
+                  class="border-1 border-gray-500 hover:bg-black cursor-pointer hover:text-white text-black px-2 py-1 rounded-md transition-colors duration-200 font-normal"
                 >
                   Edit
                 </button>
@@ -692,8 +690,8 @@ export default {
         v-if="showEditDialog"
         class="fixed inset-0 flex items-center justify-center p-4" style="background-color:rgb(0,0,0,0.5)"
       >
-        <div class="bg-white dark:bg-gray-800 rounded-md max-w-2xl w-full p-6">
-          <h2 class="text-xl font-bold mb-4 dark:text-white">
+        <div class="bg-white rounded-md max-w-2xl w-full p-6">
+          <h2 class="text-xl font-bold mb-4">
             {{ isNewEntry ? "Submit New Entry" : "Edit Entry" }}
           </h2>
 
@@ -702,60 +700,60 @@ export default {
             <!-- Name Field -->
             <div>
               <label
-                class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                class="block text-sm font-medium text-gray-700 mb-1"
               >
                 Name <span class="text-red-500">*</span>
               </label>
               <input
                 type="text"
                 v-model="editingItem.name"
-                class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 py-1"
+                class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 py-1"
                 @input="trackChange('name', editingItem.name)"
               />
               <span v-if="isNewEntry && formErrors.name" class="text-red-500 text-sm">Name is required</span>
             </div>
             <div>
               <label
-                class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                class="block text-sm font-medium text-gray-700 mb-1"
               >
                 Developer
               </label>
               <input
                 type="text"
                 v-model="editingItem.developer"
-                class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 py-1"
+                class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 py-1"
                 @input="trackChange('developer', editingItem.developer)"
               />
             </div>
             <div>
               <label
-                class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                class="block text-sm font-medium text-gray-700 mb-1"
               >
                 Price
               </label>
               <input
                 type="number"
                 v-model="editingItem.price"
-                class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 py-1"
+                class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 py-1"
                 @input="trackChange('price', editingItem.price)"
               />
             </div>
             <div>
               <label
-                class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                class="block text-sm font-medium text-gray-700 mb-1"
               >
                 F₃
               </label>
               <input
                 type="number"
                 v-model="editingItem.f3"
-                class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 py-1"
+                class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 py-1"
                 @input="trackChange('f3', editingItem.f3)"
               />
             </div>
             <div>
               <label
-                class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                class="block text-sm font-medium text-gray-700 mb-1"
               >
                 Enclosure <span class="text-red-500">*</span>
               </label>
@@ -775,7 +773,7 @@ export default {
             </div>
             <div>
               <label
-                class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                class="block text-sm font-medium text-gray-700 mb-1"
               >
                 Range <span class="text-red-500">*</span>
               </label>
@@ -795,7 +793,7 @@ export default {
             </div>
             <div>
               <label
-                class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                class="block text-sm font-medium text-gray-700 mb-1"
               >
                 Specialty
               </label>
@@ -814,7 +812,7 @@ export default {
             </div>
             <div class="col-span-full">
               <label
-              class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+              class="block text-sm font-medium text-gray-700 mb-2"
               >Dimensions (H×W×D):</label>
               <div class="grid grid-cols-3 gap-4 text-sm">
                 <input
@@ -842,14 +840,14 @@ export default {
             </div>
             <div class="col-span-full">
               <label
-                class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                class="block text-sm font-medium text-gray-700 mb-1"
               >
                 URL <span class="text-red-500">*</span>
               </label>
               <input
                 type="text"
                 v-model="editingItem.url"
-                class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 py-1"
+                class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 py-1"
                 @input="trackChange('url', editingItem.url)"
               />
               <span v-if="isNewEntry && formErrors.url" class="text-red-500 text-sm">URL is required</span>
@@ -860,7 +858,7 @@ export default {
           <div class="mt-6 flex justify-end space-x-3 text-sm">
             <button
               @click="closeEditDialog"
-              class="px-3 py-1 cursor-pointer bg-gray-200 border-gray-500 dark:border-gray-700 rounded-md text-gray-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+              class="px-3 py-1 cursor-pointer bg-gray-200 border-gray-500 rounded-md text-gray-500 hover:bg-gray-100 "
             >
               Cancel
             </button>
