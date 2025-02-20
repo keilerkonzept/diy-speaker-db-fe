@@ -318,132 +318,119 @@ export default {
 </script>
 
   <template>
-  <div class="overflow-scroll">
+  <div class="overflow-scroll h-screen animated-background bg-gradient-to-r from-indigo-100 via-red-100 via-blue-100 to-green-100">
     <!-- Header -->
     <div
-      class="sticky left-0 text-xl w-full bg-black text-white font-black mb-4 py-2 px-4"
+      class="sticky left-0 text-2xl w-full text-green-700 mt-4 mb-6 px-4"
     >
-      <div class="flex items-center justify-between">
-        <a href="/"> DIY Speaker DB </a>
-        <a href="https://keilerkonzept.com">
-          <svg
-            class="size-5 color-blue-200 mr-2 inline-block"
-            fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 124.51 104.87"
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            stroke-linejoin="round"
-            stroke-miterlimit="1.414"
-          >
-            <path
-              fill-rule="nonzero"
-              d="M41.404,23.741 C41.186,23.74 40.969,23.768 40.758,23.823 C16.619,30.18 0.002,46.714 0.002,65.818 C0.002,72.678 2.197,79.433 6.326,85.509 C6.491,85.752 6.698,85.964 6.937,86.136 C12.685,90.258 22.877,94.118 31.031,96.766 C39.775,101.998 50.832,104.866 62.256,104.866 C73.682,104.866 84.74,101.998 93.485,96.766 C101.639,94.117 111.831,90.257 117.578,86.136 C117.816,85.965 118.022,85.753 118.187,85.511 C122.316,79.435 124.512,72.679 124.511,65.818 C124.511,46.714 107.896,30.181 83.758,23.823 C83.55,23.769 83.336,23.742 83.121,23.742 L83.119,23.741 C82.016,23.742 81.043,24.466 80.726,25.522 C80.409,26.579 80.822,27.719 81.742,28.327 C88.122,32.54 93.195,38.675 96.502,45.881 C87.408,39.434 75.094,35.815 62.257,35.815 C62.186,35.815 62.114,35.815 62.043,35.815 C49.28,35.855 37.054,39.472 28.012,45.881 C31.32,38.676 36.393,32.54 42.773,28.327 C43.692,27.72 44.106,26.583 43.791,25.527 C43.476,24.472 42.508,23.746 41.406,23.741 L41.404,23.741 Z M30.26,33.03 C25.534,38.735 22.097,45.6 20.25,53.058 C15.982,58.311 13.734,64.272 13.734,70.34 C13.734,76.222 15.846,82.006 19.87,87.145 C16,85.545 12.538,83.885 10.219,82.286 C6.772,77.064 5,71.471 5,65.817 C5,52.694 14.592,40.412 30.259,33.03 L30.26,33.03 Z M94.256,33.032 C109.922,40.415 119.512,52.694 119.512,65.817 C119.512,71.47 117.741,77.062 114.295,82.283 C111.975,83.882 108.514,85.544 104.644,87.144 C108.667,82.006 110.779,76.221 110.779,70.339 C110.779,64.271 108.531,58.309 104.261,53.056 C102.415,45.6 98.98,38.735 94.256,33.032 Z M44.984,53.799 C50.591,53.8 55.136,61.204 55.136,70.338 C55.136,79.471 50.591,86.876 44.984,86.876 C39.376,86.876 34.831,79.472 34.831,70.338 C34.831,61.204 39.376,53.799 44.984,53.799 Z M79.538,53.799 C85.145,53.8 89.69,61.204 89.69,70.338 C89.69,79.471 85.145,86.876 79.538,86.876 C73.931,86.876 69.385,79.472 69.385,70.338 C69.385,61.204 73.931,53.799 79.538,53.799 Z M43.014,7.7 C43.014,10.653 40.412,13.048 37.202,13.048 C33.992,13.048 31.39,10.653 31.39,7.7 C31.39,4.747 33.992,2.353 37.202,2.353 C40.412,2.353 43.014,4.747 43.014,7.7 Z M87,15.625 C82.787,15.625 79.375,12.213 79.375,8 C79.375,3.787 82.787,0.375 87,0.375 C91.213,0.375 94.625,3.787 94.625,8 C94.625,12.213 91.213,15.625 87,15.625 Z M37.13,15.935 C32.917,15.935 29.505,12.523 29.505,8.31 C29.505,4.097 32.917,0.685 37.13,0.685 C41.343,0.685 44.755,4.097 44.755,8.31 C44.755,12.523 41.343,15.935 37.13,15.935 Z"
-            ></path>
-          </svg>
-        </a>
+      <a href="/">
+      <div class="flex items-center">
+        <span class="uppercase font-thin tracking-wider"> DIY Speaker DB </span>
       </div>
+        </a>
     </div>
 
     <!-- Main Content -->
-    <div class="container min-w-full mx-auto px-4">
+    <div class="container min-w-full mx-auto px-4 ">
+      <div class="text-center">
       <!-- New Entry Button -->
       <button
         @click="createNewEntry"
-        class="mb-6 text-sm border-1 cursor-pointer border-gray-500 hover:bg-black hover:text-white text-black px-2 py-1 rounded-md transition-colors duration-200"
+        class="px-3 py-2 mb-8 font-medium bg-white text-sm text-green-700 rounded-md shadow-md cursor-pointer hover:bg-gray-100 hover:text-gray-900"
       >
         Submit New Entry
       </button>
+      </div>
 
       <!-- Table -->
       <div
-        class="h-[100vh] relative min-w-full w-fit rounded-md border border-gray-100 bg-gray-100"
+        class="h-[100vh] relative min-w-full w-fit rounded-md border border-green-100"
       >
         <table class="min-w-full sm:table-fixed divide-y divide-gray-200">
-          <thead class="sticky top-0 bg-gray-100">
+          <thead class="sticky top-0 bg-gradient-to-tr from-gray-100 from-20% to-green-100 font-medium text-green-700">
             <!-- Header Row -->
-            <tr class="text-xs">
+            <tr class="text-xs uppercase tracking-wider">
               <th
                 scope="col"
-                class="min-w-[150pt] w-[250pt] px-3 py-3 text-left font-medium text-black uppercase tracking-wider"
+                class="min-w-[150pt] w-[250pt] px-3 py-3 text-left "
               >
                 Name
               </th>
               <th
                 scope="col"
-                class="min-w-[100pt] w-[200pt] px-3 py-3 text-left font-medium text-black uppercase tracking-wider"
+                class="min-w-[100pt] w-[200pt] px-3 py-3 text-left "
               >
                 Developer
               </th>
               <th
                 scope="col"
-                class="min-w-[70pt] w-[70pt] px-3 py-3 text-left font-medium text-black uppercase tracking-wider"
+                class="min-w-[70pt] w-[70pt] px-3 py-3 text-left "
               >
-                Price / pair
+                Price
               </th>
               <th
                 scope="col"
-                class="min-w-[100pt] w-[100pt] px-3 py-3 text-left font-medium text-black uppercase tracking-wider"
+                class="min-w-[100pt] w-[100pt] px-3 py-3 text-left "
               >
                 Enclosure
               </th>
               <th
                 scope="col"
-                class="min-w-[60pt] w-[80pt] px-3 py-3 text-left font-medium text-black uppercase tracking-wider"
+                class="min-w-[60pt] w-[80pt] px-3 py-3 text-left "
               >
                 Range
               </th>
               <th
                 scope="col"
-                class="min-w-[60pt] w-[60pt] px-3 py-3 text-left font-medium text-black uppercase tracking-wider"
+                class="min-w-[60pt] w-[60pt] px-3 py-3 text-left "
               >
                 F₃
               </th>
               <th
                 scope="col"
-                class="min-w-[120pt] w-[120pt] px-3 py-3 text-left font-medium text-black uppercase tracking-wider"
+                class="min-w-[120pt] w-[120pt] px-3 py-3 text-left "
               >
                 Specialty
               </th>
               <th
                 scope="col"
-                class="min-w-[20pt] w-[20pt] px-3 py-3 text-left font-medium text-black uppercase tracking-wider"
+                class="min-w-[20pt] w-[20pt] px-3 py-3 text-left "
               >
                 Height
               </th>
               <th
                 scope="col"
-                class="min-w-[20pt] w-[20pt] px-3 py-3 text-left font-medium text-black uppercase tracking-wider"
+                class="min-w-[20pt] w-[20pt] px-3 py-3 text-left "
               >
                 Width
               </th>
               <th
                 scope="col"
-                class="min-w-[20pt] w-[20pt] px-3 py-3 text-left font-medium text-black uppercase tracking-wider"
+                class="min-w-[20pt] w-[20pt] px-3 py-3 text-left "
               >
                 Depth
               </th>
               <th
                 scope="col"
-                class="w-[30pt] px-3 py-3 text-left font-medium text-black uppercase tracking-wider"
+                class="w-[30pt] px-3 py-3 text-left "
               >
-                Volume (L)
+                Volume
               </th>
               <th
                 scope="col"
-                class="min-w-[40pt] px-3 py-3 text-left font-medium text-black uppercase tracking-wider"
+                class="min-w-[40pt] px-3 py-3 text-left "
               ></th>
             </tr>
 
             <!-- Filter Row -->
-            <tr class="bg-gray-100 align-baseline text-sm">
+            <tr class="align-baseline text-sm">
               <th class="px-3 py-3">
                 <input
                   type="text"
                   v-model="filters.name"
                   @input="applyFilters"
                   @keyup.esc="clearFilter('name')"
-                  class="w-full font-normal rounded-md px-2 py-1 bg-white border-gray-300 text-gray-900 focus:border-green-500"
+                  class="w-full font-normal rounded-md px-2 py-1 bg-white border-green-300 text-gray-900"
                   placeholder="Filter by name"
                 />
               </th>
@@ -453,7 +440,7 @@ export default {
                   v-model="filters.developer"
                   @input="applyFilters"
                   @keyup.esc="clearFilter('developer')"
-                  class="w-full font-normal rounded-md px-2 py-1 bg-white border-gray-300 text-gray-900 focus:border-green-500"
+                  class="w-full font-normal rounded-md px-2 py-1 bg-white border-green-300 text-gray-900 focus:border-green-500"
                   placeholder="Filter by developer"
                 />
               </th>
@@ -463,7 +450,7 @@ export default {
                   v-model.number="filters.price"
                   @input="applyFilters"
                   @keyup.esc="clearFilter('price')"
-                  class="w-full font-normal rounded-md px-2 py-1 text-gray-900 bg-white border-gray-300 focus:border-green-500"
+                  class="w-full font-normal rounded-md px-2 py-1 text-gray-900 bg-white border-green-300 focus:border-green-500"
                   placeholder="< €"
                 />
               </th>
@@ -472,7 +459,7 @@ export default {
                   <select
                     v-model="selectedEnclosure"
                     @change="addFilter('enclosures', selectedEnclosure)"
-                    class="w-full font-normal text-gray-500 rounded-md mt-1 px-2 py-1 bg-white border-gray-300 focus:border-green-500"
+                    class="w-full font-normal text-gray-500 rounded-md mt-1 px-2 py-1 bg-white border-green-300 focus:border-green-500"
                   >
                     <option class="" value="">Select...</option>
                     <option
@@ -487,7 +474,7 @@ export default {
                     <span
                       v-for="item in filters.enclosures"
                       :key="item"
-                      class="inline-flex items-center pl-2 py-1 rounded-md text-xs bg-gray-300 text-gray-900"
+                      class="inline-flex items-center pl-2 py-1 rounded-md text-xs bg-green-300 text-gray-900"
                     >
                       {{ item }}
                       <button
@@ -505,7 +492,7 @@ export default {
                   <select
                     v-model="selectedRange"
                     @change="addFilter('ranges', selectedRange)"
-                    class="w-full font-normal text-gray-500 rounded-md mt-1 px-2 py-1 bg-white border-gray-300 focus:border-green-500"
+                    class="w-full font-normal text-gray-500 rounded-md mt-1 px-2 py-1 bg-white border-green-300 focus:border-green-500"
                   >
                     <option value="">Select...</option>
                     <option
@@ -520,7 +507,7 @@ export default {
                     <span
                       v-for="item in filters.ranges"
                       :key="item"
-                      class="inline-flex items-center pl-2 py-1 rounded-md text-xs bg-gray-300 text-gray-900"
+                      class="inline-flex items-center pl-2 py-1 rounded-md text-xs bg-green-300 text-gray-900"
                     >
                       {{ item }}
                       <button
@@ -539,7 +526,7 @@ export default {
                   v-model.number="filters.f3"
                   @input="applyFilters"
                   @keyup.esc="clearFilter('f3')"
-                  class="w-full font-normal text-gray-900 rounded-md px-2 py-1 bg-white border-gray-300 focus:border-green-500"
+                  class="w-full font-normal text-gray-900 rounded-md px-2 py-1 bg-white border-green-300 focus:border-green-500"
                   placeholder="> F₃"
                 />
               </th>
@@ -548,7 +535,7 @@ export default {
                   <select
                     v-model="selectedSpecialty"
                     @change="addFilter('specialties', selectedSpecialty)"
-                    class="w-full font-normal text-gray-500 rounded-md mt-1 px-2 py-1 bg-white border-gray-300 focus:border-green-500"
+                    class="w-full font-normal text-gray-500 rounded-md mt-1 px-2 py-1 bg-white border-green-300 focus:border-green-500"
                   >
                     <option value="">Select...</option>
                     <option
@@ -563,7 +550,7 @@ export default {
                     <span
                       v-for="item in filters.specialties"
                       :key="item"
-                      class="inline-flex items-center pl-2 py-1 rounded-md text-xs bg-gray-300 text-gray-900"
+                      class="inline-flex items-center pl-2 py-1 rounded-md text-xs bg-green-300 text-gray-900"
                     >
                       {{ item }}
                       <button
@@ -582,7 +569,7 @@ export default {
                   v-model.number="filters.height"
                   @input="applyFilters"
                   @keyup.esc="clearFilter('height')"
-                  class="w-full font-normal rounded-md px-2 py-1 bg-white text-gray-900 border-gray-300 focus:border-green-500"
+                  class="w-full font-normal rounded-md px-2 py-1 bg-white text-gray-900 border-green-300 focus:border-green-500"
                   placeholder="< H"
                 />
               </th>
@@ -592,7 +579,7 @@ export default {
                   v-model.number="filters.width"
                   @input="applyFilters"
                   @keyup.esc="clearFilter('width')"
-                  class="w-full font-normal rounded-md px-2 py-1 bg-white text-gray-900 border-gray-300 focus:border-green-500"
+                  class="w-full font-normal rounded-md px-2 py-1 bg-white text-gray-900 border-green-300 focus:border-green-500"
                   placeholder="< W"
                 />
               </th>
@@ -602,7 +589,7 @@ export default {
                   v-model.number="filters.depth"
                   @input="applyFilters"
                   @keyup.esc="clearFilter('depth')"
-                  class="w-full font-normal rounded-md px-2 py-1 bg-white text-gray-900 border-gray-300 focus:border-green-500"
+                  class="w-full font-normal rounded-md px-2 py-1 bg-white text-gray-900 border-green-300 focus:border-green-500"
                   placeholder="< D"
                 />
               </th>
@@ -612,7 +599,7 @@ export default {
                   v-model.number="filters.volume"
                   @input="applyFilters"
                   @keyup.esc="clearFilter('volume')"
-                  class="w-full font-normal rounded-md px-2 py-1 bg-white text-gray-900 border-gray-300 focus:border-green-500"
+                  class="w-full font-normal rounded-md px-2 py-1 bg-white text-gray-900 border-green-300 focus:border-green-500"
                   placeholder="< L"
                 />
               </th>
@@ -632,7 +619,7 @@ export default {
                 <a
                   :href="item.url"
                   target="_blank"
-                  class="text-black underline text-sm font-normal text-gray-800"
+                  class="text-green-900 underline text-sm font-normal text-gray-800"
                 >
                   {{ item.name }}
                 </a>
@@ -670,7 +657,7 @@ export default {
               <td class="px-1 py-2 text-left text-sm font-normal">
                 <button
                   @click="editItem(item)"
-                  class="ml-2 border-1 border-gray-500 hover:bg-black cursor-pointer hover:text-white text-black px-2 py-1 rounded-md transition-colors duration-200 font-normal"
+                  class="px-3 py-1 text-sm font-medium text-green-900 border-gray-500 rounded-md shadow-sm cursor-pointer hover:bg-gray-100"
                 >
                   Edit
                 </button>
@@ -686,8 +673,8 @@ export default {
         class="fixed inset-0 flex items-center justify-center p-4"
         style="background-color: rgb(0, 0, 0, 0.5)"
       >
-        <div class="bg-white rounded-md max-w-2xl w-full p-6">
-          <h2 class="text-xl font-bold mb-4">
+        <div class="bg-white text-green-900 rounded-md max-w-2xl w-full p-6">
+          <h2 class="text-lg font-bold uppercase mb-7">
             {{ isNewEntry ? "Submit New Entry" : "Edit Entry" }}
           </h2>
 
@@ -695,7 +682,7 @@ export default {
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <!-- Name Field -->
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">
+              <label class="block text-sm font-medium text-green-800 mb-1">
                 Name <span class="text-red-500">*</span>
               </label>
               <input
@@ -711,7 +698,7 @@ export default {
               >
             </div>
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">
+              <label class="block text-sm font-medium text-green-800 mb-1">
                 Developer
               </label>
               <input
@@ -722,7 +709,7 @@ export default {
               />
             </div>
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">
+              <label class="block text-sm font-medium text-green-800 mb-1">
                 Price
               </label>
               <input
@@ -733,7 +720,7 @@ export default {
               />
             </div>
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">
+              <label class="block text-sm font-medium text-green-800 mb-1">
                 F₃
               </label>
               <input
@@ -744,13 +731,13 @@ export default {
               />
             </div>
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">
+              <label class="block text-sm font-medium text-green-800 mb-1">
                 Enclosure <span class="text-red-500">*</span>
               </label>
               <select
                 v-model="editingItem.enclosure"
                 @change="trackChange('enclosure', editingItem.enclosure)"
-                class="text-sm w-full bg-gray-200 rounded-md p-2"
+                class="text-sm w-full bg-green-100 shadow-sm rounded-md p-2"
               >
                 <option value="">Select enclosure...</option>
                 <option
@@ -768,13 +755,13 @@ export default {
               >
             </div>
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">
+              <label class="block text-sm font-medium text-green-800 mb-1">
                 Range <span class="text-red-500">*</span>
               </label>
               <select
                 v-model="editingItem.range"
                 @change="trackChange('range', editingItem.range)"
-                class="text-sm w-full bg-gray-200 rounded-md p-2"
+                class="text-sm w-full bg-green-100 shadow-sm rounded-md p-2"
               >
                 <option value="">Select range...</option>
                 <option
@@ -792,13 +779,13 @@ export default {
               >
             </div>
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">
+              <label class="block text-sm font-medium text-green-800 mb-1">
                 Specialty
               </label>
               <select
                 v-model="editingItem.speciality"
                 @change="trackChange('speciality', editingItem.speciality)"
-                class="text-sm w-full bg-gray-200 rounded-md p-2"
+                class="text-sm w-full bg-green-100 shadow-sm rounded-md p-2"
               >
                 <option value="">Select speciality...</option>
                 <option
@@ -811,7 +798,7 @@ export default {
               </select>
             </div>
             <div class="col-span-full">
-              <label class="block text-sm font-medium text-gray-700 mb-2"
+              <label class="block text-sm font-medium text-green-800 mb-2"
                 >Dimensions (H×W×D):</label
               >
               <div class="grid grid-cols-3 gap-4 text-sm">
@@ -839,7 +826,7 @@ export default {
               </div>
             </div>
             <div class="col-span-full">
-              <label class="block text-sm font-medium text-gray-700 mb-1">
+              <label class="block text-sm font-medium text-green-800 mb-1">
                 URL <span class="text-red-500">*</span>
               </label>
               <input
@@ -860,13 +847,13 @@ export default {
           <div class="mt-6 flex justify-end space-x-3 text-sm">
             <button
               @click="closeEditDialog"
-              class="px-3 py-1 cursor-pointer bg-gray-200 border-gray-500 rounded-md text-gray-500 hover:bg-gray-100"
+              class="px-3 py-1 cursor-pointer bg-gray-200 border-gray-500 rounded-md text-gray-500 shadow-sm hover:bg-gray-100"
             >
               Cancel
             </button>
             <button
               @click="submitEdit"
-              class="px-3 py-1 bg-black border-1 border-black text-gray-300 hover:text-white cursor-pointer rounded-md"
+              class="px-3 py-1 text-sm font-medium text-green-900 bg-green-200 border-gray-500 rounded-md shadow-md cursor-pointer hover:bg-gray-100"
               :disabled="isSubmitting"
             >
               <div class="flex items-center">
