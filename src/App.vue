@@ -628,7 +628,8 @@ export default {
                 {{ item.developer }}
               </td>
               <td class="px-3 py-4 text-right">
-                {{ formatPrice(item.price) }}
+                <span v-if="item.price">{{ formatPrice(item.price) }}</span>
+                <span v-if="!item.price" class="text-gray-400">N/A</span>
               </td>
               <td class="px-3 py-4">
                 {{ item.enclosure }}
