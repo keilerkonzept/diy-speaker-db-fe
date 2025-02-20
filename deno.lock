@@ -2,7 +2,6 @@
   "version": "4",
   "specifiers": {
     "npm:@eslint/js@^9.18.0": "9.20.0",
-    "npm:@heroicons/vue@^2.2.0": "2.2.0_vue@3.5.13",
     "npm:@tailwindcss/vite@^4.0.7": "4.0.7_vite@6.1.0_lightningcss@1.29.1",
     "npm:@vitejs/plugin-vue@^5.2.1": "5.2.1_vite@6.1.0_vue@3.5.13",
     "npm:@vitest/eslint-plugin@1.1.25": "1.1.25_@typescript-eslint+utils@8.24.0__eslint@9.20.1__typescript@5.7.3_eslint@9.20.1_vitest@3.0.6__jsdom@26.0.0__vite@6.1.0_jsdom@26.0.0",
@@ -416,12 +415,6 @@
       "dependencies": [
         "@eslint/core",
         "levn"
-      ]
-    },
-    "@heroicons/vue@2.2.0_vue@3.5.13": {
-      "integrity": "sha512-G3dbSxoeEKqbi/DFalhRxJU4mTXJn7GwZ7ae8NuEQzd1bqdd0jAbdaBZlHPcvPD2xI1iGzNVB4k20Un2AguYPw==",
-      "dependencies": [
-        "vue"
       ]
     },
     "@humanfs/core@0.19.1": {
@@ -2583,7 +2576,6 @@
     "packageJson": {
       "dependencies": [
         "npm:@eslint/js@^9.18.0",
-        "npm:@heroicons/vue@^2.2.0",
         "npm:@tailwindcss/vite@^4.0.7",
         "npm:@vitejs/plugin-vue@^5.2.1",
         "npm:@vitest/eslint-plugin@1.1.25",
