@@ -321,13 +321,13 @@ export default {
   <div class="overflow-scroll h-screen animated-background bg-gradient-to-r from-indigo-100 via-red-100 via-blue-100 to-green-100">
     <!-- Header -->
     <div
-      class="sticky left-0 text-2xl w-full text-green-700 mt-4 mb-6 px-4"
+      class="sticky left-0 text-2xl w-full text-green-700 mt-4 mb-8 px-4"
     >
-      <a href="/">
       <div class="flex items-center">
-        <span class="uppercase font-thin tracking-wider"> DIY Speaker DB </span>
-      </div>
+      <a href="/">
+        <span class="uppercase tracking-wide border-2 px-2 whitespace-nowrap">DIY Speaker DB</span>
         </a>
+      </div>
     </div>
 
     <!-- Main Content -->
@@ -336,7 +336,7 @@ export default {
       <!-- New Entry Button -->
       <button
         @click="createNewEntry"
-        class="px-3 py-2 mb-8 font-medium bg-white text-sm text-green-700 rounded-md shadow-md cursor-pointer hover:bg-gray-100 hover:text-gray-900"
+        class="px-3 py-2 mb-6 font-medium bg-white text-sm text-green-700 rounded-md shadow-md cursor-pointer hover:bg-gray-100 hover:text-gray-900"
       >
         Submit New Entry
       </button>
