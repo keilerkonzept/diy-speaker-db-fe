@@ -783,8 +783,8 @@ export default {
                 Specialty
               </label>
               <select
-                v-model="editingItem.speciality"
-                @change="trackChange('speciality', editingItem.speciality)"
+                v-model="editingItem.specialty"
+                @change="trackChange('speciality', editingItem.specialty)"
                 class="text-sm w-full bg-green-100 shadow-sm rounded-md p-2"
               >
                 <option value="">Select speciality...</option>
