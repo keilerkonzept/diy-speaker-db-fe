@@ -1,11 +1,10 @@
 <script>
-import { getData } from './services/data'
 
 export default {
   name: 'App',
   data() {
     return {
-      items: getData(),
+      items: [],
       displayedItems: [],
       showDialog: false,
       newEntry: {
@@ -64,9 +63,37 @@ export default {
   },
   methods: {
 
-    loadData() {
-        this.items = getData();
+    async loadData() {
+      const url = "https://sheets.googleapis.com/v4/spreadsheets/1PoYey8POjJOA-ucpMtjJpdDWmXww5tK5HlhHbNeUZrs/values/live?alt=json&key=AIzaSyCi5Azx-KvH8rfE3oTlRERkchMcSH-9dvA";
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`Response status: ${response.status}`);
+        }
+
+        const json = await response.json();
+        json.values.shift(); // remove header row
+
+        json.values.forEach(item => {
+          this.items.push({
+            name: item[0],
+            developer: item[1],
+            price: item[2].length > 0 ? parseFloat(item[2]) : null,
+            enclosure: item[3],
+            range: item[4],
+            f3: item[5].length > 0 ? parseFloat(item[5]) : null,
+            sensitivity: item[6].length > 0 ? parseFloat(item[6]) : null,
+            specialty: item[7],
+            height: item[8].length > 0 ? parseFloat(item[8]) : null,
+            width: item[9].length > 0 ? parseFloat(item[9]) : null,
+            depth: item[10].length > 0 ? parseFloat(item[10]) : null,
+            url: item[11]
+          });
+        });
         this.applyFilters();
+      } catch (error) {
+        alert(error.message);
+      }
     },
 
     calculateVolume(item) {
