@@ -318,7 +318,7 @@ export default {
 </script>
 
   <template>
-  <div class="overflow-scroll h-screen bg-gradient-to-r from-green-50 to-indigo-50">
+  <div class="overflow-scroll h-screen circles">
     <!-- Header -->
     <div
       class="sticky left-0 text-lg tracking-wide font-semibold w-full text-green-700 mt-4 mb-8 "

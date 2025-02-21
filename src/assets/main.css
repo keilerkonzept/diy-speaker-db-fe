@@ -12,3 +12,8 @@
       -moz-appearance: textfield;
     }
 }
+
+.circles {
+    background-image:  repeating-radial-gradient(circle at 0 0, transparent 0, var(--color-indigo-50) 32px), repeating-linear-gradient(var(--color-green-50), var(--color-indigo-50));
+background-color: var(--color-indigo-50);
+}
