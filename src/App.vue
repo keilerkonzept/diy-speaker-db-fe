@@ -34,6 +34,7 @@ export default {
         volume: null,
         developer: "",
         f3: null,
+        sensitivity: null,
       },
       showEditDialog: false,
       editingItem: null,
@@ -78,6 +79,7 @@ export default {
             width: item[9].length > 0 ? parseFloat(item[9]) : null,
             depth: item[10].length > 0 ? parseFloat(item[10]) : null,
             url: item[11],
+            image_url: item[12]
           });
         });
         this.applyFilters();
@@ -133,6 +135,8 @@ export default {
           !this.filters.volume || volumeInLiters < this.filters.volume;
 
         const f3Match = !this.filters.f3 || item.f3 < this.filters.f3;
+        const sensitivityMatch = !this.filters.sensitivity || 
+          (item.sensitivity && item.sensitivity >= this.filters.sensitivity);
 
         return (
           nameMatch &&
@@ -145,7 +149,8 @@ export default {
           depthMatch &&
           volumeMatch &&
           developerMatch &&
-          f3Match
+          f3Match &&
+          sensitivityMatch
         );
       });
     },
@@ -184,7 +189,7 @@ export default {
           }`
         ] = "";
       } else if (
-        ["price", "height", "width", "depth", "volume", "f3"].includes(
+        ["price", "height", "width", "depth", "volume", "f3", "sensitivity"].includes(
           filterName
         )
       ) {
@@ -209,6 +214,8 @@ export default {
         width: null,
         depth: null,
         url: "",
+        image_url: "",
+        sensitivity: null,
         changes: {},
       };
       this.originalItem = { ...this.editingItem };
@@ -346,6 +353,11 @@ export default {
             <tr class="text-sm uppercase">
               <th
                 scope="col"
+                class="min-w-[70pt] w-[70pt] px-3 py-3"
+              >
+              </th>
+              <th
+                scope="col"
                 class="min-w-[150pt] w-[250pt] px-3 py-3"
               >
                 Name
@@ -379,6 +391,12 @@ export default {
                 class="min-w-[60pt] w-[60pt] px-3 py-3"
               >
                 F₃
+              </th>
+              <th
+                scope="col"
+                class="min-w-[60pt] w-[60pt] px-3 py-3"
+              >
+                Sensitivity
               </th>
               <th
                 scope="col"
@@ -418,6 +436,7 @@ export default {
 
             <!-- Filter Row -->
             <tr class="align-baseline text-sm">
+              <th class="px-3 py-3"></th>
               <th class="px-3 py-3">
                 <input
                   type="text"
@@ -525,6 +544,17 @@ export default {
                 />
               </th>
               <th class="px-3 py-3">
+                <input
+                  type="number"
+                  name="filter-sensitivity"
+                  v-model.number="filters.sensitivity"
+                  @input="applyFilters"
+                  @keyup.esc="clearFilter('sensitivity')"
+                  class="w-full font-normal text-gray-900 rounded-md px-2 py-1 bg-white border-green-300 focus:border-green-500"
+                  placeholder="> dB"
+                />
+              </th>
+              <th class="px-3 py-3">
                 <div class="relative">
                   <select
                     v-model="selectedSpecialty"
@@ -610,6 +640,12 @@ export default {
               :key="index"
             >
               <td class="px-3 py-4">
+                <img v-if="item.image_url" 
+                     :src="item.image_url" 
+                     :alt="item.name"
+                     class="preview-image">
+              </td>
+              <td class="px-3 py-4">
                 <a
                   :href="item.url"
                   target="_blank"
@@ -633,6 +669,9 @@ export default {
               </td>
               <td class="px-3 py-4 text-right whitespace-nowrap">
                 <span v-if="item.f3">{{ item.f3 }} Hz</span>
+              </td>
+              <td class="px-3 py-4 text-right">
+                {{ item.sensitivity }} dB
               </td>
               <td class="px-3 py-4">
                 {{ item.specialty }}
@@ -722,6 +761,17 @@ export default {
                 v-model="editingItem.f3"
                 class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 py-1"
                 @input="trackChange('f3', editingItem.f3)"
+              />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-green-800 mb-1">
+                Sensitivity
+              </label>
+              <input
+                type="number"
+                v-model="editingItem.sensitivity"
+                class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 py-1"
+                @input="trackChange('sensitivity', editingItem.sensitivity)"
               />
             </div>
             <div>
@@ -834,6 +884,17 @@ export default {
                 class="text-red-500 text-sm"
                 >URL is required</span
               >
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-green-800 mb-1">
+                Image URL
+              </label>
+              <input
+                type="text"
+                v-model="editingItem.image_url"
+                class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 py-1"
+                @input="trackChange('image_url', editingItem.image_url)"
+              />
             </div>
           </div>
 
