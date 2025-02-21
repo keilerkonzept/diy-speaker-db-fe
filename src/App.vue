@@ -318,14 +318,14 @@ export default {
 </script>
 
   <template>
-  <div class="overflow-scroll h-screen animated-background bg-gradient-to-r from-indigo-100 via-red-100 via-blue-100 to-green-100">
+  <div class="overflow-scroll h-screen bg-gradient-to-r from-indigo-50 via-orange-50 to-green-50">
     <!-- Header -->
     <div
-      class="sticky left-0 text-2xl w-full text-green-700 mt-4 mb-8 px-4"
+      class="sticky left-0 text-lg tracking-wide font-semibold w-full text-green-700 mt-4 mb-8 "
     >
-      <div class="flex items-center">
+      <div class="flex items-center rounded-md bg-green-200/40 mx-4 p-2">
       <a href="/">
-        <span class="uppercase tracking-wide border-2 px-2 whitespace-nowrap">DIY Speaker DB</span>
+        <span class="uppercase tracking-wide px-2 whitespace-nowrap">DIY Speaker DB</span>
         </a>
       </div>
     </div>
@@ -336,7 +336,7 @@ export default {
       <!-- New Entry Button -->
       <button
         @click="createNewEntry"
-        class="px-3 py-2 mb-6 font-medium bg-white text-sm text-green-700 rounded-md shadow-md cursor-pointer hover:bg-gray-100 hover:text-gray-900"
+        class="px-3 py-2 mb-8 font-medium bg-white text-sm text-green-700 rounded-md shadow-md cursor-pointer hover:bg-gray-100 hover:text-gray-900"
       >
         Submit New Entry
       </button>
@@ -344,9 +344,9 @@ export default {
 
       <!-- Table -->
       <div
-        class="h-[100vh] relative min-w-full w-fit rounded-md border border-green-100"
+        class="relative min-w-full w-fit rounded-md border border-green-100"
       >
-        <table class="min-w-full sm:table-fixed divide-y divide-gray-200">
+        <table class="min-w-full table-fixed divide-y divide-gray-200">
           <thead class="sticky top-0 bg-gradient-to-tr from-gray-100 from-20% to-green-100 font-medium text-green-700">
             <!-- Header Row -->
             <tr class="text-xs uppercase tracking-wider">
@@ -376,7 +376,7 @@ export default {
               </th>
               <th
                 scope="col"
-                class="min-w-[60pt] w-[80pt] px-3 py-3 text-left "
+                class="min-w-[90pt] w-[90pt] px-3 py-3 text-left "
               >
                 Range
               </th>
@@ -619,7 +619,7 @@ export default {
                 <a
                   :href="item.url"
                   target="_blank"
-                  class="text-green-900 underline text-sm font-normal text-gray-800"
+                  class="text-green-900 underline text-sm font-normal text-gray-800 hover:text-green-700"
                 >
                   {{ item.name }}
                 </a>
