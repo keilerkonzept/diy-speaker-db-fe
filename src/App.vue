@@ -318,12 +318,12 @@ export default {
 </script>
 
   <template>
-  <div class="overflow-scroll h-screen bg-gradient-to-r from-indigo-50 via-orange-50 to-green-50">
+  <div class="overflow-scroll h-screen bg-gradient-to-r from-green-50 to-indigo-50">
     <!-- Header -->
     <div
       class="sticky left-0 text-lg tracking-wide font-semibold w-full text-green-700 mt-4 mb-8 "
     >
-      <div class="flex items-center rounded-md bg-green-200/40 mx-4 p-2">
+      <div class="flex items-center rounded-md bg-gray-200 mx-4 p-2">
       <a href="/">
         <span class="uppercase tracking-wide px-2 whitespace-nowrap">DIY Speaker DB</span>
         </a>
@@ -344,10 +344,10 @@ export default {
 
       <!-- Table -->
       <div
-        class="relative min-w-full w-fit rounded-md border border-green-100"
+        class=" min-w-full w-fit rounded-lg p-1 bg-gray-200"
       >
         <table class="min-w-full table-fixed divide-y divide-gray-200">
-          <thead class="sticky top-0 bg-gradient-to-tr from-gray-100 from-20% to-green-100 font-medium text-green-700">
+          <thead class="sticky top-0 bg-gray-200 font-medium text-green-700">
             <!-- Header Row -->
             <tr class="text-xs uppercase tracking-wider">
               <th
