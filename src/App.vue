@@ -318,107 +318,101 @@ export default {
 </script>
 
   <template>
-  <div class="overflow-scroll h-screen circles">
+  <div class="overflow-scroll h-screen">
     <!-- Header -->
-    <div
-      class="sticky left-0 text-lg tracking-wide font-semibold w-full text-green-700 mt-4 mb-8 "
-    >
-      <div class="flex items-center rounded-md bg-gray-200 mx-4 p-2">
-      <a href="/">
-        <span class="uppercase tracking-wide px-2 whitespace-nowrap">DIY Speaker DB</span>
+    <div class="left-0 text-md tracking-wide font-semibold w-full text-green-700 mt-4 mb-8">
+      <div class="flex items-center justify-between rounded-md mx-4 p-2" style="background-color: var(--color-gray-50)">
+        <a href="/">
+          <span class="uppercase tracking-wide px-2 whitespace-nowrap">DIY Speaker DB</span>
         </a>
+        <button
+          @click="createNewEntry"
+          class="px-3 py-2 font-medium bg-white text-sm text-green-700 rounded-md shadow-md cursor-pointer hover:bg-gray-100 hover:text-gray-900"
+        >
+          Submit New Entry
+        </button>
       </div>
     </div>
 
     <!-- Main Content -->
     <div class="container min-w-full mx-auto px-4 ">
-      <div class="text-center">
-      <!-- New Entry Button -->
-      <button
-        @click="createNewEntry"
-        class="px-3 py-2 mb-8 font-medium bg-white text-sm text-green-700 rounded-md shadow-md cursor-pointer hover:bg-gray-100 hover:text-gray-900"
-      >
-        Submit New Entry
-      </button>
-      </div>
-
       <!-- Table -->
       <div
-        class=" min-w-full w-fit rounded-lg p-1 bg-gray-200"
+        class=" min-w-full w-fit rounded-lg p-1"
       >
         <table class="min-w-full table-fixed divide-y divide-gray-200">
-          <thead class="sticky top-0 bg-gray-200 font-medium text-green-700">
+          <thead class="sticky top-0 text-green-700 bg-gray-50">
             <!-- Header Row -->
-            <tr class="text-xs uppercase tracking-wider">
+            <tr class="text-sm uppercase">
               <th
                 scope="col"
-                class="min-w-[150pt] w-[250pt] px-3 py-3 text-left "
+                class="min-w-[150pt] w-[250pt] px-3 py-3"
               >
                 Name
               </th>
               <th
                 scope="col"
-                class="min-w-[100pt] w-[200pt] px-3 py-3 text-left "
+                class="min-w-[100pt] w-[200pt] px-3 py-3"
               >
                 Developer
               </th>
               <th
                 scope="col"
-                class="min-w-[70pt] w-[70pt] px-3 py-3 text-left "
+                class="min-w-[70pt] w-[70pt] px-3 py-3"
               >
                 Price
               </th>
               <th
                 scope="col"
-                class="min-w-[100pt] w-[100pt] px-3 py-3 text-left "
+                class="min-w-[100pt] w-[100pt] px-3 py-3"
               >
                 Enclosure
               </th>
               <th
                 scope="col"
-                class="min-w-[90pt] w-[90pt] px-3 py-3 text-left "
+                class="min-w-[90pt] w-[90pt] px-3 py-3"
               >
                 Range
               </th>
               <th
                 scope="col"
-                class="min-w-[60pt] w-[60pt] px-3 py-3 text-left "
+                class="min-w-[60pt] w-[60pt] px-3 py-3"
               >
                 F₃
               </th>
               <th
                 scope="col"
-                class="min-w-[120pt] w-[120pt] px-3 py-3 text-left "
+                class="min-w-[120pt] w-[120pt] px-3 py-3"
               >
                 Specialty
               </th>
               <th
                 scope="col"
-                class="min-w-[20pt] w-[20pt] px-3 py-3 text-left "
+                class="min-w-[20pt] w-[20pt] px-3 py-3"
               >
                 Height
               </th>
               <th
                 scope="col"
-                class="min-w-[20pt] w-[20pt] px-3 py-3 text-left "
+                class="min-w-[20pt] w-[20pt] px-3 py-3"
               >
                 Width
               </th>
               <th
                 scope="col"
-                class="min-w-[20pt] w-[20pt] px-3 py-3 text-left "
+                class="min-w-[20pt] w-[20pt] px-3 py-3"
               >
                 Depth
               </th>
               <th
                 scope="col"
-                class="w-[30pt] px-3 py-3 text-left "
+                class="w-[30pt] px-3 py-3"
               >
                 Volume
               </th>
               <th
                 scope="col"
-                class="min-w-[40pt] px-3 py-3 text-left "
+                class="min-w-[40pt] px-3 py-3"
               ></th>
             </tr>
 
@@ -671,8 +665,7 @@ export default {
       <!-- Edit Dialog -->
       <div
         v-if="showEditDialog"
-        class="fixed inset-0 flex items-center justify-center p-4"
-        style="background-color: rgb(0, 0, 0, 0.5)"
+        class="fixed inset-0 flex items-center justify-center p-4 bg-gray-50"
       >
         <div class="bg-white text-green-900 rounded-md max-w-2xl w-full p-6">
           <h2 class="text-lg font-bold uppercase mb-7">
