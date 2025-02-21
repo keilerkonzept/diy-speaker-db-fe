@@ -731,7 +731,7 @@ export default {
               <select
                 v-model="editingItem.enclosure"
                 @change="trackChange('enclosure', editingItem.enclosure)"
-                class="text-sm w-full bg-green-100 shadow-sm rounded-md p-2"
+                class="text-sm w-full shadow-sm rounded-md p-2"
               >
                 <option value="">Select enclosure...</option>
                 <option
@@ -755,7 +755,7 @@ export default {
               <select
                 v-model="editingItem.range"
                 @change="trackChange('range', editingItem.range)"
-                class="text-sm w-full bg-green-100 shadow-sm rounded-md p-2"
+                class="text-sm w-full shadow-sm rounded-md p-2"
               >
                 <option value="">Select range...</option>
                 <option
@@ -779,7 +779,7 @@ export default {
               <select
                 v-model="editingItem.specialty"
                 @change="trackChange('speciality', editingItem.specialty)"
-                class="text-sm w-full bg-green-100 shadow-sm rounded-md p-2"
+                class="text-sm w-full shadow-sm rounded-md p-2"
               >
                 <option value="">Select speciality...</option>
                 <option
