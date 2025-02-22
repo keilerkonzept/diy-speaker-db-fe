@@ -20,13 +20,13 @@ export default {
         "Isobaric",
         "Open Baffle",
       ],
-      availableRanges: ["Full Range", "Top", "Subwoofer"],
+      availableTypes: ["Floor", "Compact", "Subwoofer"],
       availableSpecialties: ["Koax", "Passive Membrane", "Broadband", "AMT"],
       filters: {
         name: "",
         price: null,
         enclosures: [],
-        ranges: [],
+        types: [],
         specialties: [],
         height: null,
         width: null,
@@ -45,10 +45,10 @@ export default {
         name: false,
         url: false,
         enclosure: false,
-        range: false,
+        type: false,
       },
       selectedEnclosure: "",
-      selectedRange: "",
+      selectedType: "",
       selectedSpecialty: "",
     };
   },
@@ -71,7 +71,7 @@ export default {
             developer: item[1],
             price: item[2].length > 0 ? parseFloat(item[2]) : null,
             enclosure: item[3],
-            range: item[4],
+            type: item[4],
             f3: item[5].length > 0 ? parseFloat(item[5]) : null,
             sensitivity: item[6].length > 0 ? parseFloat(item[6]) : null,
             specialty: item[7],
@@ -113,9 +113,9 @@ export default {
         const enclosureMatch =
           this.filters.enclosures.length === 0 ||
           this.filters.enclosures.includes(item.enclosure);
-        const rangeMatch =
-          this.filters.ranges.length === 0 ||
-          this.filters.ranges.includes(item.range);
+        const typeMatch =
+          this.filters.types.length === 0 ||
+          this.filters.types.includes(item.type);
         const specialtyMatch =
           this.filters.specialties.length === 0 ||
           this.filters.specialties.includes(item.specialty);
@@ -142,7 +142,7 @@ export default {
           nameMatch &&
           priceMatch &&
           enclosureMatch &&
-          rangeMatch &&
+          typeMatch &&
           specialtyMatch &&
           heightMatch &&
           widthMatch &&
@@ -164,8 +164,8 @@ export default {
       // Reset the select more explicitly
       if (filterType === "specialties") {
         this.selectedSpecialty = "";
-      } else if (filterType === "ranges") {
-        this.selectedRange = "";
+      } else if (filterType === "types") {
+        this.selectedType = "";
       } else if (filterType === "enclosures") {
         this.selectedEnclosure = "";
       }
@@ -180,7 +180,7 @@ export default {
     },
 
     clearFilter(filterName) {
-      if (["enclosures", "ranges", "specialties"].includes(filterName)) {
+      if (["enclosures", "types", "specialties"].includes(filterName)) {
         this.filters[filterName] = [];
         this[
           `selected${
@@ -207,7 +207,7 @@ export default {
         developer: "",
         price: null,
         enclosure: "",
-        range: "",
+        type: "",
         f3: null,
         specialty: "",
         height: null,
@@ -254,7 +254,7 @@ export default {
           name: false,
           url: false,
           enclosure: false,
-          range: false,
+          type: false,
         };
       }
     },
@@ -266,7 +266,7 @@ export default {
         name: !this.editingItem.name,
         url: !this.editingItem.url,
         enclosure: !this.editingItem.enclosure,
-        range: !this.editingItem.range,
+        type: !this.editingItem.type,
       };
 
       return !Object.values(this.formErrors).some((error) => error);
@@ -358,7 +358,7 @@ export default {
               </th>
               <th
                 scope="col"
-                class="min-w-[150pt] w-[250pt] px-3 py-3"
+                class="min-w-[120pt] w-[250pt] px-3 py-3"
               >
                 Name
               </th>
@@ -376,15 +376,15 @@ export default {
               </th>
               <th
                 scope="col"
-                class="min-w-[100pt] w-[100pt] px-3 py-3"
+                class="min-w-[80pt] w-[100pt] px-3 py-3"
               >
                 Enclosure
               </th>
               <th
                 scope="col"
-                class="min-w-[90pt] w-[90pt] px-3 py-3"
+                class="min-w-[80pt] w-[90pt] px-3 py-3"
               >
-                Range
+                Type
               </th>
               <th
                 scope="col"
@@ -400,7 +400,7 @@ export default {
               </th>
               <th
                 scope="col"
-                class="min-w-[120pt] w-[120pt] px-3 py-3"
+                class="min-w-[80pt] w-[120pt] px-3 py-3"
               >
                 Specialty
               </th>
@@ -503,28 +503,28 @@ export default {
               <th class="px-3 py-3">
                 <div class="relative">
                   <select
-                    v-model="selectedRange"
-                    @change="addFilter('ranges', selectedRange)"
+                    v-model="selectedType"
+                    @change="addFilter('types', selectedType)"
                     class="w-full font-normal text-gray-500 rounded-md mt-1 px-2 py-1 bg-white border-green-300 focus:border-green-500"
                   >
                     <option value="">Select...</option>
                     <option
-                      v-for="range in availableRanges"
-                      :key="range"
-                      :value="range"
+                      v-for="type in availableTypes"
+                      :key="type"
+                      :value="type"
                     >
-                      {{ range }}
+                      {{ type }}
                     </option>
                   </select>
                   <div class="mt-2 flex flex-wrap gap-2 font-normal">
                     <span
-                      v-for="item in filters.ranges"
+                      v-for="item in filters.types"
                       :key="item"
                       class="inline-flex items-center pl-2 py-1 rounded-md text-xs bg-green-300 text-gray-900"
                     >
                       {{ item }}
                       <button
-                        @click="removeFilter('ranges', item)"
+                        @click="removeFilter('types', item)"
                         class="ml-1 mr-2 font-normal text-gray-500 hover:cursor-pointer hover:text-red-700"
                       >
                         ×
@@ -665,7 +665,7 @@ export default {
                 {{ item.enclosure }}
               </td>
               <td class="px-3 py-4 whitespace-wrap">
-                {{ item.range }}
+                {{ item.type }}
               </td>
               <td class="px-3 py-4 text-right whitespace-nowrap">
                 <span v-if="item.f3">{{ item.f3 }} Hz</span>
@@ -800,26 +800,26 @@ export default {
             </div>
             <div>
               <label class="block text-sm font-medium text-green-800 mb-1">
-                Range <span class="text-red-500">*</span>
+                Type <span class="text-red-500">*</span>
               </label>
               <select
-                v-model="editingItem.range"
-                @change="trackChange('range', editingItem.range)"
+                v-model="editingItem.type"
+                @change="trackChange('type', editingItem.type)"
                 class="text-sm w-full shadow-sm rounded-md p-2"
               >
-                <option value="">Select range...</option>
+                <option value="">Select type...</option>
                 <option
-                  v-for="range in availableRanges"
-                  :key="range"
-                  :value="range"
+                  v-for="type in availableTypes"
+                  :key="type"
+                  :value="type"
                 >
-                  {{ range }}
+                  {{ type }}
                 </option>
               </select>
               <span
-                v-if="isNewEntry && formErrors.range"
+                v-if="isNewEntry && formErrors.type"
                 class="text-red-500 text-sm"
-                >Range is required</span
+                >Type is required</span
               >
             </div>
             <div>
