@@ -135,7 +135,7 @@ export default {
           !this.filters.volume || volumeInLiters <= this.filters.volume;
 
         const f3Match = !this.filters.f3 || item.f3 <= this.filters.f3;
-        const sensitivityMatch = !this.filters.sensitivity || 
+        const sensitivityMatch = !this.filters.sensitivity ||
           (item.sensitivity && item.sensitivity >= this.filters.sensitivity);
 
         return (
@@ -640,10 +640,18 @@ export default {
               :key="index"
             >
               <td class="px-3 py-4">
-                <img v-if="item.image_url" 
-                     :src="item.image_url" 
+                <a
+                  :href="item.url"
+                  target="_blank"
+                  class=""
+                >
+                <div class="overflow-hidden rounded-sm">
+                <img v-if="item.image_url"
+                     :src="item.image_url"
                      :alt="item.name"
-                     class="preview-image">
+                     class="hover:scale-105"/>
+                     </div>
+              </a>
               </td>
               <td class="px-3 py-4">
                 <a
