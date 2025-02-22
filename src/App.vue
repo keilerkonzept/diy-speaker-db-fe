@@ -639,8 +639,9 @@ export default {
               v-for="(item, index) in displayedItems"
               :key="index"
             >
-              <td class="px-3 py-4">
+              <td  class="px-3 py-4">
                 <a
+                  v-if="item.image_url"
                   :href="item.url"
                   target="_blank"
                   class=""
