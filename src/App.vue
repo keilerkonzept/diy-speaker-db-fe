@@ -121,20 +121,20 @@ export default {
           this.filters.specialties.includes(item.specialty);
 
         const priceMatch =
-          !this.filters.price || item.price < this.filters.price;
+          !this.filters.price || item.price <= this.filters.price;
         const heightMatch =
-          !this.filters.height || item.height < this.filters.height;
+          !this.filters.height || item.height <= this.filters.height;
         const widthMatch =
-          !this.filters.width || item.width < this.filters.width;
+          !this.filters.width || item.width <= this.filters.width;
         const depthMatch =
-          !this.filters.depth || item.depth < this.filters.depth;
+          !this.filters.depth || item.depth <= this.filters.depth;
 
         const volumeInLiters =
           (item.height * item.width * item.depth) / 1000000;
         const volumeMatch =
-          !this.filters.volume || volumeInLiters < this.filters.volume;
+          !this.filters.volume || volumeInLiters <= this.filters.volume;
 
-        const f3Match = !this.filters.f3 || item.f3 < this.filters.f3;
+        const f3Match = !this.filters.f3 || item.f3 <= this.filters.f3;
         const sensitivityMatch = !this.filters.sensitivity || 
           (item.sensitivity && item.sensitivity >= this.filters.sensitivity);
 
