@@ -19,6 +19,7 @@ export default {
         "Bandpass",
         "Isobaric",
         "Open Baffle",
+        "FAST"
       ],
       availableTypes: ["Floor", "Compact", "Subwoofer"],
       availableSpecialties: ["Koax", "Passive Membrane", "Broadband", "AMT"],
