@@ -22,7 +22,7 @@ export default {
         "FAST"
       ],
       availableTypes: ["Floor", "Compact", "Subwoofer", "Wall"],
-      availableSpecialties: ["Koax", "Passive Membrane", "Broadband", "AMT"],
+      availableSpecialties: ["Koax", "Passive Membrane", "Broadband", "AMT", "D'Appolito"],
       filters: {
         name: "",
         price: null,
