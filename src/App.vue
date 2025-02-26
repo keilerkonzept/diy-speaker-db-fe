@@ -21,7 +21,7 @@ export default {
         "Open Baffle",
         "FAST"
       ],
-      availableTypes: ["Floor", "Compact", "Subwoofer"],
+      availableTypes: ["Floor", "Compact", "Subwoofer", "Wall"],
       availableSpecialties: ["Koax", "Passive Membrane", "Broadband", "AMT"],
       filters: {
         name: "",
