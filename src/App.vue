@@ -1,4 +1,6 @@
   <script>
+import { proxyImage } from './utils/imageProxy';
+
 export default {
   name: "App",
   data() {
@@ -9,6 +11,7 @@ export default {
       newEntry: {
         name: "",
       },
+      proxyImage,
       availableEnclosures: [
         "Closed Box",
         "CB w Series Cap",
@@ -649,7 +652,7 @@ export default {
                 >
                 <div class="overflow-hidden rounded-sm">
                 <img v-if="item.image_url"
-                     :src="item.image_url"
+                     :src="proxyImage(item.image_url)"
                      :alt="item.name"
                      class="hover:scale-105"/>
                      </div>
