@@ -56,6 +56,7 @@ export default {
         url: false,
         enclosure: false,
         type: false,
+        tabType: false,
       },
       selectedEnclosure: "",
       selectedType: "",
@@ -274,6 +275,7 @@ export default {
           url: false,
           enclosure: false,
           type: false,
+          tabType: false,
         };
       }
     },
@@ -286,6 +288,7 @@ export default {
         url: !this.editingItem.url,
         enclosure: !this.editingItem.enclosure,
         type: !this.editingItem.type,
+        tabType: !this.editingItem.tabType,
       };
 
       return !Object.values(this.formErrors).some((error) => error);
@@ -844,6 +847,24 @@ export default {
                 v-if="isNewEntry && formErrors.enclosure"
                 class="text-red-500 text-sm"
                 >Enclosure is required</span
+              >
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-green-800 mb-1">
+                Category <span class="text-red-500">*</span>
+              </label>
+              <select
+                v-model="editingItem.tabType"
+                @change="trackChange('tabType', editingItem.tabType)"
+                class="text-sm w-full shadow-sm rounded-md p-2"
+              >
+                <option value="hifi">HiFi</option>
+                <option value="pa">PA</option>
+              </select>
+              <span
+                v-if="isNewEntry && formErrors.tabType"
+                class="text-red-500 text-sm"
+                >Category is required</span
               >
             </div>
             <div>
