@@ -12,6 +12,11 @@ export default {
         name: "",
       },
       proxyImage,
+      activeTab: 'hifi', // Default to HiFi tab
+      dataSources: {
+        hifi: "https://sheets.googleapis.com/v4/spreadsheets/1PoYey8POjJOA-ucpMtjJpdDWmXww5tK5HlhHbNeUZrs/values/hifi-live?alt=json&key=AIzaSyCi5Azx-KvH8rfE3oTlRERkchMcSH-9dvA",
+        pa: "https://sheets.googleapis.com/v4/spreadsheets/1PoYey8POjJOA-ucpMtjJpdDWmXww5tK5HlhHbNeUZrs/values/pa-live?alt=json&key=AIzaSyCi5Azx-KvH8rfE3oTlRERkchMcSH-9dvA" // Currently same URL, will be changed by user later
+      },
       availableEnclosures: [
         "Closed Box",
         "CB w Series Cap",
@@ -58,8 +63,8 @@ export default {
   },
   methods: {
     async loadData() {
-      const url =
-        "https://sheets.googleapis.com/v4/spreadsheets/1PoYey8POjJOA-ucpMtjJpdDWmXww5tK5HlhHbNeUZrs/values/live?alt=json&key=AIzaSyCi5Azx-KvH8rfE3oTlRERkchMcSH-9dvA";
+      this.items = []; // Clear existing items
+      const url = this.dataSources[this.activeTab];
       try {
         const response = await fetch(url);
         if (!response.ok) {
@@ -89,6 +94,13 @@ export default {
         this.applyFilters();
       } catch (error) {
         alert(error.message);
+      }
+    },
+    
+    switchTab(tab) {
+      if (this.activeTab !== tab) {
+        this.activeTab = tab;
+        this.loadData();
       }
     },
 
@@ -220,6 +232,7 @@ export default {
         url: "",
         image_url: "",
         sensitivity: null,
+        tabType: this.activeTab, // Store the tab type for new entries
         changes: {},
       };
       this.originalItem = { ...this.editingItem };
@@ -230,6 +243,7 @@ export default {
       this.isNewEntry = false;
       this.editingItem = {
         ...item,
+        tabType: this.activeTab, // Store the tab type for edited entries
         changes: {},
       };
       this.originalItem = { ...item };
@@ -290,6 +304,7 @@ export default {
           body: JSON.stringify({
             ...this.editingItem,
             isNewEntry: this.isNewEntry,
+            tabType: this.activeTab, // Include the active tab in the submission
             timestamp: new Date().toISOString(),
           }),
           headers: {
@@ -333,9 +348,28 @@ export default {
     <!-- Header -->
     <div class="left-0 text-md tracking-wide font-semibold w-full text-green-700 mt-4 mb-8">
       <div class="flex items-center justify-between rounded-md mx-4 p-2" style="background-color: var(--color-gray-50)">
-        <a href="/">
-          <span class="uppercase tracking-wide px-2 whitespace-nowrap">DIY Speaker DB</span>
-        </a>
+        <div class="flex items-center">
+          <a href="/">
+            <span class="uppercase tracking-wide px-2 whitespace-nowrap">DIY Speaker DB</span>
+          </a>
+          <!-- Tabs -->
+          <div class="flex ml-6 space-x-1">
+            <button 
+              @click="switchTab('hifi')" 
+              class="px-4 py-1 rounded-t-md transition-colors"
+              :class="activeTab === 'hifi' ? 'bg-white text-green-700 font-medium shadow-sm' : 'text-gray-600 hover:text-green-600'"
+            >
+              HiFi
+            </button>
+            <button 
+              @click="switchTab('pa')" 
+              class="px-4 py-1 rounded-t-md transition-colors"
+              :class="activeTab === 'pa' ? 'bg-white text-green-700 font-medium shadow-sm' : 'text-gray-600 hover:text-green-600'"
+            >
+              PA
+            </button>
+          </div>
+        </div>
         <button
           @click="createNewEntry"
           class="px-3 py-2 font-medium bg-white text-sm text-green-700 rounded-md shadow-md cursor-pointer hover:bg-gray-100 hover:text-gray-900"
