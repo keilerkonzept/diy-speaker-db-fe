@@ -23,6 +23,7 @@ export default {
         "Bass Reflex",
         "TQWT",
         "Horn",
+        "Tapped Horn",
         "Transmission Line",
         "Bandpass",
         "Isobaric",
