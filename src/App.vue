@@ -1,8 +1,12 @@
   <script>
 import { proxyImage } from './utils/imageProxy';
+import EditItemDialog from './components/EditItemDialog.vue';
 
 export default {
   name: "App",
+  components: {
+    EditItemDialog
+  },
   data() {
     return {
       items: [],
@@ -15,7 +19,9 @@ export default {
       activeTab: 'hifi', // Default to HiFi tab
       dataSources: {
         hifi: "https://sheets.googleapis.com/v4/spreadsheets/1PoYey8POjJOA-ucpMtjJpdDWmXww5tK5HlhHbNeUZrs/values/hifi-live?alt=json&key=AIzaSyCi5Azx-KvH8rfE3oTlRERkchMcSH-9dvA",
-        pa: "https://sheets.googleapis.com/v4/spreadsheets/1PoYey8POjJOA-ucpMtjJpdDWmXww5tK5HlhHbNeUZrs/values/pa-live?alt=json&key=AIzaSyCi5Azx-KvH8rfE3oTlRERkchMcSH-9dvA" // Currently same URL, will be changed by user later
+        'hifi-commercial': "https://sheets.googleapis.com/v4/spreadsheets/1PoYey8POjJOA-ucpMtjJpdDWmXww5tK5HlhHbNeUZrs/values/hifi-commercial-live?alt=json&key=AIzaSyCi5Azx-KvH8rfE3oTlRERkchMcSH-9dvA",
+        pa: "https://sheets.googleapis.com/v4/spreadsheets/1PoYey8POjJOA-ucpMtjJpdDWmXww5tK5HlhHbNeUZrs/values/pa-live?alt=json&key=AIzaSyCi5Azx-KvH8rfE3oTlRERkchMcSH-9dvA",
+        'pa-commercial': "https://sheets.googleapis.com/v4/spreadsheets/1PoYey8POjJOA-ucpMtjJpdDWmXww5tK5HlhHbNeUZrs/values/pa-commercial-live?alt=json&key=AIzaSyCi5Azx-KvH8rfE3oTlRERkchMcSH-9dvA"
       },
       columnConfigs: {
         hifi: [
@@ -26,7 +32,20 @@ export default {
           { key: 'enclosure', label: 'Enclosure', width: 'min-w-[80pt] w-[100pt]' },
           { key: 'type', label: 'Type', width: 'min-w-[80pt] w-[90pt]' },
           { key: 'f3', label: 'F₃', width: 'min-w-[60pt] w-[60pt]' },
-          { key: 'sensitivity', label: 'Sensitivity', width: 'min-w-[60pt] w-[60pt]' },
+          { key: 'sensitivity', label: 'SPL', width: 'min-w-[60pt] w-[60pt]' },
+          { key: 'specialty', label: 'Specialty', width: 'min-w-[80pt] w-[120pt]' },
+          { key: 'dimensions', label: 'H × W × D', width: 'min-w-[20pt] w-[20pt]' },
+          { key: 'volume', label: 'Volume', width: 'w-[30pt]' }
+        ],
+        'hifi-commercial': [
+          { key: 'image', label: '', width: 'min-w-[70pt] w-[70pt]' },
+          { key: 'name', label: 'Name', width: 'min-w-[120pt] w-[250pt]' },
+          { key: 'developer', label: 'Developer', width: 'min-w-[100pt] w-[200pt]' },
+          { key: 'price', label: 'Price', width: 'min-w-[70pt] w-[70pt]' },
+          { key: 'enclosure', label: 'Enclosure', width: 'min-w-[80pt] w-[100pt]' },
+          { key: 'type', label: 'Type', width: 'min-w-[80pt] w-[90pt]' },
+          { key: 'f3', label: 'F₃', width: 'min-w-[60pt] w-[60pt]' },
+          { key: 'sensitivity', label: 'SPL', width: 'min-w-[60pt] w-[60pt]' },
           { key: 'specialty', label: 'Specialty', width: 'min-w-[80pt] w-[120pt]' },
           { key: 'dimensions', label: 'H × W × D', width: 'min-w-[20pt] w-[20pt]' },
           { key: 'volume', label: 'Volume', width: 'w-[30pt]' }
@@ -39,7 +58,23 @@ export default {
           { key: 'enclosure', label: 'Enclosure', width: 'min-w-[80pt] w-[100pt]' },
           { key: 'type', label: 'Type', width: 'min-w-[80pt] w-[90pt]' },
           { key: 'f3', label: 'F₃', width: 'min-w-[60pt] w-[60pt]' },
-          { key: 'sensitivity', label: 'Sensitivity', width: 'min-w-[60pt] w-[60pt]' },
+          { key: 'sensitivity', label: 'SPL', width: 'min-w-[60pt] w-[60pt]' },
+          { key: 'power', label: 'Power', width: 'min-w-[60pt] w-[60pt]' },
+          { key: 'range', label: 'Range', width: 'min-w-[80pt] w-[100pt]' },
+          { key: 'dispersion', label: 'Dispersion', width: 'min-w-[80pt] w-[100pt]' }, 
+          { key: 'specialty', label: 'Specialty', width: 'min-w-[80pt] w-[120pt]' },
+          { key: 'dimensions', label: 'H × W × D', width: 'min-w-[20pt] w-[20pt]' },
+          { key: 'volume', label: 'Volume', width: 'w-[30pt]' }
+        ],
+        'pa-commercial': [
+          { key: 'image', label: '', width: 'min-w-[70pt] w-[70pt]' },
+          { key: 'name', label: 'Name', width: 'min-w-[120pt] w-[250pt]' },
+          { key: 'developer', label: 'Developer', width: 'min-w-[100pt] w-[200pt]' },
+          { key: 'price', label: 'Price', width: 'min-w-[40pt] w-[40pt]' },
+          { key: 'enclosure', label: 'Enclosure', width: 'min-w-[80pt] w-[100pt]' },
+          { key: 'type', label: 'Type', width: 'min-w-[80pt] w-[90pt]' },
+          { key: 'f3', label: 'F₃', width: 'min-w-[60pt] w-[60pt]' },
+          { key: 'sensitivity', label: 'SPL', width: 'min-w-[60pt] w-[60pt]' },
           { key: 'power', label: 'Power', width: 'min-w-[60pt] w-[60pt]' },
           { key: 'range', label: 'Range', width: 'min-w-[80pt] w-[100pt]' },
           { key: 'dispersion', label: 'Dispersion', width: 'min-w-[80pt] w-[100pt]' }, 
@@ -96,50 +131,123 @@ export default {
       selectedEnclosure: "",
       selectedType: "",
       selectedSpecialty: "",
+      cachedItems: {
+        hifi: [],
+        'hifi-commercial': [],
+        pa: [],
+        'pa-commercial': []
+      },
+      tabCounts: {
+        hifi: 0,
+        'hifi-commercial': 0,
+        pa: 0,
+        'pa-commercial': 0
+      }
     };
   },
   methods: {
-    async loadData() {
-      this.items = []; // Clear existing items
-      const url = this.dataSources[this.activeTab];
+    async loadAllData() {
       try {
+        // Load data for all tabs
+        const tabs = Object.keys(this.dataSources);
+        
+        for (const tab of tabs) {
+          if (this.cachedItems[tab].length === 0) {
+            await this.loadTabData(tab);
+          }
+        }
+        
+        // Set items based on active tab
+        this.items = [...this.cachedItems[this.activeTab]];
+        this.applyFilters();
+      } catch (error) {
+        alert("Error loading data: " + error.message);
+      }
+    },
+    
+    async loadTabData(tab) {
+      try {
+        const url = this.dataSources[tab];
         const response = await fetch(url);
+        
         if (!response.ok) {
           throw new Error(`Response status: ${response.status}`);
         }
 
         const json = await response.json();
         json.values.shift(); // remove header row
-
+        
+        const items = [];
+        
         json.values.forEach((item) => {
-          const baseItem = {
-            name: item[0],
-            developer: item[1],
-            price: item[2].length > 0 ? parseFloat(item[2]) : null,
-            enclosure: item[3],
-            type: item[4],
-            f3: item[5].length > 0 ? parseFloat(item[5]) : null,
-            sensitivity: item[6].length > 0 ? parseFloat(item[6]) : null,
-            specialty: item[7],
-            height: item[8].length > 0 ? parseFloat(item[8]) : null,
-            width: item[9].length > 0 ? parseFloat(item[9]) : null,
-            depth: item[10].length > 0 ? parseFloat(item[10]) : null,
-            url: item[11],
-            image_url: item[12]
-          };
-          
-          // Add PA-specific fields if we're on the PA tab
-          if (this.activeTab === 'pa') {
-            baseItem.power = item[13]?.length > 0 ? parseFloat(item[13]) : null;
-            baseItem.range = item[14] || "";
-            baseItem.dispersion = item[15] || "";
+          var row = {};
+          if (tab.includes('hifi')) {
+            row = {
+              name: item[0],
+              developer: item[1],
+              price: item[2].length > 0 ? parseFloat(item[2]) : null,
+              enclosure: item[3],
+              type: item[4],
+              f3: item[5].length > 0 ? parseFloat(item[5]) : null,
+              sensitivity: item[6].length > 0 ? parseFloat(item[6]) : null,
+              specialty: item[7],
+              height: item[8].length > 0 ? parseFloat(item[8]) : null,
+              width: item[9].length > 0 ? parseFloat(item[9]) : null,
+              depth: item[10].length > 0 ? parseFloat(item[10]) : null,
+              url: item[11],
+              image_url: item[12]
+            };
           }
           
-          this.items.push(baseItem);
+          // Add PA-specific fields if we're on the PA tab
+          if (tab.includes('pa')) {
+            row = {
+              name: item[0],
+              developer: item[1],
+              price: item[2].length > 0 ? parseFloat(item[2]) : null,
+              enclosure: item[3],
+              type: item[4],
+              f3: item[5].length > 0 ? parseFloat(item[5]) : null,
+              sensitivity: item[6].length > 0 ? parseFloat(item[6]) : null,
+              power: item[7]?.length > 0 ? parseFloat(item[13]) : null,
+              range: item[8] || "",
+              dispersion: item[8] || "",
+              specialty: item[10],
+              height: item[11].length > 0 ? parseFloat(item[8]) : null,
+              width: item[12].length > 0 ? parseFloat(item[9]) : null,
+              depth: item[13].length > 0 ? parseFloat(item[10]) : null,
+              url: item[14],
+              image_url: item[15]
+            };
+          }
+          
+          items.push(row);
         });
-        this.applyFilters();
+        
+        // Update cached items and count
+        this.cachedItems[tab] = items;
+        this.tabCounts[tab] = items.length;
+        
+        return items;
       } catch (error) {
-        alert(error.message);
+        console.error(`Error loading data for tab ${tab}:`, error);
+        this.cachedItems[tab] = [];
+        this.tabCounts[tab] = 0;
+        return [];
+      }
+    },
+    
+    async loadData() {
+      // If we have cached data, use it
+      if (this.cachedItems[this.activeTab].length > 0) {
+        this.items = [...this.cachedItems[this.activeTab]];
+        this.applyFilters();
+      } else {
+        // Otherwise, load it
+        this.items = [];
+        await this.loadTabData(this.activeTab);
+        this.items = [...this.cachedItems[this.activeTab]];
+        this.applyFilters();
       }
     },
     
@@ -411,7 +519,7 @@ export default {
     },
   },
   mounted() {
-    this.loadData();
+    this.loadAllData();
     window.addEventListener("keydown", this.handleKeydown);
   },
   unmounted() {
@@ -444,6 +552,19 @@ export default {
               :class="activeTab === 'hifi' ? 'bg-white text-green-700 font-medium shadow-sm' : 'text-gray-600 hover:text-green-600'"
             >
               HiFi
+              <span class="ml-1 px-1.5 py-0.5 text-xs bg-green-100 text-green-800 rounded-full">
+                {{ tabCounts.hifi }}
+              </span>
+            </button>
+            <button 
+              @click="switchTab('hifi-commercial')" 
+              class="px-4 py-1 rounded-t-md transition-colors"
+              :class="activeTab === 'hifi-commercial' ? 'bg-white text-green-700 font-medium shadow-sm' : 'text-gray-600 hover:text-green-600'"
+            >
+              HiFi Commercial
+              <span class="ml-1 px-1.5 py-0.5 text-xs bg-green-100 text-green-800 rounded-full">
+                {{ tabCounts['hifi-commercial'] }}
+              </span>
             </button>
             <button 
               @click="switchTab('pa')" 
@@ -451,6 +572,19 @@ export default {
               :class="activeTab === 'pa' ? 'bg-white text-green-700 font-medium shadow-sm' : 'text-gray-600 hover:text-green-600'"
             >
               PA
+              <span class="ml-1 px-1.5 py-0.5 text-xs bg-green-100 text-green-800 rounded-full">
+                {{ tabCounts.pa }}
+              </span>
+            </button>
+            <button 
+              @click="switchTab('pa-commercial')" 
+              class="px-4 py-1 rounded-t-md transition-colors"
+              :class="activeTab === 'pa-commercial' ? 'bg-white text-green-700 font-medium shadow-sm' : 'text-gray-600 hover:text-green-600'"
+            >
+              PA Commercial
+              <span class="ml-1 px-1.5 py-0.5 text-xs bg-green-100 text-green-800 rounded-full">
+                {{ tabCounts['pa-commercial'] }}
+              </span>
             </button>
           </div>
         </div>
@@ -746,7 +880,7 @@ export default {
               v-for="(item, index) in displayedItems"
               :key="index"
             >
-              <td  class="px-3 py-4">
+              <td  class="px-2 py-4">
                 <a
                   v-if="item.image_url"
                   :href="item.url"
@@ -761,7 +895,7 @@ export default {
                      </div>
               </a>
               </td>
-              <td class="px-3 py-4">
+              <td class="px-2 py-4">
                 <a
                   :href="item.url"
                   target="_blank"
@@ -770,46 +904,48 @@ export default {
                   {{ item.name }}
                 </a>
               </td>
-              <td class="px-3 py-4">
+              <td class="px-2 py-4">
                 {{ item.developer }}
               </td>
-              <td class="px-3 py-4 text-right">
+              <td class="px-2 py-4 text-right">
                 <span v-if="item.price">{{ formatPrice(item.price) }}</span>
                 <span v-if="!item.price" class="text-gray-400">N/A</span>
               </td>
-              <td class="px-3 py-4">
+              <td class="px-2 py-4">
                 {{ item.enclosure }}
               </td>
-              <td class="px-3 py-4 whitespace-wrap">
+              <td class="px-2 py-4 whitespace-wrap">
                 {{ item.type }}
               </td>
-              <td class="px-3 py-4 text-right whitespace-nowrap">
+              <td class="px-2 py-4 text-right whitespace-nowrap">
                 <span v-if="item.f3">{{ item.f3 }} Hz</span>
               </td>
-              <td class="px-3 py-4 text-right">
-                {{ item.sensitivity }} dB
+              <td class="px-2 py-4 text-right">
+                <span v-if="item.sensitivity">{{ item.sensitivity }} dB</span>
+                <span v-if="!item.sensitivity" class="text-gray-400">N/A</span>
               </td>
-              <td v-if="activeTab != 'hifi'" class="px-3 py-4 text-right">
+              <td v-if="activeTab == 'pa'" class="px-2 py-4 text-right">
                 <span v-if="item.power">{{ item.power }} W</span>
                 <span v-if="!item.power" class="text-gray-400">N/A</span>
               </td>
-              <td v-if="activeTab != 'hifi'" class="px-3 py-4 text-right">
+              <td v-if="activeTab == 'pa'" class="px-2 py-4 text-right">
                 {{ item.range }}
               </td>
-              <td v-if="activeTab != 'hifi'" class="px-3 py-4 text-right">
+              <td v-if="activeTab == 'pa'" class="px-2 py-4 text-right">
                 {{ item.dispersion }}
               </td>
-              <td class="px-3 py-4">
+              <td class="px-2 py-4">
                 {{ item.specialty }}
               </td>
-              <td class="px-3 py-4 text-left">
+              <td class="px-2 py-4 text-left">
                 <span v-if="item.height && item.width && item.depth">
                   {{ item.height }} x<br>
                   {{ item.width }} x<br>
                   {{ item.depth }}
                 </span>
+                <span v-if="!item.height" class="text-gray-400">N/A</span>
               </td>
-              <td class="px-3 py-4 text-right">
+              <td class="px-2 py-4 text-right">
                 <span v-if="calculateVolume(item)">{{ calculateVolume(item) }} L</span>
                 <span v-if="!calculateVolume(item)" class="text-gray-400">N/A</span>
               </td>
@@ -892,293 +1028,20 @@ export default {
         </div>
       </div>
       
-      <!-- Edit Dialog -->
-      <div
-        v-if="showEditDialog"
-        class="fixed inset-0 flex items-center justify-center p-4 bg-gray-50"
-      >
-        <div class="bg-white text-green-900 rounded-md max-w-2xl w-full p-6">
-          <h2 class="text-lg font-bold uppercase mb-7">
-            {{ isNewEntry ? "Submit New Entry" : "Edit Entry" }}
-          </h2>
-
-          <!-- Form Fields -->
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <!-- Name Field -->
-            <div>
-              <label class="block text-sm font-medium text-green-800 mb-1">
-                Name <span class="text-red-500">*</span>
-              </label>
-              <input
-                type="text"
-                v-model="editingItem.name"
-                class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 py-1"
-                @input="trackChange('name', editingItem.name)"
-              />
-              <span
-                v-if="isNewEntry && formErrors.name"
-                class="text-red-500 text-sm"
-                >Name is required</span
-              >
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-green-800 mb-1">
-                Developer
-              </label>
-              <input
-                type="text"
-                v-model="editingItem.developer"
-                class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 py-1"
-                @input="trackChange('developer', editingItem.developer)"
-              />
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-green-800 mb-1">
-                Price
-              </label>
-              <input
-                type="number"
-                v-model="editingItem.price"
-                class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 py-1"
-                @input="trackChange('price', editingItem.price)"
-              />
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-green-800 mb-1">
-                F₃
-              </label>
-              <input
-                type="number"
-                v-model="editingItem.f3"
-                class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 py-1"
-                @input="trackChange('f3', editingItem.f3)"
-              />
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-green-800 mb-1">
-                Sensitivity
-              </label>
-              <input
-                type="number"
-                v-model="editingItem.sensitivity"
-                class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 py-1"
-                @input="trackChange('sensitivity', editingItem.sensitivity)"
-              />
-            </div>
-            
-            <!-- PA-specific fields -->
-            <div v-if="editingItem.tabType === 'pa'">
-              <label class="block text-sm font-medium text-green-800 mb-1">
-                Power (W)
-              </label>
-              <input
-                type="number"
-                v-model="editingItem.power"
-                class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 py-1"
-                @input="trackChange('power', editingItem.power)"
-              />
-            </div>
-            <div v-if="editingItem.tabType === 'pa'">
-              <label class="block text-sm font-medium text-green-800 mb-1">
-                Range
-              </label>
-              <input
-                type="text"
-                v-model="editingItem.range"
-                class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 py-1"
-                @input="trackChange('range', editingItem.range)"
-              />
-            </div>
-            <div v-if="editingItem.tabType === 'pa'">
-              <label class="block text-sm font-medium text-green-800 mb-1">
-                Dispersion
-              </label>
-              <input
-                type="text"
-                v-model="editingItem.dispersion"
-                class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 py-1"
-                @input="trackChange('dispersion', editingItem.dispersion)"
-              />
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-green-800 mb-1">
-                Enclosure <span class="text-red-500">*</span>
-              </label>
-              <select
-                v-model="editingItem.enclosure"
-                @change="trackChange('enclosure', editingItem.enclosure)"
-                class="text-sm w-full shadow-sm rounded-md p-2"
-              >
-                <option value="">Select enclosure...</option>
-                <option
-                  v-for="enclosure in availableEnclosures"
-                  :key="enclosure"
-                  :value="enclosure"
-                >
-                  {{ enclosure }}
-                </option>
-              </select>
-              <span
-                v-if="isNewEntry && formErrors.enclosure"
-                class="text-red-500 text-sm"
-                >Enclosure is required</span
-              >
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-green-800 mb-1">
-                Category <span class="text-red-500">*</span>
-              </label>
-              <select
-                v-model="editingItem.tabType"
-                @change="trackChange('tabType', editingItem.tabType)"
-                class="text-sm w-full shadow-sm rounded-md p-2"
-              >
-                <option value="hifi">HiFi</option>
-                <option value="pa">PA</option>
-              </select>
-              <span
-                v-if="isNewEntry && formErrors.tabType"
-                class="text-red-500 text-sm"
-                >Category is required</span
-              >
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-green-800 mb-1">
-                Type <span class="text-red-500">*</span>
-              </label>
-              <select
-                v-model="editingItem.type"
-                @change="trackChange('type', editingItem.type)"
-                class="text-sm w-full shadow-sm rounded-md p-2"
-              >
-                <option value="">Select type...</option>
-                <option
-                  v-for="type in availableTypes"
-                  :key="type"
-                  :value="type"
-                >
-                  {{ type }}
-                </option>
-              </select>
-              <span
-                v-if="isNewEntry && formErrors.type"
-                class="text-red-500 text-sm"
-                >Type is required</span
-              >
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-green-800 mb-1">
-                Specialty
-              </label>
-              <select
-                v-model="editingItem.specialty"
-                @change="trackChange('speciality', editingItem.specialty)"
-                class="text-sm w-full shadow-sm rounded-md p-2"
-              >
-                <option value="">Select speciality...</option>
-                <option
-                  v-for="speciality in availableSpecialties"
-                  :key="speciality"
-                  :value="speciality"
-                >
-                  {{ speciality }}
-                </option>
-              </select>
-            </div>
-            <div class="col-span-full">
-              <label class="block text-sm font-medium text-green-800 mb-2"
-                >Dimensions (H×W×D):</label
-              >
-              <div class="grid grid-cols-3 gap-4 text-sm">
-                <input
-                  type="number"
-                  v-model="editingItem.height"
-                  placeholder="Height"
-                  class="focus:outline-0 border-b-1 border-gray-300 p-1"
-                  @input="trackChange('height', editingItem.height)"
-                />
-                <input
-                  type="number"
-                  v-model="editingItem.width"
-                  placeholder="Width"
-                  class="focus:outline-0 border-b-1 border-gray-300 p-1"
-                  @input="trackChange('width', editingItem.width)"
-                />
-                <input
-                  type="number"
-                  v-model="editingItem.depth"
-                  placeholder="Depth"
-                  class="focus:outline-0 border-b-1 border-gray-300 p-1"
-                  @input="trackChange('depth', editingItem.depth)"
-                />
-              </div>
-            </div>
-            <div class="col-span-full">
-              <label class="block text-sm font-medium text-green-800 mb-1">
-                URL <span class="text-red-500">*</span>
-              </label>
-              <input
-                type="text"
-                v-model="editingItem.url"
-                class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 py-1"
-                @input="trackChange('url', editingItem.url)"
-              />
-              <span
-                v-if="isNewEntry && formErrors.url"
-                class="text-red-500 text-sm"
-                >URL is required</span
-              >
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-green-800 mb-1">
-                Image URL
-              </label>
-              <input
-                type="text"
-                v-model="editingItem.image_url"
-                class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 py-1"
-                @input="trackChange('image_url', editingItem.image_url)"
-              />
-            </div>
-          </div>
-
-          <!-- Dialog Buttons -->
-          <div class="mt-6 flex justify-end space-x-3 text-sm">
-            <button
-              @click="closeEditDialog"
-              class="px-3 py-1 cursor-pointer bg-gray-200 border-gray-500 rounded-md text-gray-500 shadow-sm hover:bg-gray-100"
-            >
-              Cancel
-            </button>
-            <button
-              @click="submitEdit"
-              class="px-3 py-1 text-sm font-medium text-green-900 bg-green-200 border-gray-500 rounded-md shadow-md cursor-pointer hover:bg-gray-100"
-              :disabled="isSubmitting"
-            >
-              <div class="flex items-center">
-                <svg
-                  v-if="isSubmitting"
-                  aria-hidden="true"
-                  class="inline size-4 text-gray-200 animate-spin dark:text-gray-600 fill-white mr-2"
-                  viewBox="0 0 100 101"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                    fill="currentColor"
-                  />
-                  <path
-                    d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                    fill="currentFill"
-                  />
-                </svg>
-                {{ isSubmitting ? "Saving..." : "Submit" }}
-              </div>
-            </button>
-          </div>
-        </div>
-      </div>
+      <!-- Edit Dialog Component -->
+      <edit-item-dialog
+          :show-dialog="showEditDialog"
+          :editing-item="editingItem"
+          :is-new-entry="isNewEntry"
+          :is-submitting="isSubmitting"
+          :form-errors="formErrors"
+          :available-enclosures="availableEnclosures"
+          :available-types="availableTypes"
+          :available-specialties="availableSpecialties" 
+          @track-change="trackChange"
+          @close="closeEditDialog"
+          @submit="submitEdit"
+      /> 
     </div>
   </div>
 </template>
