@@ -17,6 +17,38 @@ export default {
         hifi: "https://sheets.googleapis.com/v4/spreadsheets/1PoYey8POjJOA-ucpMtjJpdDWmXww5tK5HlhHbNeUZrs/values/hifi-live?alt=json&key=AIzaSyCi5Azx-KvH8rfE3oTlRERkchMcSH-9dvA",
         pa: "https://sheets.googleapis.com/v4/spreadsheets/1PoYey8POjJOA-ucpMtjJpdDWmXww5tK5HlhHbNeUZrs/values/pa-live?alt=json&key=AIzaSyCi5Azx-KvH8rfE3oTlRERkchMcSH-9dvA" // Currently same URL, will be changed by user later
       },
+      columnConfigs: {
+        hifi: [
+          { key: 'image', label: '', width: 'min-w-[70pt] w-[70pt]' },
+          { key: 'name', label: 'Name', width: 'min-w-[120pt] w-[250pt]' },
+          { key: 'developer', label: 'Developer', width: 'min-w-[100pt] w-[200pt]' },
+          { key: 'price', label: 'Price', width: 'min-w-[70pt] w-[70pt]' },
+          { key: 'enclosure', label: 'Enclosure', width: 'min-w-[80pt] w-[100pt]' },
+          { key: 'type', label: 'Type', width: 'min-w-[80pt] w-[90pt]' },
+          { key: 'f3', label: 'F₃', width: 'min-w-[60pt] w-[60pt]' },
+          { key: 'sensitivity', label: 'Sensitivity', width: 'min-w-[60pt] w-[60pt]' },
+          { key: 'specialty', label: 'Specialty', width: 'min-w-[80pt] w-[120pt]' },
+          { key: 'dimensions', label: 'H × W × D', width: 'min-w-[20pt] w-[20pt]' },
+          { key: 'volume', label: 'Volume', width: 'w-[30pt]' }
+        ],
+        pa: [
+          { key: 'image', label: '', width: 'min-w-[70pt] w-[70pt]' },
+          { key: 'name', label: 'Name', width: 'min-w-[120pt] w-[250pt]' },
+          { key: 'developer', label: 'Developer', width: 'min-w-[100pt] w-[200pt]' },
+          { key: 'price', label: 'Price', width: 'min-w-[40pt] w-[40pt]' },
+          { key: 'enclosure', label: 'Enclosure', width: 'min-w-[80pt] w-[100pt]' },
+          { key: 'type', label: 'Type', width: 'min-w-[80pt] w-[90pt]' },
+          { key: 'f3', label: 'F₃', width: 'min-w-[60pt] w-[60pt]' },
+          { key: 'sensitivity', label: 'Sensitivity', width: 'min-w-[60pt] w-[60pt]' },
+          { key: 'power', label: 'Power', width: 'min-w-[60pt] w-[60pt]' },
+          { key: 'range', label: 'Range', width: 'min-w-[80pt] w-[100pt]' },
+          { key: 'dispersion', label: 'Dispersion', width: 'min-w-[80pt] w-[100pt]' }, 
+          { key: 'specialty', label: 'Specialty', width: 'min-w-[80pt] w-[120pt]' },
+          { key: 'dimensions', label: 'H × W × D', width: 'min-w-[20pt] w-[20pt]' },
+          { key: 'volume', label: 'Volume', width: 'w-[30pt]' }
+        ]
+      },
+      showDimensionsDialog: false,
       availableEnclosures: [
         "Closed Box",
         "CB w Series Cap",
@@ -45,6 +77,9 @@ export default {
         developer: "",
         f3: null,
         sensitivity: null,
+        power: null,
+        range: "",
+        dispersion: "",
       },
       showEditDialog: false,
       editingItem: null,
@@ -77,7 +112,7 @@ export default {
         json.values.shift(); // remove header row
 
         json.values.forEach((item) => {
-          this.items.push({
+          const baseItem = {
             name: item[0],
             developer: item[1],
             price: item[2].length > 0 ? parseFloat(item[2]) : null,
@@ -91,7 +126,16 @@ export default {
             depth: item[10].length > 0 ? parseFloat(item[10]) : null,
             url: item[11],
             image_url: item[12]
-          });
+          };
+          
+          // Add PA-specific fields if we're on the PA tab
+          if (this.activeTab === 'pa') {
+            baseItem.power = item[13]?.length > 0 ? parseFloat(item[13]) : null;
+            baseItem.range = item[14] || "";
+            baseItem.dispersion = item[15] || "";
+          }
+          
+          this.items.push(baseItem);
         });
         this.applyFilters();
       } catch (error) {
@@ -107,8 +151,11 @@ export default {
     },
 
     calculateVolume(item) {
+      if(!item.height || !item.width || !item.depth) {
+        return null;
+      }
       const volumeInLiters = (item.height * item.width * item.depth) / 1000000;
-      return volumeInLiters.toFixed(2);
+      return volumeInLiters.toFixed(0);
     },
 
     formatPrice(price) {
@@ -155,6 +202,14 @@ export default {
         const f3Match = !this.filters.f3 || item.f3 <= this.filters.f3;
         const sensitivityMatch = !this.filters.sensitivity ||
           (item.sensitivity && item.sensitivity >= this.filters.sensitivity);
+          
+        // PA-specific filters
+        const powerMatch = !this.filters.power || 
+          (item.power && item.power >= this.filters.power);
+        const rangeMatch = !this.filters.range || 
+          (item.range && item.range.toLowerCase().includes(this.filters.range.toLowerCase()));
+        const dispersionMatch = !this.filters.dispersion || 
+          (item.dispersion && item.dispersion.toLowerCase().includes(this.filters.dispersion.toLowerCase()));
 
         return (
           nameMatch &&
@@ -168,7 +223,10 @@ export default {
           volumeMatch &&
           developerMatch &&
           f3Match &&
-          sensitivityMatch
+          sensitivityMatch &&
+          powerMatch &&
+          rangeMatch &&
+          dispersionMatch
         );
       });
     },
@@ -207,7 +265,7 @@ export default {
           }`
         ] = "";
       } else if (
-        ["price", "height", "width", "depth", "volume", "f3", "sensitivity"].includes(
+        ["price", "height", "width", "depth", "volume", "f3", "sensitivity", "power"].includes(
           filterName
         )
       ) {
@@ -234,6 +292,9 @@ export default {
         url: "",
         image_url: "",
         sensitivity: null,
+        power: null,
+        range: "",
+        dispersion: "",
         tabType: this.activeTab, // Store the tab type for new entries
         changes: {},
       };
@@ -334,7 +395,19 @@ export default {
         if (this.showDialog) {
           this.showDialog = false;
         }
+        if (this.showDimensionsDialog) {
+          this.showDimensionsDialog = false;
+        }
       }
+    },
+    
+    openDimensionsDialog() {
+      this.showDimensionsDialog = true;
+    },
+    
+    applyDimensionsFilters() {
+      this.applyFilters();
+      this.showDimensionsDialog = false;
     },
   },
   mounted() {
@@ -348,6 +421,13 @@ export default {
 </script>
 
   <template>
+  <!-- SVG Sprites - defined once -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="edit-icon" viewBox="0 0 20 20">
+      <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+    </symbol>
+  </svg>
+  
   <div class="overflow-scroll h-screen">
     <!-- Header -->
     <div class="left-0 text-md tracking-wide font-semibold w-full text-green-700 mt-4 mb-8">
@@ -384,7 +464,7 @@ export default {
     </div>
 
     <!-- Main Content -->
-    <div class="container min-w-full mx-auto px-4 ">
+    <div class="container min-w-full mx-auto">
       <!-- Table -->
       <div
         class=" min-w-full w-fit rounded-lg p-1"
@@ -394,93 +474,28 @@ export default {
             <!-- Header Row -->
             <tr class="text-sm uppercase">
               <th
+                v-for="(column, index) in columnConfigs[activeTab]"
+                :key="column.key"
                 scope="col"
-                class="min-w-[70pt] w-[70pt] px-3 py-3"
+                :class="column.width + ' px-1 py-3 whitespace-nowrap'"
               >
+                {{ column.label }}
               </th>
               <th
                 scope="col"
-                class="min-w-[120pt] w-[250pt] px-3 py-3"
-              >
-                Name
-              </th>
-              <th
-                scope="col"
-                class="min-w-[100pt] w-[200pt] px-3 py-3"
-              >
-                Developer
-              </th>
-              <th
-                scope="col"
-                class="min-w-[70pt] w-[70pt] px-3 py-3"
-              >
-                Price
-              </th>
-              <th
-                scope="col"
-                class="min-w-[80pt] w-[100pt] px-3 py-3"
-              >
-                Enclosure
-              </th>
-              <th
-                scope="col"
-                class="min-w-[80pt] w-[90pt] px-3 py-3"
-              >
-                Type
-              </th>
-              <th
-                scope="col"
-                class="min-w-[60pt] w-[60pt] px-3 py-3"
-              >
-                F₃
-              </th>
-              <th
-                scope="col"
-                class="min-w-[60pt] w-[60pt] px-3 py-3"
-              >
-                Sensitivity
-              </th>
-              <th
-                scope="col"
-                class="min-w-[80pt] w-[120pt] px-3 py-3"
-              >
-                Specialty
-              </th>
-              <th
-                scope="col"
-                class="min-w-[20pt] w-[20pt] px-3 py-3"
-              >
-                Height
-              </th>
-              <th
-                scope="col"
-                class="min-w-[20pt] w-[20pt] px-3 py-3"
-              >
-                Width
-              </th>
-              <th
-                scope="col"
-                class="min-w-[20pt] w-[20pt] px-3 py-3"
-              >
-                Depth
-              </th>
-              <th
-                scope="col"
-                class="w-[30pt] px-3 py-3"
-              >
-                Volume
-              </th>
-              <th
-                scope="col"
-                class="min-w-[40pt] px-3 py-3"
+                class="w-[20pt] px-2 py-3"
               ></th>
             </tr>
 
             <!-- Filter Row -->
             <tr class="align-baseline text-sm">
-              <th class="px-3 py-3"></th>
-              <th class="px-3 py-3">
-                <input
+              <!-- Image column has no filter -->
+              <th v-for="(column, index) in columnConfigs[activeTab]" :key="column.key" class="px-3 py-3">
+                <!-- Image column (no filter) -->
+                <template v-if="column.key === 'image'"></template>
+                
+                <!-- Name filter -->
+                <input v-else-if="column.key === 'name'"
                   type="text"
                   v-model="filters.name"
                   @input="applyFilters"
@@ -488,9 +503,9 @@ export default {
                   class="w-full font-normal rounded-md px-2 py-1 bg-white border-green-300 text-gray-900"
                   placeholder="Filter by name"
                 />
-              </th>
-              <th class="px-3 py-3">
-                <input
+                
+                <!-- Developer filter -->
+                <input v-else-if="column.key === 'developer'"
                   type="text"
                   v-model="filters.developer"
                   @input="applyFilters"
@@ -498,9 +513,9 @@ export default {
                   class="w-full font-normal rounded-md px-2 py-1 bg-white border-green-300 text-gray-900 focus:border-green-500"
                   placeholder="Filter by developer"
                 />
-              </th>
-              <th class="px-3 py-3">
-                <input
+                
+                <!-- Price filter -->
+                <input v-else-if="column.key === 'price'"
                   type="number"
                   v-model.number="filters.price"
                   @input="applyFilters"
@@ -508,9 +523,9 @@ export default {
                   class="w-full font-normal rounded-md px-2 py-1 text-gray-900 bg-white border-green-300 focus:border-green-500"
                   placeholder="< €"
                 />
-              </th>
-              <th class="px-3 py-3">
-                <div class="relative">
+                
+                <!-- Enclosure filter -->
+                <div v-else-if="column.key === 'enclosure'" class="relative">
                   <select
                     v-model="selectedEnclosure"
                     @change="addFilter('enclosures', selectedEnclosure)"
@@ -541,9 +556,9 @@ export default {
                     </span>
                   </div>
                 </div>
-              </th>
-              <th class="px-3 py-3">
-                <div class="relative">
+                
+                <!-- Type filter -->
+                <div v-else-if="column.key === 'type'" class="relative">
                   <select
                     v-model="selectedType"
                     @change="addFilter('types', selectedType)"
@@ -574,19 +589,19 @@ export default {
                     </span>
                   </div>
                 </div>
-              </th>
-              <th class="px-3 py-3">
-                <input
+                
+                <!-- F3 filter -->
+                <input v-else-if="column.key === 'f3'"
                   type="number"
                   v-model.number="filters.f3"
                   @input="applyFilters"
                   @keyup.esc="clearFilter('f3')"
                   class="w-full font-normal text-gray-900 rounded-md px-2 py-1 bg-white border-green-300 focus:border-green-500"
-                  placeholder="> F₃"
+                  placeholder="< Hz"
                 />
-              </th>
-              <th class="px-3 py-3">
-                <input
+                
+                <!-- Sensitivity filter -->
+                <input v-else-if="column.key === 'sensitivity'"
                   type="number"
                   name="filter-sensitivity"
                   v-model.number="filters.sensitivity"
@@ -595,9 +610,39 @@ export default {
                   class="w-full font-normal text-gray-900 rounded-md px-2 py-1 bg-white border-green-300 focus:border-green-500"
                   placeholder="> dB"
                 />
-              </th>
-              <th class="px-3 py-3">
-                <div class="relative">
+                
+                <!-- Power filter (PA only) -->
+                <input v-else-if="column.key === 'power'"
+                  type="number"
+                  v-model.number="filters.power"
+                  @input="applyFilters"
+                  @keyup.esc="clearFilter('power')"
+                  class="w-full font-normal text-gray-900 rounded-md px-2 py-1 bg-white border-green-300 focus:border-green-500"
+                  placeholder="> W"
+                />
+                
+                <!-- Range filter (PA only) -->
+                <input v-else-if="column.key === 'range'"
+                  type="text"
+                  v-model="filters.range"
+                  @input="applyFilters"
+                  @keyup.esc="clearFilter('range')"
+                  class="w-full font-normal text-gray-900 rounded-md px-2 py-1 bg-white border-green-300 focus:border-green-500"
+                  placeholder="Filter range"
+                />
+                
+                <!-- Dispersion filter (PA only) -->
+                <input v-else-if="column.key === 'dispersion'"
+                  type="text"
+                  v-model="filters.dispersion"
+                  @input="applyFilters"
+                  @keyup.esc="clearFilter('dispersion')"
+                  class="w-full font-normal text-gray-900 rounded-md px-2 py-1 bg-white border-green-300 focus:border-green-500"
+                  placeholder="Filter dispersion"
+                />
+                
+                <!-- Specialty filter -->
+                <div v-else-if="column.key === 'specialty'" class="relative">
                   <select
                     v-model="selectedSpecialty"
                     @change="addFilter('specialties', selectedSpecialty)"
@@ -628,39 +673,59 @@ export default {
                     </span>
                   </div>
                 </div>
-              </th>
-              <th class="px-3 py-3">
-                <input
-                  type="number"
-                  v-model.number="filters.height"
-                  @input="applyFilters"
-                  @keyup.esc="clearFilter('height')"
-                  class="w-full font-normal rounded-md px-2 py-1 bg-white text-gray-900 border-green-300 focus:border-green-500"
-                  placeholder="< H"
-                />
-              </th>
-              <th class="px-3 py-3">
-                <input
-                  type="number"
-                  v-model.number="filters.width"
-                  @input="applyFilters"
-                  @keyup.esc="clearFilter('width')"
-                  class="w-full font-normal rounded-md px-2 py-1 bg-white text-gray-900 border-green-300 focus:border-green-500"
-                  placeholder="< W"
-                />
-              </th>
-              <th class="px-3 py-3">
-                <input
-                  type="number"
-                  v-model.number="filters.depth"
-                  @input="applyFilters"
-                  @keyup.esc="clearFilter('depth')"
-                  class="w-full font-normal rounded-md px-2 py-1 bg-white text-gray-900 border-green-300 focus:border-green-500"
-                  placeholder="< D"
-                />
-              </th>
-              <th class="px-3 py-3">
-                <input
+                
+                <!-- Dimensions filter -->
+                <div v-else-if="column.key === 'dimensions'" class="relative">
+                  <button
+                    @click="openDimensionsDialog"
+                    class="w-full font-normal text-sm text-gray-500 rounded-md mt-1 px-2 py-1 bg-white border border-green-300 hover:bg-gray-50"
+                  >
+                    Filter...
+                  </button>
+                  
+                  <!-- Show filter indicators if any dimension filter is applied -->
+                  <div v-if="filters.height || filters.width || filters.depth" class="mt-2 flex flex-wrap gap-2 font-normal">
+                    <span
+                      v-if="filters.height"
+                      class="inline-flex items-center pl-2 py-1 rounded-md text-xs bg-green-300 text-gray-900"
+                    >
+                      H: {{ filters.height }}
+                      <button
+                        @click="clearFilter('height')"
+                        class="ml-1 mr-2 font-normal text-gray-500 hover:cursor-pointer hover:text-red-700"
+                      >
+                        ×
+                      </button>
+                    </span>
+                    <span
+                      v-if="filters.width"
+                      class="inline-flex items-center pl-2 py-1 rounded-md text-xs bg-green-300 text-gray-900"
+                    >
+                      W: {{ filters.width }}
+                      <button
+                        @click="clearFilter('width')"
+                        class="ml-1 mr-2 font-normal text-gray-500 hover:cursor-pointer hover:text-red-700"
+                      >
+                        ×
+                      </button>
+                    </span>
+                    <span
+                      v-if="filters.depth"
+                      class="inline-flex items-center pl-2 py-1 rounded-md text-xs bg-green-300 text-gray-900"
+                    >
+                      D: {{ filters.depth }}
+                      <button
+                        @click="clearFilter('depth')"
+                        class="ml-1 mr-2 font-normal text-gray-500 hover:cursor-pointer hover:text-red-700"
+                      >
+                        ×
+                      </button>
+                    </span>
+                  </div>
+                </div>
+                
+                <!-- Volume filter -->
+                <input v-else-if="column.key === 'volume'"
                   type="number"
                   v-model.number="filters.volume"
                   @input="applyFilters"
@@ -724,27 +789,39 @@ export default {
               <td class="px-3 py-4 text-right">
                 {{ item.sensitivity }} dB
               </td>
+              <td v-if="activeTab != 'hifi'" class="px-3 py-4 text-right">
+                <span v-if="item.power">{{ item.power }} W</span>
+                <span v-if="!item.power" class="text-gray-400">N/A</span>
+              </td>
+              <td v-if="activeTab != 'hifi'" class="px-3 py-4 text-right">
+                {{ item.range }}
+              </td>
+              <td v-if="activeTab != 'hifi'" class="px-3 py-4 text-right">
+                {{ item.dispersion }}
+              </td>
               <td class="px-3 py-4">
                 {{ item.specialty }}
               </td>
-              <td class="px-3 py-4 text-right">
-                {{ item.height }}
+              <td class="px-3 py-4 text-left">
+                <span v-if="item.height && item.width && item.depth">
+                  {{ item.height }} x<br>
+                  {{ item.width }} x<br>
+                  {{ item.depth }}
+                </span>
               </td>
               <td class="px-3 py-4 text-right">
-                {{ item.width }}
+                <span v-if="calculateVolume(item)">{{ calculateVolume(item) }} L</span>
+                <span v-if="!calculateVolume(item)" class="text-gray-400">N/A</span>
               </td>
-              <td class="px-3 py-4 text-right">
-                {{ item.depth }}
-              </td>
-              <td class="px-3 py-4 text-right">
-                {{ calculateVolume(item) }} L
-              </td>
-              <td class="px-1 py-2 text-left text-sm font-normal">
+              <td class="px-2 py-4 text-center">
                 <button
                   @click="editItem(item)"
-                  class="px-3 py-1 text-sm font-medium text-green-900 border-gray-500 rounded-md shadow-sm cursor-pointer hover:bg-gray-100"
+                  class="p-1 text-gray-600 rounded-md cursor-pointer hover:bg-gray-100 hover:text-green-700"
+                  title="Edit"
                 >
-                  Edit
+                  <svg class="h-4 w-4" fill="currentColor">
+                    <use xlink:href="#edit-icon" />
+                  </svg>
                 </button>
               </td>
             </tr>
@@ -752,6 +829,69 @@ export default {
         </table>
       </div>
 
+      <!-- Dimensions Filter Dialog -->
+      <div
+        v-if="showDimensionsDialog"
+        class="fixed inset-0 flex items-center justify-center p-4 bg-gray-50 bg-opacity-75 z-10"
+      >
+        <div class="bg-white text-green-900 rounded-md shadow-lg max-w-md w-full p-6">
+          <h2 class="text-lg font-bold uppercase mb-4">Filter Dimensions</h2>
+          
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-green-800 mb-2">
+                Height (mm)
+              </label>
+              <input
+                type="number"
+                v-model.number="filters.height"
+                class="w-full font-normal rounded-md px-3 py-2 border border-green-300 focus:border-green-500 focus:outline-none"
+                placeholder="Maximum height"
+              />
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-green-800 mb-2">
+                Width (mm)
+              </label>
+              <input
+                type="number"
+                v-model.number="filters.width"
+                class="w-full font-normal rounded-md px-3 py-2 border border-green-300 focus:border-green-500 focus:outline-none"
+                placeholder="Maximum width"
+              />
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-green-800 mb-2">
+                Depth (mm)
+              </label>
+              <input
+                type="number"
+                v-model.number="filters.depth"
+                class="w-full font-normal rounded-md px-3 py-2 border border-green-300 focus:border-green-500 focus:outline-none"
+                placeholder="Maximum depth"
+              />
+            </div>
+          </div>
+          
+          <div class="mt-6 flex justify-end space-x-3">
+            <button
+              @click="showDimensionsDialog = false"
+              class="px-4 py-2 cursor-pointer bg-gray-200 border-gray-500 rounded-md text-gray-500 shadow-sm hover:bg-gray-100"
+            >
+              Cancel
+            </button>
+            <button
+              @click="applyDimensionsFilters"
+              class="px-4 py-2 text-sm font-medium text-green-900 bg-green-200 border-gray-500 rounded-md shadow-md cursor-pointer hover:bg-gray-100"
+            >
+              Apply
+            </button>
+          </div>
+        </div>
+      </div>
+      
       <!-- Edit Dialog -->
       <div
         v-if="showEditDialog"
@@ -823,6 +963,41 @@ export default {
                 v-model="editingItem.sensitivity"
                 class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 py-1"
                 @input="trackChange('sensitivity', editingItem.sensitivity)"
+              />
+            </div>
+            
+            <!-- PA-specific fields -->
+            <div v-if="editingItem.tabType === 'pa'">
+              <label class="block text-sm font-medium text-green-800 mb-1">
+                Power (W)
+              </label>
+              <input
+                type="number"
+                v-model="editingItem.power"
+                class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 py-1"
+                @input="trackChange('power', editingItem.power)"
+              />
+            </div>
+            <div v-if="editingItem.tabType === 'pa'">
+              <label class="block text-sm font-medium text-green-800 mb-1">
+                Range
+              </label>
+              <input
+                type="text"
+                v-model="editingItem.range"
+                class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 py-1"
+                @input="trackChange('range', editingItem.range)"
+              />
+            </div>
+            <div v-if="editingItem.tabType === 'pa'">
+              <label class="block text-sm font-medium text-green-800 mb-1">
+                Dispersion
+              </label>
+              <input
+                type="text"
+                v-model="editingItem.dispersion"
+                class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 py-1"
+                @input="trackChange('dispersion', editingItem.dispersion)"
               />
             </div>
             <div>
