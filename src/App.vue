@@ -200,7 +200,7 @@ export default {
           }
           
           // Add PA-specific fields if we're on the PA tab
-          if (tab.includes('pa')) {
+          if (tab.startsWith('pa')) {
             row = {
               name: item[0],
               developer: item[1],
@@ -209,13 +209,13 @@ export default {
               type: item[4],
               f3: item[5].length > 0 ? parseFloat(item[5]) : null,
               sensitivity: item[6].length > 0 ? parseFloat(item[6]) : null,
-              power: item[7]?.length > 0 ? parseFloat(item[13]) : null,
+              power: item[7]?.length > 0 ? parseFloat(item[7]) : null,
               range: item[8] || "",
               dispersion: item[8] || "",
               specialty: item[10],
-              height: item[11].length > 0 ? parseFloat(item[8]) : null,
-              width: item[12].length > 0 ? parseFloat(item[9]) : null,
-              depth: item[13].length > 0 ? parseFloat(item[10]) : null,
+              height: item[11].length > 0 ? parseFloat(item[11]) : null,
+              width: item[12].length > 0 ? parseFloat(item[12]) : null,
+              depth: item[13].length > 0 ? parseFloat(item[13]) : null,
               url: item[14],
               image_url: item[15]
             };
@@ -924,14 +924,14 @@ export default {
                 <span v-if="item.sensitivity">{{ item.sensitivity }} dB</span>
                 <span v-if="!item.sensitivity" class="text-gray-400">N/A</span>
               </td>
-              <td v-if="activeTab == 'pa'" class="px-2 py-4 text-right">
+              <td v-if="activeTab.startsWith('pa')" class="px-2 py-4 text-right">
                 <span v-if="item.power">{{ item.power }} W</span>
                 <span v-if="!item.power" class="text-gray-400">N/A</span>
               </td>
-              <td v-if="activeTab == 'pa'" class="px-2 py-4 text-right">
+              <td v-if="activeTab.startsWith('pa')" class="px-2 py-4 text-right">
                 {{ item.range }}
               </td>
-              <td v-if="activeTab == 'pa'" class="px-2 py-4 text-right">
+              <td v-if="activeTab.startsWith('pa')" class="px-2 py-4 text-right">
                 {{ item.dispersion }}
               </td>
               <td class="px-2 py-4">
