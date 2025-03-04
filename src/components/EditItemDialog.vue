@@ -53,12 +53,10 @@ export default {
       return !Object.values(formErrors).some((error) => error);
     },
     trackChange(field, value) {
-      /*
       const fields = ['price', 'f3', 'sensitivity', 'power', 'width', 'height', 'depth'];
       if(fields.includes(field)) {
-        newVal = value.replaceAll(',', '.');
+        value = value.replaceAll(',', '.');
       }
-      */
       this.$emit('track-change', field, value);
     },
     closeDialog() {
@@ -68,7 +66,7 @@ export default {
       if (!this.validateForm()) {
         return;
       }
-      // this.fixFloats(['price', 'f3', 'sensitivity', 'power', 'width', 'height', 'depth']);
+      this.fixFloats(['price', 'f3', 'sensitivity', 'power', 'width', 'height', 'depth']);
       this.$emit('submit');
     },
     fixFloats(fields) {
