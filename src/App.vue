@@ -527,49 +527,6 @@ export default {
           <a href="/">
             <span class="uppercase tracking-wide px-2 whitespace-nowrap">DIY Speaker DB</span>
           </a>
-          <!-- Tabs -->
-          <div class="flex ml-6 space-x-1">
-            <button 
-              @click="switchTab('hifi')" 
-              class="px-4 py-1 rounded-t-md transition-colors"
-              :class="activeTab === 'hifi' ? 'bg-white text-green-700 font-medium shadow-sm' : 'text-gray-600 hover:text-green-600'"
-            >
-              HiFi
-              <span class="ml-1 px-1.5 py-0.5 text-xs bg-green-100 text-green-800 rounded-full">
-                {{ tabCounts.hifi }}
-              </span>
-            </button>
-            <button 
-              @click="switchTab('hifi-commercial')" 
-              class="px-4 py-1 rounded-t-md transition-colors"
-              :class="activeTab === 'hifi-commercial' ? 'bg-white text-green-700 font-medium shadow-sm' : 'text-gray-600 hover:text-green-600'"
-            >
-              HiFi Commercial
-              <span class="ml-1 px-1.5 py-0.5 text-xs bg-green-100 text-green-800 rounded-full">
-                {{ tabCounts['hifi-commercial'] }}
-              </span>
-            </button>
-            <button 
-              @click="switchTab('pa')" 
-              class="px-4 py-1 rounded-t-md transition-colors"
-              :class="activeTab === 'pa' ? 'bg-white text-green-700 font-medium shadow-sm' : 'text-gray-600 hover:text-green-600'"
-            >
-              PA
-              <span class="ml-1 px-1.5 py-0.5 text-xs bg-green-100 text-green-800 rounded-full">
-                {{ tabCounts.pa }}
-              </span>
-            </button>
-            <button 
-              @click="switchTab('pa-commercial')" 
-              class="px-4 py-1 rounded-t-md transition-colors"
-              :class="activeTab === 'pa-commercial' ? 'bg-white text-green-700 font-medium shadow-sm' : 'text-gray-600 hover:text-green-600'"
-            >
-              PA Commercial
-              <span class="ml-1 px-1.5 py-0.5 text-xs bg-green-100 text-green-800 rounded-full">
-                {{ tabCounts['pa-commercial'] }}
-              </span>
-            </button>
-          </div>
         </div>
         <button
           @click="createNewEntry"
@@ -580,11 +537,54 @@ export default {
       </div>
     </div>
 
+    <!-- Tabs -->
+    <div class="flex ml-6 space-x-1">
+      <button 
+        @click="switchTab('hifi')" 
+        class="px-4 py-1 rounded-t-md transition-colors"
+        :class="activeTab === 'hifi' ? 'bg-gray-50 text-green-700 font-medium shadow-sm' : 'text-gray-600 hover:text-green-600'"
+      >
+        HiFi
+        <span class="ml-1 px-1.5 py-0.5 text-xs bg-green-100 text-green-800 rounded-full">
+          {{ tabCounts.hifi }}
+        </span>
+      </button>
+      <button 
+        @click="switchTab('hifi-commercial')" 
+        class="px-4 py-1 rounded-t-md transition-colors"
+        :class="activeTab === 'hifi-commercial' ? 'bg-gray-50 text-green-700 font-medium shadow-sm' : 'text-gray-600 hover:text-green-600'"
+      >
+        HiFi Commercial
+        <span class="ml-1 px-1.5 py-0.5 text-xs bg-green-100 text-green-800 rounded-full">
+          {{ tabCounts['hifi-commercial'] }}
+        </span>
+      </button>
+      <button 
+        @click="switchTab('pa')" 
+        class="px-4 py-1 rounded-t-md transition-colors"
+        :class="activeTab === 'pa' ? 'bg-gray-50 text-green-700 font-medium shadow-sm' : 'text-gray-600 hover:text-green-600'"
+      >
+        PA
+        <span class="ml-1 px-1.5 py-0.5 text-xs bg-green-100 text-green-800 rounded-full">
+          {{ tabCounts.pa }}
+        </span>
+      </button>
+      <button 
+        @click="switchTab('pa-commercial')" 
+        class="px-4 py-1 rounded-t-md transition-colors"
+        :class="activeTab === 'pa-commercial' ? 'bg-gray-50 text-green-700 font-medium shadow-sm' : 'text-gray-600 hover:text-green-600'"
+      >
+        PA Commercial
+        <span class="ml-1 px-1.5 py-0.5 text-xs bg-green-100 text-green-800 rounded-full">
+          {{ tabCounts['pa-commercial'] }}
+        </span>
+      </button>
+    </div>
     <!-- Main Content -->
     <div class="container min-w-full mx-auto">
       <!-- Table -->
       <div
-        class=" min-w-full w-fit rounded-lg p-1"
+        class=" min-w-full w-fit rounded-lg px-1"
       >
         <table class="min-w-full table-fixed divide-y divide-gray-200">
           <thead class="sticky top-0 text-green-700 bg-gray-50">
