@@ -114,6 +114,7 @@ export default {
           </label>
           <input
             type="number"
+            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
             v-model="editingItem.price"
             class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 py-1"
             @input="trackChange('price', editingItem.price)"
@@ -125,6 +126,7 @@ export default {
           </label>
           <input
             type="number"
+            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
             v-model="editingItem.f3"
             class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 py-1"
             @input="trackChange('f3', editingItem.f3)"
@@ -136,6 +138,7 @@ export default {
           </label>
           <input
             type="number"
+            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
             v-model="editingItem.sensitivity"
             class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 py-1"
             @input="trackChange('sensitivity', editingItem.sensitivity)"
@@ -149,6 +152,7 @@ export default {
           </label>
           <input
             type="number"
+            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
             v-model="editingItem.power"
             class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 py-1"
             @input="trackChange('power', editingItem.power)"
@@ -270,6 +274,7 @@ export default {
           <div class="grid grid-cols-3 gap-4 text-sm">
             <input
               type="number"
+              oninput="this.value = this.value.replace(/[^0-9]/g, '')"
               v-model="editingItem.height"
               placeholder="Height"
               class="focus:outline-0 border-b-1 border-gray-300 p-1"
@@ -277,6 +282,7 @@ export default {
             />
             <input
               type="number"
+              oninput="this.value = this.value.replace(/[^0-9]/g, '')"
               v-model="editingItem.width"
               placeholder="Width"
               class="focus:outline-0 border-b-1 border-gray-300 p-1"
@@ -284,6 +290,7 @@ export default {
             />
             <input
               type="number"
+              oninput="this.value = this.value.replace(/[^0-9]/g, '')"
               v-model="editingItem.depth"
               placeholder="Depth"
               class="focus:outline-0 border-b-1 border-gray-300 p-1"
