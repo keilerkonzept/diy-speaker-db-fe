@@ -36,6 +36,22 @@ export default {
     }
   },
   methods: {
+    validateForm() {
+      if (!this.isNewEntry) return true;
+
+      const formErrors = {
+        name: !this.editingItem.name,
+        url: !this.editingItem.url,
+        enclosure: !this.editingItem.enclosure,
+        type: !this.editingItem.type,
+        tabType: !this.editingItem.tabType,
+      };
+
+      // Emit the form errors to update parent component
+      this.$emit('update-form-errors', formErrors);
+
+      return !Object.values(formErrors).some((error) => error);
+    },
     trackChange(field, value) {
       this.$emit('track-change', field, value);
     },
@@ -43,6 +59,9 @@ export default {
       this.$emit('close');
     },
     submitEdit() {
+      if (!this.validateForm()) {
+        return;
+      }
       this.$emit('submit');
     }
   }
@@ -102,7 +121,7 @@ export default {
         </div>
         <div>
           <label class="block text-sm font-medium text-green-800 mb-1">
-            F₃
+            F₃ (Hz)
           </label>
           <input
             type="number"
@@ -113,7 +132,7 @@ export default {
         </div>
         <div>
           <label class="block text-sm font-medium text-green-800 mb-1">
-            Sensitivity
+            Sensitivity (dB)
           </label>
           <input
             type="number"
@@ -246,7 +265,7 @@ export default {
         </div>
         <div class="col-span-full">
           <label class="block text-sm font-medium text-green-800 mb-2"
-            >Dimensions (H×W×D):</label
+            >Dimensions H×W×D (mm):</label
           >
           <div class="grid grid-cols-3 gap-4 text-sm">
             <input

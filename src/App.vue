@@ -449,24 +449,7 @@ export default {
       }
     },
 
-    validateForm() {
-      if (!this.isNewEntry) return true;
-
-      this.formErrors = {
-        name: !this.editingItem.name,
-        url: !this.editingItem.url,
-        enclosure: !this.editingItem.enclosure,
-        type: !this.editingItem.type,
-        tabType: !this.editingItem.tabType,
-      };
-
-      return !Object.values(this.formErrors).some((error) => error);
-    },
-
     async submitEdit() {
-      if (!this.validateForm()) {
-        return;
-      }
 
       this.isSubmitting = true;
       try {
@@ -1041,6 +1024,7 @@ export default {
           @track-change="trackChange"
           @close="closeEditDialog"
           @submit="submitEdit"
+          @update-form-errors="formErrors = $event"
       /> 
     </div>
   </div>

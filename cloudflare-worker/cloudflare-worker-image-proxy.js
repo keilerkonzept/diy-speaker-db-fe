@@ -26,7 +26,7 @@
  */
 
 export default {
-  async fetch(request, env, ctx) {
+  async fetch(request, _env, _ctx) {
     // Parse the request URL
     const url = new URL(request.url);
     const imageUrl = url.searchParams.get('url');
