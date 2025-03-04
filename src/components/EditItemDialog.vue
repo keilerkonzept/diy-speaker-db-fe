@@ -53,6 +53,12 @@ export default {
       return !Object.values(formErrors).some((error) => error);
     },
     trackChange(field, value) {
+      /*
+      const fields = ['price', 'f3', 'sensitivity', 'power', 'width', 'height', 'depth'];
+      if(fields.includes(field)) {
+        newVal = value.replaceAll(',', '.');
+      }
+      */
       this.$emit('track-change', field, value);
     },
     closeDialog() {
@@ -62,8 +68,42 @@ export default {
       if (!this.validateForm()) {
         return;
       }
+      // this.fixFloats(['price', 'f3', 'sensitivity', 'power', 'width', 'height', 'depth']);
       this.$emit('submit');
-    }
+    },
+    fixFloats(fields) {
+      for(const field of fields) {
+        const val = this.editingItem[field];
+        if(val != null && typeof val == 'string') {
+          this.editingItem[field] = val.replaceAll(',', '.');
+        }
+      }
+    },
+    filterNumber(field, value) {
+      if(value != null && (typeof value == 'string')) {
+        let val = value.replace(/[^0-9.,]/g, ''); // Allow numbers, dot, comma
+        const parts = val.split(/[.,]/); // Split on either separator
+
+        if (parts.length > 2) {
+          // More than one separator: keep only the first
+          const firstSeparator = val.match(/[.,]/)[0]; // Get first . or ,
+          const [integer, decimal] = val.split(firstSeparator);
+          val = `${integer}${firstSeparator}${decimal.replace(/[.,]/g, '')}`;
+        }
+        if(this.editingItem != null) {
+          this.editingItem[field] = val;
+        }
+      }
+    },
+  },
+  watch: {
+    'editingItem.price'(newValue)       { this.filterNumber('price', newValue); },
+    'editingItem.f3'(newValue)          { this.filterNumber('f3', newValue); },
+    'editingItem.sensitivity'(newValue) { this.filterNumber('sensitivity', newValue); },
+    'editingItem.power'(newValue)       { this.filterNumber('power', newValue); },
+    'editingItem.width'(newValue)       { this.filterNumber('width', newValue); },
+    'editingItem.height'(newValue)      { this.filterNumber('height', newValue); },
+    'editingItem.depth'(newValue)       { this.filterNumber('depth', newValue); }
   }
 }
 </script>
@@ -80,13 +120,13 @@ export default {
 
       <!-- Form Fields -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <!-- Name Field -->
         <div>
           <label class="block text-sm font-medium text-green-800 mb-1">
             Name <span class="text-red-500">*</span>
           </label>
           <input
             type="text"
+            name="name"
             v-model="editingItem.name"
             class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 py-1"
             @input="trackChange('name', editingItem.name)"
@@ -103,6 +143,7 @@ export default {
           </label>
           <input
             type="text"
+            name="developer"
             v-model="editingItem.developer"
             class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 py-1"
             @input="trackChange('developer', editingItem.developer)"
@@ -113,8 +154,8 @@ export default {
             Price
           </label>
           <input
-            type="number"
-            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+            type="text"
+            name="price"
             v-model="editingItem.price"
             class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 py-1"
             @input="trackChange('price', editingItem.price)"
@@ -125,8 +166,8 @@ export default {
             F₃ (Hz)
           </label>
           <input
-            type="number"
-            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+            type="text"
+            name="f3"
             v-model="editingItem.f3"
             class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 py-1"
             @input="trackChange('f3', editingItem.f3)"
@@ -137,8 +178,8 @@ export default {
             Sensitivity (dB)
           </label>
           <input
-            type="number"
-            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+            type="text"
+            name="sensitivity"
             v-model="editingItem.sensitivity"
             class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 py-1"
             @input="trackChange('sensitivity', editingItem.sensitivity)"
@@ -151,8 +192,8 @@ export default {
             Power (W)
           </label>
           <input
-            type="number"
-            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+            type="text"
+            name="power"
             v-model="editingItem.power"
             class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 py-1"
             @input="trackChange('power', editingItem.power)"
@@ -164,6 +205,7 @@ export default {
           </label>
           <input
             type="text"
+            name="range"
             v-model="editingItem.range"
             class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 py-1"
             @input="trackChange('range', editingItem.range)"
@@ -175,6 +217,7 @@ export default {
           </label>
           <input
             type="text"
+            name="dispersion"
             v-model="editingItem.dispersion"
             class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 py-1"
             @input="trackChange('dispersion', editingItem.dispersion)"
@@ -186,6 +229,7 @@ export default {
           </label>
           <select
             v-model="editingItem.tabType"
+            name="tabType"
             @change="trackChange('tabType', editingItem.tabType)"
             class="text-sm w-full shadow-sm rounded-md p-2"
           >
@@ -206,6 +250,7 @@ export default {
           </label>
           <select
             v-model="editingItem.enclosure"
+            name="enclosure"
             @change="trackChange('enclosure', editingItem.enclosure)"
             class="text-sm w-full shadow-sm rounded-md p-2"
           >
@@ -230,6 +275,7 @@ export default {
           </label>
           <select
             v-model="editingItem.type"
+            name="type"
             @change="trackChange('type', editingItem.type)"
             class="text-sm w-full shadow-sm rounded-md p-2"
           >
@@ -254,6 +300,7 @@ export default {
           </label>
           <select
             v-model="editingItem.specialty"
+            name="specialty"
             @change="trackChange('speciality', editingItem.specialty)"
             class="text-sm w-full shadow-sm rounded-md p-2"
           >
@@ -273,24 +320,24 @@ export default {
           >
           <div class="grid grid-cols-3 gap-4 text-sm">
             <input
-              type="number"
-              oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+              type="text"
+              name="height"
               v-model="editingItem.height"
               placeholder="Height"
               class="focus:outline-0 border-b-1 border-gray-300 p-1"
               @input="trackChange('height', editingItem.height)"
             />
             <input
-              type="number"
-              oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+              type="text"
+              name="width"
               v-model="editingItem.width"
               placeholder="Width"
               class="focus:outline-0 border-b-1 border-gray-300 p-1"
               @input="trackChange('width', editingItem.width)"
             />
             <input
-              type="number"
-              oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+              type="text"
+              name="depth"
               v-model="editingItem.depth"
               placeholder="Depth"
               class="focus:outline-0 border-b-1 border-gray-300 p-1"
@@ -304,6 +351,7 @@ export default {
           </label>
           <input
             type="text"
+            name="url"
             v-model="editingItem.url"
             class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 py-1"
             @input="trackChange('url', editingItem.url)"
@@ -320,6 +368,7 @@ export default {
           </label>
           <input
             type="text"
+            name="image_url"
             v-model="editingItem.image_url"
             class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 py-1"
             @input="trackChange('image_url', editingItem.image_url)"

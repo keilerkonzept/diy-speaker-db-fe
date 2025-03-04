@@ -117,7 +117,7 @@ export default {
         dispersion: "",
       },
       showEditDialog: false,
-      editingItem: null,
+      editingItem: {},
       isSubmitting: false,
       originalItem: null,
       isNewEntry: false,
@@ -436,7 +436,7 @@ export default {
     closeEditDialog() {
       if (!this.isSubmitting) {
         this.showEditDialog = false;
-        this.editingItem = null;
+        this.editingItem = {};
         this.originalItem = null;
         this.isNewEntry = false;
         this.formErrors = {
