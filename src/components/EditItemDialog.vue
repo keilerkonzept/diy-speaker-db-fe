@@ -2,24 +2,16 @@
 export default {
   name: "EditItemDialog",
   props: {
-    showDialog: {
+    propShowDialog: {
       type: Boolean,
       required: true
     },
-    editingItem: {
+    propEditingItem: {
       type: Object,
       required: true
     },
     isNewEntry: {
       type: Boolean,
-      required: true
-    },
-    isSubmitting: {
-      type: Boolean,
-      required: true
-    },
-    formErrors: {
-      type: Object,
       required: true
     },
     availableEnclosures: {
@@ -39,10 +31,51 @@ export default {
       required: true
     }
   },
+  mounted() {
+      window.addEventListener("keydown", this.handleKeydown);
+  },
+  unmounted() {
+    window.removeEventListener("keydown", this.handleKeydown);
+  },
+  data() {
+    return {
+      // initialize internal state from immutable props:
+      showDialog: this.propShowDialog,
+      editingItem:  { ...this.propEditingItem },
+      originalItem: JSON.parse(JSON.stringify(this.propEditingItem)),
+      isSubmitting: false,
+      formErrors: {
+        name: false,
+        url: false,
+        enclosure: false,
+        type: false,
+        tabType: false,
+      },
+    }
+  },
+  watch: {
+    propShowDialog(newValue)            { this.showDialog = newValue; },
+    propEditingItem(newValue)           { this.editingItem = { ...newValue }; this.originalItem = { ...newValue }; },
+    'editingItem.price'(newValue)       { this.filterNumber('price', newValue); },
+    'editingItem.f3'(newValue)          { this.filterNumber('f3', newValue); },
+    'editingItem.sensitivity'(newValue) { this.filterNumber('sensitivity', newValue); },
+    'editingItem.power'(newValue)       { this.filterNumber('power', newValue); },
+    'editingItem.width'(newValue)       { this.filterNumber('width', newValue); },
+    'editingItem.height'(newValue)      { this.filterNumber('height', newValue); },
+    'editingItem.depth'(newValue)       { this.filterNumber('depth', newValue); }
+  },
   methods: {
+    handleKeydown(event) {
+      if (event.key === "Escape") {
+        if (this.showDialog) {
+          this.closeEditDialog();
+        }
+      }
+    },
+
     validateForm() {
 
-      const formErrors = {
+      this.formErrors = {
         name: !this.editingItem.name,
         url: !this.editingItem.url,
         enclosure: !this.editingItem.enclosure,
@@ -50,28 +83,76 @@ export default {
         tabType: !this.editingItem.tabType,
       };
 
-      // Emit the form errors to update parent component
-      this.$emit('update-form-errors', formErrors);
-
-      return !Object.values(formErrors).some((error) => error);
+      return !Object.values(this.formErrors).some((error) => error);
     },
+
+    closeEditDialog() {
+      if (!this.isSubmitting) {
+        this.showDialog = false;
+        this.editingItem = {};
+        this.originalItem = null;
+        this.formErrors = {
+          name: false,
+          url: false,
+          enclosure: false,
+          type: false,
+          tabType: false,
+        };
+        this.$emit('reset-edit-dialog');
+      }
+    },
+
     trackChange(field, value) {
       const fields = ['price', 'f3', 'sensitivity', 'power', 'width', 'height', 'depth'];
-      if(fields.includes(field)) {
+      if(fields.includes(field) && value != null && (typeof value == 'string')) {
         value = value.replaceAll(',', '.');
       }
-      this.$emit('track-change', field, value);
+
+      if (JSON.stringify(this.originalItem[field]) !== JSON.stringify(value)) {
+        this.editingItem.changes[field] = {
+          from: this.originalItem[field],
+          to: value,
+        };
+      } else {
+        delete this.editingItem.changes[field];
+      }
+      delete this.formErrors[field];
     },
-    closeDialog() {
-      this.$emit('close');
-    },
-    submitEdit() {
+    
+    async submitEdit() {
+
       if (!this.validateForm()) {
         return;
       }
       this.fixFloats(['price', 'f3', 'sensitivity', 'power', 'width', 'height', 'depth']);
-      this.$emit('submit');
+
+      this.isSubmitting = true;
+      try {
+        const url =
+          "https://script.google.com/macros/s/AKfycbyVq-XrpTHxH8Nhe_yyUJWKnGdphIAkE0699USXGlrMHNi8JN3-FyrKhAWcBUPmHf8b/exec";
+        const _response = await fetch(url, {
+          method: "POST",
+          body: JSON.stringify({
+            ...this.editingItem,
+            isNewEntry: this.isNewEntry,
+            tabType: this.editingItem.tabType,
+            timestamp: new Date().toISOString(),
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          mode: "no-cors",
+        });
+
+        this.isSubmitting = false;
+        this.closeEditDialog();
+      } catch (error) {
+        alert("Error saving data: " + error.toString());
+      } finally {
+        this.isSubmitting = false;
+      }
     },
+
     fixFloats(fields) {
       for(const field of fields) {
         const val = this.editingItem[field];
@@ -96,15 +177,6 @@ export default {
         }
       }
     },
-  },
-  watch: {
-    'editingItem.price'(newValue)       { this.filterNumber('price', newValue); },
-    'editingItem.f3'(newValue)          { this.filterNumber('f3', newValue); },
-    'editingItem.sensitivity'(newValue) { this.filterNumber('sensitivity', newValue); },
-    'editingItem.power'(newValue)       { this.filterNumber('power', newValue); },
-    'editingItem.width'(newValue)       { this.filterNumber('width', newValue); },
-    'editingItem.height'(newValue)      { this.filterNumber('height', newValue); },
-    'editingItem.depth'(newValue)       { this.filterNumber('depth', newValue); }
   }
 }
 </script>
@@ -389,7 +461,7 @@ export default {
       <!-- Dialog Buttons -->
       <div class="mt-6 flex justify-end space-x-3 text-sm">
         <button
-          @click="closeDialog"
+          @click="closeEditDialog"
           class="px-3 py-1 cursor-pointer bg-gray-200 border-gray-500 rounded-md text-gray-500 shadow-sm hover:bg-gray-100"
         >
           Cancel

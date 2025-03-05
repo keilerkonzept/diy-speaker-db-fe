@@ -11,10 +11,6 @@ export default {
     return {
       items: [],
       displayedItems: [],
-      showDialog: false,
-      newEntry: {
-        name: "",
-      },
       proxyImage,
       activeTab: 'hifi', // Default to HiFi tab
       dataSources: {
@@ -117,18 +113,11 @@ export default {
         range: "",
         dispersion: "",
       },
+      
       showEditDialog: false,
       editingItem: {},
-      isSubmitting: false,
-      originalItem: null,
       isNewEntry: false,
-      formErrors: {
-        name: false,
-        url: false,
-        enclosure: false,
-        type: false,
-        tabType: false,
-      },
+
       selectedEnclosure: "",
       selectedType: "",
       selectedSpecialty: "",
@@ -212,7 +201,7 @@ export default {
               sensitivity: item[6].length > 0 ? parseFloat(item[6]) : null,
               power: item[7]?.length > 0 ? parseFloat(item[7]) : null,
               range: item[8] || "",
-              dispersion: item[8] || "",
+              dispersion: item[9] || "",
               specialty: item[10],
               height: item[11].length > 0 ? parseFloat(item[11]) : null,
               width: item[12].length > 0 ? parseFloat(item[12]) : null,
@@ -407,7 +396,6 @@ export default {
         tabType: this.activeTab, // Store the tab type for new entries
         changes: {},
       };
-      this.originalItem = { ...this.editingItem };
       this.showEditDialog = true;
     },
 
@@ -418,75 +406,16 @@ export default {
         tabType: this.activeTab, // Store the tab type for edited entries
         changes: {},
       };
-      this.originalItem = { ...item };
       this.showEditDialog = true;
     },
 
-    trackChange(field, value) {
-      if (JSON.stringify(this.originalItem[field]) !== JSON.stringify(value)) {
-        this.editingItem.changes[field] = {
-          from: this.originalItem[field],
-          to: value,
-        };
-      } else {
-        delete this.editingItem.changes[field];
-      }
-      delete this.formErrors[field];
-    },
-
-    closeEditDialog() {
-      if (!this.isSubmitting) {
-        this.showEditDialog = false;
-        this.editingItem = {};
-        this.originalItem = null;
-        this.isNewEntry = false;
-        this.formErrors = {
-          name: false,
-          url: false,
-          enclosure: false,
-          type: false,
-          tabType: false,
-        };
-      }
-    },
-
-    async submitEdit() {
-
-      this.isSubmitting = true;
-      try {
-        const url =
-          "https://script.google.com/macros/s/AKfycbyVq-XrpTHxH8Nhe_yyUJWKnGdphIAkE0699USXGlrMHNi8JN3-FyrKhAWcBUPmHf8b/exec";
-        const _response = await fetch(url, {
-          method: "POST",
-          body: JSON.stringify({
-            ...this.editingItem,
-            isNewEntry: this.isNewEntry,
-            tabType: this.activeTab, // Include the active tab in the submission
-            timestamp: new Date().toISOString(),
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-          mode: "no-cors",
-        });
-
-        this.isSubmitting = false;
-        this.closeEditDialog();
-      } catch (error) {
-        alert("Error saving data: " + error.toString());
-      } finally {
-        this.isSubmitting = false;
-      }
+    resetEditDialog() {
+      this.showEditDialog = false;
+      this.editingItem = {};
     },
 
     handleKeydown(event) {
       if (event.key === "Escape") {
-        if (this.showEditDialog) {
-          this.closeEditDialog();
-        }
-        if (this.showDialog) {
-          this.showDialog = false;
-        }
         if (this.showDimensionsDialog) {
           this.showDimensionsDialog = false;
         }
@@ -1023,20 +952,15 @@ export default {
       
       <!-- Edit Dialog Component -->
       <edit-item-dialog
-          :show-dialog="showEditDialog"
-          :editing-item="editingItem"
+          :prop-show-dialog="showEditDialog"
+          :prop-editing-item="editingItem"
           :is-new-entry="isNewEntry"
-          :is-submitting="isSubmitting"
-          :form-errors="formErrors"
           :available-enclosures="availableEnclosures"
           :available-types-hifi="availableTypesHifi"
           :available-types-pa="availableTypesPa"
           :available-specialties="availableSpecialties" 
-          @track-change="trackChange"
-          @close="closeEditDialog"
-          @submit="submitEdit"
-          @update-form-errors="formErrors = $event"
-      /> 
+          @reset-edit-dialog="resetEditDialog"
+      />
     </div>
   </div>
 </template>
