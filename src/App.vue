@@ -97,7 +97,8 @@ export default {
         "Open Baffle",
         "FAST"
       ],
-      availableTypes: ["Floor", "Compact", "Subwoofer", "Wall"],
+      availableTypesHifi: ["Floor", "Compact", "Subwoofer", "Wall"],
+      availableTypesPa: ["Subwoofer", "Top", "Line Array"],
       availableSpecialties: ["Koax", "Passive Membrane", "Broadband", "AMT", "D'Appolito"],
       filters: {
         name: "",
@@ -683,7 +684,16 @@ export default {
                   >
                     <option value="">Select...</option>
                     <option
-                      v-for="type in availableTypes"
+                      v-for="type in availableTypesHifi"
+                      v-if="this.activeTab.startsWith('hifi')"
+                      :key="type"
+                      :value="type"
+                    >
+                      {{ type }}
+                    </option>
+                    <option
+                      v-for="type in availableTypesPa"
+                      v-if="this.activeTab.startsWith('pa')"
                       :key="type"
                       :value="type"
                     >
@@ -1019,7 +1029,8 @@ export default {
           :is-submitting="isSubmitting"
           :form-errors="formErrors"
           :available-enclosures="availableEnclosures"
-          :available-types="availableTypes"
+          :available-types-hifi="availableTypesHifi"
+          :available-types-pa="availableTypesPa"
           :available-specialties="availableSpecialties" 
           @track-change="trackChange"
           @close="closeEditDialog"

@@ -26,7 +26,11 @@ export default {
       type: Array,
       required: true
     },
-    availableTypes: {
+    availableTypesHifi: {
+      type: Array,
+      required: true
+    },
+    availableTypesPa: {
       type: Array,
       required: true
     },
@@ -37,7 +41,6 @@ export default {
   },
   methods: {
     validateForm() {
-      if (!this.isNewEntry) return true;
 
       const formErrors = {
         name: !this.editingItem.name,
@@ -130,7 +133,7 @@ export default {
             @input="trackChange('name', editingItem.name)"
           />
           <span
-            v-if="isNewEntry && formErrors.name"
+            v-if="formErrors.name"
             class="text-red-500 text-sm"
             >Name is required</span
           >
@@ -185,7 +188,7 @@ export default {
         </div>
         
         <!-- PA-specific fields -->
-        <div v-if="editingItem.tabType === 'pa'">
+        <div v-if="editingItem.tabType.startsWith('pa')">
           <label class="block text-sm font-medium text-green-800 mb-1">
             Power (W)
           </label>
@@ -197,7 +200,7 @@ export default {
             @input="trackChange('power', editingItem.power)"
           />
         </div>
-        <div v-if="editingItem.tabType === 'pa'">
+        <div v-if="editingItem.tabType.startsWith('pa')">
           <label class="block text-sm font-medium text-green-800 mb-1">
             Range
           </label>
@@ -209,7 +212,7 @@ export default {
             @input="trackChange('range', editingItem.range)"
           />
         </div>
-        <div v-if="editingItem.tabType === 'pa'">
+        <div v-if="editingItem.tabType.startsWith('pa')">
           <label class="block text-sm font-medium text-green-800 mb-1">
             Dispersion
           </label>
@@ -237,7 +240,7 @@ export default {
             <option value="pa-commercial">PA Commercial</option>
           </select>
           <span
-            v-if="isNewEntry && formErrors.tabType"
+            v-if="formErrors.tabType"
             class="text-red-500 text-sm"
             >Category is required</span
           >
@@ -262,7 +265,7 @@ export default {
             </option>
           </select>
           <span
-            v-if="isNewEntry && formErrors.enclosure"
+            v-if="formErrors.enclosure"
             class="text-red-500 text-sm"
             >Enclosure is required</span
           >
@@ -279,7 +282,16 @@ export default {
           >
             <option value="">Select type...</option>
             <option
-              v-for="type in availableTypes"
+              v-if="editingItem.tabType.startsWith('hifi')"
+              v-for="type in availableTypesHifi"
+              :key="type"
+              :value="type"
+            >
+              {{ type }}
+            </option>
+            <option
+              v-if="editingItem.tabType.startsWith('pa')"
+              v-for="type in availableTypesPa"
               :key="type"
               :value="type"
             >
@@ -287,7 +299,7 @@ export default {
             </option>
           </select>
           <span
-            v-if="isNewEntry && formErrors.type"
+            v-if="formErrors.type"
             class="text-red-500 text-sm"
             >Type is required</span
           >
@@ -355,7 +367,7 @@ export default {
             @input="trackChange('url', editingItem.url)"
           />
           <span
-            v-if="isNewEntry && formErrors.url"
+            v-if="formErrors.url"
             class="text-red-500 text-sm"
             >URL is required</span
           >
