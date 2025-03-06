@@ -2,6 +2,12 @@
 
 A Vue.js application for browsing and managing a database of DIY speaker projects.
 
+## Backend
+
+The backend is a Google Sheets document, which can be queried as JSON.
+Every tab on the FE corresponds to a tab in the Spreadsheet.
+Changes are posted to a dedidcated tab via Google App Script endpoint.
+
 ## Image Proxy Solution
 
 The application uses a Cloudflare Worker to proxy HTTP images to HTTPS, allowing them to be displayed in modern browsers that block mixed content.
