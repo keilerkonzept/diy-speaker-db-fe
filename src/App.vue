@@ -132,8 +132,15 @@ export default {
         'hifi-commercial': 0,
         pa: 0,
         'pa-commercial': 0
-      }
+      },
+      copiedMessage: "",
+      copiedSpeaker: null
     };
+  }, // end data()
+  computed: {
+    copiedSpeakerId() {
+      return 'speaker-' + encodeURIComponent(this.copiedSpeaker?.replace(/\s+/g, '-').toLowerCase());
+    }
   },
   methods: {
     getInitialTab() {
@@ -180,8 +187,12 @@ export default {
         // Set items based on active tab
         this.items = [...this.cachedItems[this.activeTab]];
         this.applyFilters();
+
+        // Return a resolved promise to allow chaining
+        return Promise.resolve();
       } catch (error) {
         alert("Error loading data: " + error.message);
+        return Promise.reject(error);
       }
     },
     
@@ -452,7 +463,18 @@ export default {
         }
       }
     },
-    
+    createAnchor(name) {
+      return '#speaker-' + encodeURIComponent(name?.replace(/\s+/g, '-').toLowerCase() || index);
+    },
+    copyAnchorToClipboard(name) {
+      const anchor = this.createAnchor(name);
+      navigator.clipboard.writeText(new URL(anchor, window.location.href).toString());
+      this.copiedMessage = 'Link copied to clipboard!';
+      this.copiedSpeaker = name;
+      setTimeout(() => {
+        this.copiedMessage = '';
+      }, 1000);
+    },
     openDimensionsDialog() {
       this.showDimensionsDialog = true;
     },
@@ -461,9 +483,43 @@ export default {
       this.applyFilters();
       this.showDimensionsDialog = false;
     },
+    scrollToTargetElement(targetElement, attemptCount = 0, maxAttempts = 5) {
+      if (targetElement) {
+        // Check if all images in the table are loaded
+        const images = document.querySelectorAll('table img');
+        const allImagesLoaded = Array.from(images).every(img => img.complete);
+        
+        if (allImagesLoaded) {
+          // All images loaded, safe to scroll
+          targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else if (attemptCount < maxAttempts) {
+          // Some images still loading, wait for them
+          const nextAttemptDelay = Math.min(100 * Math.pow(2, attemptCount), 2000); // Exponential backoff with max 2s
+          setTimeout(() => {
+            this.scrollToHashElement(attemptCount + 1, maxAttempts);
+          }, nextAttemptDelay);
+        } else {
+          // Max attempts reached, scroll anyway
+          targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+    },
   },
   mounted() {
-    this.loadAllData();
+    this.loadAllData().then(() => {
+      if (window.location.hash) {
+        this.$nextTick(() => {
+          // Add a small delay to ensure everything is rendered
+          setTimeout(() => {
+            const targetElement = document.getElementById(window.location.hash.substring(1));
+            if (targetElement) {
+              this.scrollToTargetElement(targetElement);
+            }
+          }, 100);
+        });
+      }
+    });
+
     window.addEventListener("keydown", this.handleKeydown);
     
     // Listen for popstate events (browser back/forward buttons)
@@ -487,8 +543,12 @@ export default {
     <symbol id="edit-icon" viewBox="0 0 20 20">
       <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
     </symbol>
+
+    <symbol id="anchor-icon" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+    </symbol>
   </svg>
-  
+
   <div class="overflow-scroll h-screen">
     <!-- Header -->
     <div class="left-0 text-md tracking-wide font-semibold w-full text-green-700 mt-4 mb-8">
@@ -841,6 +901,7 @@ export default {
               class="hover:bg-gray-50 text-sm font-normal text-gray-800"
               v-for="(item, index) in displayedItems"
               :key="index"
+              :id="'speaker-' + encodeURIComponent(item.name?.replace(/\s+/g, '-').toLowerCase() || index)"
             >
               <td  class="px-2 py-4">
                 <a
@@ -858,13 +919,41 @@ export default {
               </a>
               </td>
               <td class="px-2 py-4">
-                <a
-                  :href="item.url"
-                  target="_blank"
-                  class="text-green-900 underline text-sm font-normal text-gray-800 hover:text-green-700"
-                >
-                  {{ item.name }}
-                </a>
+                <div class="flex items-start gap-2">
+                  <div class="min-w-0">
+                    <a
+                      :href="item.url"
+                      target="_blank"
+                      class="text-green-900 underline text-sm font-normal text-gray-800 hover:text-green-700"
+                    >
+                      {{ item.name }}
+                    </a>
+                  </div>
+                  <div class="inline-block relative shrink-0">
+                    <a
+                      :href="createAnchor(item.name)"
+                      class="text-gray-400 hover:text-green-700 cursor-pointer"
+                      title="Copy link to this speaker"
+                      @click.prevent="copyAnchorToClipboard(item.name)"
+                    >
+                      <svg class="h-4 w-4 inline" fill="none">
+                        <use xlink:href="#anchor-icon" />
+                      </svg>
+                    </a>
+
+                    <transition
+                      leave-active-class="transition duration-500"
+                      leave-to-class="opacity-0"
+                    >
+                      <div
+                        v-if="copiedMessage && copiedSpeaker === item.name"
+                        class="absolute left-full top-0 ml-2 bg-green-100 text-green-700 text-xs px-2 py-1 rounded whitespace-nowrap"
+                      >
+                        {{ copiedMessage }}
+                      </div>
+                    </transition>
+                  </div>
+                </div>
               </td>
               <td class="px-2 py-4">
                 {{ item.developer }}

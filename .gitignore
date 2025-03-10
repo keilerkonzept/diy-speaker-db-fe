@@ -1,4 +1,6 @@
+ai
 node_modules
 dist
 .idea
 *.iml
+.aider*
