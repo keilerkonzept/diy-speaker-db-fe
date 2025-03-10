@@ -162,10 +162,19 @@ export default {
         // Load data for all tabs
         const tabs = Object.keys(this.dataSources);
         
+        // Create an array of promises for parallel loading
+        const loadPromises = [];
+        
         for (const tab of tabs) {
           if (this.cachedItems[tab].length === 0) {
-            await this.loadTabData(tab);
+            // Add promise to array without awaiting it yet
+            loadPromises.push(this.loadTabData(tab));
           }
+        }
+        
+        // Wait for all promises to resolve in parallel
+        if (loadPromises.length > 0) {
+          await Promise.all(loadPromises);
         }
         
         // Set items based on active tab
