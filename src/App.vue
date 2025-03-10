@@ -1,4 +1,4 @@
-  <script>
+<script>
 import { proxyImage } from './utils/imageProxy';
 import EditItemDialog from './components/EditItemDialog.vue';
 
@@ -12,7 +12,7 @@ export default {
       items: [],
       displayedItems: [],
       proxyImage,
-      activeTab: 'hifi', // Default to HiFi tab
+      activeTab: this.getInitialTab(), // Get tab from URL or default to 'hifi'
       dataSources: {
         hifi: "https://sheets.googleapis.com/v4/spreadsheets/1PoYey8POjJOA-ucpMtjJpdDWmXww5tK5HlhHbNeUZrs/values/hifi-live?alt=json&key=AIzaSyCi5Azx-KvH8rfE3oTlRERkchMcSH-9dvA",
         'hifi-commercial': "https://sheets.googleapis.com/v4/spreadsheets/1PoYey8POjJOA-ucpMtjJpdDWmXww5tK5HlhHbNeUZrs/values/hifi-commercial-live?alt=json&key=AIzaSyCi5Azx-KvH8rfE3oTlRERkchMcSH-9dvA",
@@ -136,6 +136,27 @@ export default {
     };
   },
   methods: {
+    getInitialTab() {
+      // Get tab from URL query parameter
+      const urlParams = new URLSearchParams(window.location.search);
+      const tabParam = urlParams.get('tab');
+      
+      // Check if the tab parameter exists and is valid
+      if (tabParam && ['hifi', 'hifi-commercial', 'pa', 'pa-commercial'].includes(tabParam)) {
+        return tabParam;
+      }
+      
+      // Default to 'hifi' if no valid tab parameter
+      return 'hifi';
+    },
+    
+    updateUrlWithTab(tab) {
+      // Update URL without reloading the page
+      const url = new URL(window.location);
+      url.searchParams.set('tab', tab);
+      window.history.pushState({}, '', url);
+    },
+    
     async loadAllData() {
       try {
         // Load data for all tabs
@@ -244,6 +265,7 @@ export default {
     switchTab(tab) {
       if (this.activeTab !== tab) {
         this.activeTab = tab;
+        this.updateUrlWithTab(tab); // Update URL with the new tab
         this.loadData();
       }
     },
@@ -434,6 +456,15 @@ export default {
   mounted() {
     this.loadAllData();
     window.addEventListener("keydown", this.handleKeydown);
+    
+    // Listen for popstate events (browser back/forward buttons)
+    window.addEventListener('popstate', () => {
+      const newTab = this.getInitialTab();
+      if (this.activeTab !== newTab) {
+        this.activeTab = newTab;
+        this.loadData();
+      }
+    });
   },
   unmounted() {
     window.removeEventListener("keydown", this.handleKeydown);
@@ -441,7 +472,7 @@ export default {
 };
 </script>
 
-  <template>
+<template>
   <!-- SVG Sprites - defined once -->
   <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
     <symbol id="edit-icon" viewBox="0 0 20 20">
