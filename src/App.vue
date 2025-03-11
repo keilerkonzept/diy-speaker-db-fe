@@ -496,7 +496,7 @@ export default {
           // Some images still loading, wait for them
           const nextAttemptDelay = Math.min(100 * Math.pow(2, attemptCount), 2000); // Exponential backoff with max 2s
           setTimeout(() => {
-            this.scrollToHashElement(attemptCount + 1, maxAttempts);
+            this.scrollToTargetElement(attemptCount + 1, maxAttempts);
           }, nextAttemptDelay);
         } else {
           // Max attempts reached, scroll anyway
