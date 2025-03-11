@@ -492,6 +492,16 @@ export default {
         if (allImagesLoaded) {
           // All images loaded, safe to scroll
           targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          
+          // pulse
+          const tr = targetElement.closest('tr');
+          if(tr) {
+            tr.classList.add('bg-green-100');
+            setTimeout(() => {
+              tr.classList.remove('bg-green-100');
+            }, 1000);
+          }
+
         } else if (attemptCount < maxAttempts) {
           // Some images still loading, wait for them
           const nextAttemptDelay = Math.min(100 * Math.pow(2, attemptCount), 2000); // Exponential backoff with max 2s
@@ -898,7 +908,7 @@ export default {
             class="table-row-group w-full bg-white divide-y divide-gray-200"
           >
             <tr
-              class="hover:bg-gray-50 text-sm font-normal text-gray-800"
+              class="hover:bg-gray-50 text-sm font-normal text-gray-800 transition-colors duration-1000"
               v-for="(item, index) in displayedItems"
               :key="index"
               :id="'speaker-' + encodeURIComponent(item.name?.replace(/\s+/g, '-').toLowerCase() || index)"
