@@ -435,7 +435,7 @@ export default {
         power: null,
         range: "",
         dispersion: "",
-        tabType: this.activeTab, // Store the tab type for new entries
+        tabType: "",
         changes: {},
       };
       this.showEditDialog = true;

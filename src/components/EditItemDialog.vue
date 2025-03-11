@@ -306,6 +306,7 @@ export default {
             @change="trackChange('tabType', editingItem.tabType)"
             class="text-sm w-full shadow-sm rounded-md p-2"
           >
+            <option value="">Select category...</option>
             <option value="hifi">HiFi</option>
             <option value="hifi-commercial">HiFi Commercial</option>
             <option value="pa">PA</option>
