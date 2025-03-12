@@ -43,9 +43,9 @@ export default {
 <template>
     <div v-if="items.length" class="fixed bottom-0 right-15 my-6 py-3 px-3 w-60 bg-white shadow-xl">
         <div v-if="true">
-            <div class="grid grid-cols-1 gap-2">
-                <div v-for="item in items" class="flex gap-x-2">
-                    <div class="flex-auto text-nowrap overflow-hidden text-ellipsis">{{ item.name }}</div>
+            <div class="grid grid-cols-1 divide-y divide-gray-200">
+                <div v-for="item in items" class="flex py-1">
+                    <div class="flex-auto text-nowrap overflow-hidden text-ellipsis text-gray-600">{{ item.name }}</div>
                     <button @click="removeItem(item)"
                         class="p-1 text-gray-600 rounded-md cursor-pointer hover:bg-gray-100 hover:text-green-700"
                         title="Compare">
