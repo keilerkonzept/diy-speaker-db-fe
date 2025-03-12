@@ -57,7 +57,7 @@ export default {
           { key: 'sensitivity', label: 'SPL', width: 'min-w-[60pt] w-[60pt]' },
           { key: 'power', label: 'Power', width: 'min-w-[60pt] w-[60pt]' },
           { key: 'range', label: 'Range', width: 'min-w-[80pt] w-[100pt]' },
-          { key: 'dispersion', label: 'Dispersion', width: 'min-w-[80pt] w-[100pt]' }, 
+          { key: 'dispersion', label: 'Dispersion', width: 'min-w-[80pt] w-[100pt]' },
           { key: 'specialty', label: 'Specialty', width: 'min-w-[80pt] w-[120pt]' },
           { key: 'dimensions', label: 'H × W × D', width: 'min-w-[20pt] w-[20pt]' },
           { key: 'volume', label: 'Volume', width: 'w-[30pt]' }
@@ -73,7 +73,7 @@ export default {
           { key: 'sensitivity', label: 'SPL', width: 'min-w-[60pt] w-[60pt]' },
           { key: 'power', label: 'Power', width: 'min-w-[60pt] w-[60pt]' },
           { key: 'range', label: 'Range', width: 'min-w-[80pt] w-[100pt]' },
-          { key: 'dispersion', label: 'Dispersion', width: 'min-w-[80pt] w-[100pt]' }, 
+          { key: 'dispersion', label: 'Dispersion', width: 'min-w-[80pt] w-[100pt]' },
           { key: 'specialty', label: 'Specialty', width: 'min-w-[80pt] w-[120pt]' },
           { key: 'dimensions', label: 'H × W × D', width: 'min-w-[20pt] w-[20pt]' },
           { key: 'volume', label: 'Volume', width: 'w-[30pt]' }
@@ -113,7 +113,7 @@ export default {
         range: "",
         dispersion: "",
       },
-      
+
       showEditDialog: false,
       editingItem: {},
       isNewEntry: false,
@@ -147,43 +147,43 @@ export default {
       // Get tab from URL query parameter
       const urlParams = new URLSearchParams(window.location.search);
       const tabParam = urlParams.get('tab');
-      
+
       // Check if the tab parameter exists and is valid
       if (tabParam && ['hifi', 'hifi-commercial', 'pa', 'pa-commercial'].includes(tabParam)) {
         return tabParam;
       }
-      
+
       // Default to 'hifi' if no valid tab parameter
       return 'hifi';
     },
-    
+
     updateUrlWithTab(tab) {
       // Update URL without reloading the page
       const url = new URL(window.location);
       url.searchParams.set('tab', tab);
       window.history.pushState({}, '', url);
     },
-    
+
     async loadAllData() {
       try {
         // Load data for all tabs
         const tabs = Object.keys(this.dataSources);
-        
+
         // Create an array of promises for parallel loading
         const loadPromises = [];
-        
+
         for (const tab of tabs) {
           if (this.cachedItems[tab].length === 0) {
             // Add promise to array without awaiting it yet
             loadPromises.push(this.loadTabData(tab));
           }
         }
-        
+
         // Wait for all promises to resolve in parallel
         if (loadPromises.length > 0) {
           await Promise.all(loadPromises);
         }
-        
+
         // Set items based on active tab
         this.items = [...this.cachedItems[this.activeTab]];
         this.applyFilters();
@@ -195,21 +195,31 @@ export default {
         return Promise.reject(error);
       }
     },
-    
+
+    /**
+     * API reference:
+     * https://developers.google.com/sheets/api/reference/rest
+     * 
+     * The spreadsheet needs to be shared as:
+     * "File > Share > Share with others > anyone with the link can view".
+     * 
+     * Request limits:
+     * https://developers.google.com/sheets/api/limits
+     */
     async loadTabData(tab) {
       try {
         const url = this.dataSources[tab];
         const response = await fetch(url);
-        
+
         if (!response.ok) {
           throw new Error(`Response status: ${response.status}`);
         }
 
         const json = await response.json();
         json.values.shift(); // remove header row
-        
+
         const items = [];
-        
+
         json.values.forEach((item) => {
           var row = {};
           if (tab.includes('hifi')) {
@@ -229,7 +239,7 @@ export default {
               image_url: item[12]
             };
           }
-          
+
           // Add PA-specific fields if we're on the PA tab
           if (tab.startsWith('pa')) {
             row = {
@@ -251,14 +261,14 @@ export default {
               image_url: item[15]
             };
           }
-          
+
           items.push(row);
         });
-        
+
         // Update cached items and count
         this.cachedItems[tab] = items;
         this.tabCounts[tab] = items.length;
-        
+
         return items;
       } catch (error) {
         console.error(`Error loading data for tab ${tab}:`, error);
@@ -267,7 +277,7 @@ export default {
         return [];
       }
     },
-    
+
     async loadData() {
       // If we have cached data, use it
       if (this.cachedItems[this.activeTab].length > 0) {
@@ -281,7 +291,7 @@ export default {
         this.applyFilters();
       }
     },
-    
+
     switchTab(tab) {
       if (this.activeTab !== tab) {
         this.activeTab = tab;
@@ -291,7 +301,7 @@ export default {
     },
 
     calculateVolume(item) {
-      if(!item.height || !item.width || !item.depth) {
+      if (!item.height || !item.width || !item.depth) {
         return null;
       }
       const volumeInLiters = (item.height * item.width * item.depth) / 1000000;
@@ -342,13 +352,13 @@ export default {
         const f3Match = !this.filters.f3 || item.f3 <= this.filters.f3;
         const sensitivityMatch = !this.filters.sensitivity ||
           (item.sensitivity && item.sensitivity >= this.filters.sensitivity);
-          
+
         // PA-specific filters
-        const powerMatch = !this.filters.power || 
+        const powerMatch = !this.filters.power ||
           (item.power && item.power >= this.filters.power);
-        const rangeMatch = !this.filters.range || 
+        const rangeMatch = !this.filters.range ||
           (item.range && item.range.toLowerCase().includes(this.filters.range.toLowerCase()));
-        const dispersionMatch = !this.filters.dispersion || 
+        const dispersionMatch = !this.filters.dispersion ||
           (item.dispersion && item.dispersion.toLowerCase().includes(this.filters.dispersion.toLowerCase()));
 
         return (
@@ -399,9 +409,8 @@ export default {
       if (["enclosures", "types", "specialties"].includes(filterName)) {
         this.filters[filterName] = [];
         this[
-          `selected${
-            filterName.slice(0, -1).charAt(0).toUpperCase() +
-            filterName.slice(1, -1)
+          `selected${filterName.slice(0, -1).charAt(0).toUpperCase() +
+          filterName.slice(1, -1)
           }`
         ] = "";
       } else if (
@@ -478,7 +487,7 @@ export default {
     openDimensionsDialog() {
       this.showDimensionsDialog = true;
     },
-    
+
     applyDimensionsFilters() {
       this.applyFilters();
       this.showDimensionsDialog = false;
@@ -488,14 +497,14 @@ export default {
         // Check if all images in the table are loaded
         const images = document.querySelectorAll('table img');
         const allImagesLoaded = Array.from(images).every(img => img.complete);
-        
+
         if (allImagesLoaded) {
           // All images loaded, safe to scroll
           targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          
+
           // pulse
           const tr = targetElement.closest('tr');
-          if(tr) {
+          if (tr) {
             tr.classList.add('bg-green-100');
             setTimeout(() => {
               tr.classList.remove('bg-green-100');
@@ -531,7 +540,7 @@ export default {
     });
 
     window.addEventListener("keydown", this.handleKeydown);
-    
+
     // Listen for popstate events (browser back/forward buttons)
     window.addEventListener('popstate', () => {
       const newTab = this.getInitialTab();
@@ -551,11 +560,13 @@ export default {
   <!-- SVG Sprites - defined once -->
   <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
     <symbol id="edit-icon" viewBox="0 0 20 20">
-      <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+      <path
+        d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
     </symbol>
 
     <symbol id="anchor-icon" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
     </symbol>
   </svg>
 
@@ -568,10 +579,8 @@ export default {
             <span class="uppercase tracking-wide px-2 whitespace-nowrap">DIY Speaker DB</span>
           </a>
         </div>
-        <button
-          @click="createNewEntry"
-          class="px-3 py-2 font-medium bg-white text-sm text-green-700 rounded-md shadow-md cursor-pointer hover:bg-gray-100 hover:text-gray-900"
-        >
+        <button @click="createNewEntry"
+          class="px-3 py-2 font-medium bg-white text-sm text-green-700 rounded-md shadow-md cursor-pointer hover:bg-gray-100 hover:text-gray-900">
           Submit New Entry
         </button>
       </div>
@@ -579,41 +588,29 @@ export default {
 
     <!-- Tabs -->
     <div class="flex ml-6 space-x-1">
-      <button 
-        @click="switchTab('hifi')" 
-        class="px-4 py-1 rounded-t-md transition-colors"
-        :class="activeTab === 'hifi' ? 'bg-gray-50 text-green-700 font-medium shadow-sm' : 'text-gray-600 hover:text-green-600'"
-      >
+      <button @click="switchTab('hifi')" class="px-4 py-1 rounded-t-md transition-colors"
+        :class="activeTab === 'hifi' ? 'bg-gray-50 text-green-700 font-medium shadow-sm' : 'text-gray-600 hover:text-green-600'">
         HiFi
         <span class="ml-1 px-1.5 py-0.5 text-xs bg-green-100 text-green-800 rounded-full">
           {{ tabCounts.hifi }}
         </span>
       </button>
-      <button 
-        @click="switchTab('hifi-commercial')" 
-        class="px-4 py-1 rounded-t-md transition-colors"
-        :class="activeTab === 'hifi-commercial' ? 'bg-gray-50 text-green-700 font-medium shadow-sm' : 'text-gray-600 hover:text-green-600'"
-      >
+      <button @click="switchTab('hifi-commercial')" class="px-4 py-1 rounded-t-md transition-colors"
+        :class="activeTab === 'hifi-commercial' ? 'bg-gray-50 text-green-700 font-medium shadow-sm' : 'text-gray-600 hover:text-green-600'">
         HiFi Commercial
         <span class="ml-1 px-1.5 py-0.5 text-xs bg-green-100 text-green-800 rounded-full">
           {{ tabCounts['hifi-commercial'] }}
         </span>
       </button>
-      <button 
-        @click="switchTab('pa')" 
-        class="px-4 py-1 rounded-t-md transition-colors"
-        :class="activeTab === 'pa' ? 'bg-gray-50 text-green-700 font-medium shadow-sm' : 'text-gray-600 hover:text-green-600'"
-      >
+      <button @click="switchTab('pa')" class="px-4 py-1 rounded-t-md transition-colors"
+        :class="activeTab === 'pa' ? 'bg-gray-50 text-green-700 font-medium shadow-sm' : 'text-gray-600 hover:text-green-600'">
         PA
         <span class="ml-1 px-1.5 py-0.5 text-xs bg-green-100 text-green-800 rounded-full">
           {{ tabCounts.pa }}
         </span>
       </button>
-      <button 
-        @click="switchTab('pa-commercial')" 
-        class="px-4 py-1 rounded-t-md transition-colors"
-        :class="activeTab === 'pa-commercial' ? 'bg-gray-50 text-green-700 font-medium shadow-sm' : 'text-gray-600 hover:text-green-600'"
-      >
+      <button @click="switchTab('pa-commercial')" class="px-4 py-1 rounded-t-md transition-colors"
+        :class="activeTab === 'pa-commercial' ? 'bg-gray-50 text-green-700 font-medium shadow-sm' : 'text-gray-600 hover:text-green-600'">
         PA Commercial
         <span class="ml-1 px-1.5 py-0.5 text-xs bg-green-100 text-green-800 rounded-full">
           {{ tabCounts['pa-commercial'] }}
@@ -623,25 +620,16 @@ export default {
     <!-- Main Content -->
     <div class="container min-w-full mx-auto">
       <!-- Table -->
-      <div
-        class=" min-w-full w-fit rounded-lg px-1"
-      >
+      <div class=" min-w-full w-fit rounded-lg px-1">
         <table class="min-w-full table-fixed divide-y divide-gray-200">
           <thead class="sticky top-0 text-green-700 bg-gray-50">
             <!-- Header Row -->
             <tr class="text-sm uppercase">
-              <th
-                v-for="(column, index) in columnConfigs[activeTab]"
-                :key="column.key"
-                scope="col"
-                :class="column.width + ' px-1 py-3 whitespace-nowrap'"
-              >
+              <th v-for="(column, index) in columnConfigs[activeTab]" :key="column.key" scope="col"
+                :class="column.width + ' px-1 py-3 whitespace-nowrap'">
                 {{ column.label }}
               </th>
-              <th
-                scope="col"
-                class="w-[20pt] px-2 py-3"
-              ></th>
+              <th scope="col" class="w-[20pt] px-2 py-3"></th>
             </tr>
 
             <!-- Filter Row -->
@@ -650,315 +638,201 @@ export default {
               <th v-for="(column, index) in columnConfigs[activeTab]" :key="column.key" class="px-3 py-3">
                 <!-- Image column (no filter) -->
                 <template v-if="column.key === 'image'"></template>
-                
+
                 <!-- Name filter -->
-                <input v-else-if="column.key === 'name'"
-                  type="text"
-                  v-model="filters.name"
-                  @input="applyFilters"
+                <input v-else-if="column.key === 'name'" type="text" v-model="filters.name" @input="applyFilters"
                   @keyup.esc="clearFilter('name')"
                   class="w-full font-normal rounded-md px-2 py-1 bg-white border-green-300 text-gray-900"
-                  placeholder="Filter by name"
-                />
-                
+                  placeholder="Filter by name" />
+
                 <!-- Developer filter -->
-                <input v-else-if="column.key === 'developer'"
-                  type="text"
-                  v-model="filters.developer"
-                  @input="applyFilters"
-                  @keyup.esc="clearFilter('developer')"
+                <input v-else-if="column.key === 'developer'" type="text" v-model="filters.developer"
+                  @input="applyFilters" @keyup.esc="clearFilter('developer')"
                   class="w-full font-normal rounded-md px-2 py-1 bg-white border-green-300 text-gray-900 focus:border-green-500"
-                  placeholder="Filter by developer"
-                />
-                
+                  placeholder="Filter by developer" />
+
                 <!-- Price filter -->
-                <input v-else-if="column.key === 'price'"
-                  type="number"
-                  v-model.number="filters.price"
-                  @input="applyFilters"
-                  @keyup.esc="clearFilter('price')"
+                <input v-else-if="column.key === 'price'" type="number" v-model.number="filters.price"
+                  @input="applyFilters" @keyup.esc="clearFilter('price')"
                   class="w-full font-normal rounded-md px-2 py-1 text-gray-900 bg-white border-green-300 focus:border-green-500"
-                  placeholder="< €"
-                />
-                
+                  placeholder="< €" />
+
                 <!-- Enclosure filter -->
                 <div v-else-if="column.key === 'enclosure'" class="relative">
-                  <select
-                    v-model="selectedEnclosure"
-                    @change="addFilter('enclosures', selectedEnclosure)"
-                    class="w-full font-normal text-gray-500 rounded-md mt-1 px-2 py-1 bg-white border-green-300 focus:border-green-500"
-                  >
+                  <select v-model="selectedEnclosure" @change="addFilter('enclosures', selectedEnclosure)"
+                    class="w-full font-normal text-gray-500 rounded-md mt-1 px-2 py-1 bg-white border-green-300 focus:border-green-500">
                     <option class="" value="">Select...</option>
-                    <option
-                      v-for="enclosure in availableEnclosures"
-                      :key="enclosure"
-                      :value="enclosure"
-                    >
+                    <option v-for="enclosure in availableEnclosures" :key="enclosure" :value="enclosure">
                       {{ enclosure }}
                     </option>
                   </select>
                   <div class="mt-2 flex flex-wrap gap-2 font-normal">
-                    <span
-                      v-for="item in filters.enclosures"
-                      :key="item"
-                      class="inline-flex items-center pl-2 py-1 rounded-md text-xs bg-green-300 text-gray-900"
-                    >
+                    <span v-for="item in filters.enclosures" :key="item"
+                      class="inline-flex items-center pl-2 py-1 rounded-md text-xs bg-green-300 text-gray-900">
                       {{ item }}
-                      <button
-                        @click="removeFilter('enclosures', item)"
-                        class="ml-1 mr-2 font-normal text-gray-500 hover:cursor-pointer hover:text-red-700"
-                      >
+                      <button @click="removeFilter('enclosures', item)"
+                        class="ml-1 mr-2 font-normal text-gray-500 hover:cursor-pointer hover:text-red-700">
                         ×
                       </button>
                     </span>
                   </div>
                 </div>
-                
+
                 <!-- Type filter -->
                 <div v-else-if="column.key === 'type'" class="relative">
-                  <select
-                    v-model="selectedType"
-                    @change="addFilter('types', selectedType)"
-                    class="w-full font-normal text-gray-500 rounded-md mt-1 px-2 py-1 bg-white border-green-300 focus:border-green-500"
-                  >
+                  <select v-model="selectedType" @change="addFilter('types', selectedType)"
+                    class="w-full font-normal text-gray-500 rounded-md mt-1 px-2 py-1 bg-white border-green-300 focus:border-green-500">
                     <option value="">Select...</option>
-                    <option
-                      v-for="type in availableTypesHifi"
-                      v-if="this.activeTab.startsWith('hifi')"
-                      :key="type"
-                      :value="type"
-                    >
+                    <option v-for="type in availableTypesHifi" v-if="this.activeTab.startsWith('hifi')" :key="type"
+                      :value="type">
                       {{ type }}
                     </option>
-                    <option
-                      v-for="type in availableTypesPa"
-                      v-if="this.activeTab.startsWith('pa')"
-                      :key="type"
-                      :value="type"
-                    >
+                    <option v-for="type in availableTypesPa" v-if="this.activeTab.startsWith('pa')" :key="type"
+                      :value="type">
                       {{ type }}
                     </option>
                   </select>
                   <div class="mt-2 flex flex-wrap gap-2 font-normal">
-                    <span
-                      v-for="item in filters.types"
-                      :key="item"
-                      class="inline-flex items-center pl-2 py-1 rounded-md text-xs bg-green-300 text-gray-900"
-                    >
+                    <span v-for="item in filters.types" :key="item"
+                      class="inline-flex items-center pl-2 py-1 rounded-md text-xs bg-green-300 text-gray-900">
                       {{ item }}
-                      <button
-                        @click="removeFilter('types', item)"
-                        class="ml-1 mr-2 font-normal text-gray-500 hover:cursor-pointer hover:text-red-700"
-                      >
+                      <button @click="removeFilter('types', item)"
+                        class="ml-1 mr-2 font-normal text-gray-500 hover:cursor-pointer hover:text-red-700">
                         ×
                       </button>
                     </span>
                   </div>
                 </div>
-                
+
                 <!-- F3 filter -->
-                <input v-else-if="column.key === 'f3'"
-                  type="number"
-                  v-model.number="filters.f3"
-                  @input="applyFilters"
+                <input v-else-if="column.key === 'f3'" type="number" v-model.number="filters.f3" @input="applyFilters"
                   @keyup.esc="clearFilter('f3')"
                   class="w-full font-normal text-gray-900 rounded-md px-2 py-1 bg-white border-green-300 focus:border-green-500"
-                  placeholder="< Hz"
-                />
-                
+                  placeholder="< Hz" />
+
                 <!-- Sensitivity filter -->
-                <input v-else-if="column.key === 'sensitivity'"
-                  type="number"
-                  name="filter-sensitivity"
-                  v-model.number="filters.sensitivity"
-                  @input="applyFilters"
-                  @keyup.esc="clearFilter('sensitivity')"
+                <input v-else-if="column.key === 'sensitivity'" type="number" name="filter-sensitivity"
+                  v-model.number="filters.sensitivity" @input="applyFilters" @keyup.esc="clearFilter('sensitivity')"
                   class="w-full font-normal text-gray-900 rounded-md px-2 py-1 bg-white border-green-300 focus:border-green-500"
-                  placeholder="> dB"
-                />
-                
+                  placeholder="> dB" />
+
                 <!-- Power filter (PA only) -->
-                <input v-else-if="column.key === 'power'"
-                  type="number"
-                  v-model.number="filters.power"
-                  @input="applyFilters"
-                  @keyup.esc="clearFilter('power')"
+                <input v-else-if="column.key === 'power'" type="number" v-model.number="filters.power"
+                  @input="applyFilters" @keyup.esc="clearFilter('power')"
                   class="w-full font-normal text-gray-900 rounded-md px-2 py-1 bg-white border-green-300 focus:border-green-500"
-                  placeholder="> W"
-                />
-                
+                  placeholder="> W" />
+
                 <!-- Range filter (PA only) -->
-                <input v-else-if="column.key === 'range'"
-                  type="text"
-                  v-model="filters.range"
-                  @input="applyFilters"
+                <input v-else-if="column.key === 'range'" type="text" v-model="filters.range" @input="applyFilters"
                   @keyup.esc="clearFilter('range')"
                   class="w-full font-normal text-gray-900 rounded-md px-2 py-1 bg-white border-green-300 focus:border-green-500"
-                  placeholder="Filter range"
-                />
-                
+                  placeholder="Filter range" />
+
                 <!-- Dispersion filter (PA only) -->
-                <input v-else-if="column.key === 'dispersion'"
-                  type="text"
-                  v-model="filters.dispersion"
-                  @input="applyFilters"
-                  @keyup.esc="clearFilter('dispersion')"
+                <input v-else-if="column.key === 'dispersion'" type="text" v-model="filters.dispersion"
+                  @input="applyFilters" @keyup.esc="clearFilter('dispersion')"
                   class="w-full font-normal text-gray-900 rounded-md px-2 py-1 bg-white border-green-300 focus:border-green-500"
-                  placeholder="Filter dispersion"
-                />
-                
+                  placeholder="Filter dispersion" />
+
                 <!-- Specialty filter -->
                 <div v-else-if="column.key === 'specialty'" class="relative">
-                  <select
-                    v-model="selectedSpecialty"
-                    @change="addFilter('specialties', selectedSpecialty)"
-                    class="w-full font-normal text-gray-500 rounded-md mt-1 px-2 py-1 bg-white border-green-300 focus:border-green-500"
-                  >
+                  <select v-model="selectedSpecialty" @change="addFilter('specialties', selectedSpecialty)"
+                    class="w-full font-normal text-gray-500 rounded-md mt-1 px-2 py-1 bg-white border-green-300 focus:border-green-500">
                     <option value="">Select...</option>
-                    <option
-                      v-for="specialty in availableSpecialties"
-                      :key="specialty"
-                      :value="specialty"
-                    >
+                    <option v-for="specialty in availableSpecialties" :key="specialty" :value="specialty">
                       {{ specialty }}
                     </option>
                   </select>
                   <div class="mt-2 flex flex-wrap gap-2 font-normal">
-                    <span
-                      v-for="item in filters.specialties"
-                      :key="item"
-                      class="inline-flex items-center pl-2 py-1 rounded-md text-xs bg-green-300 text-gray-900"
-                    >
+                    <span v-for="item in filters.specialties" :key="item"
+                      class="inline-flex items-center pl-2 py-1 rounded-md text-xs bg-green-300 text-gray-900">
                       {{ item }}
-                      <button
-                        @click="removeFilter('specialties', item)"
-                        class="ml-1 mr-2 font-normal text-gray-500 hover:cursor-pointer hover:text-red-700"
-                      >
+                      <button @click="removeFilter('specialties', item)"
+                        class="ml-1 mr-2 font-normal text-gray-500 hover:cursor-pointer hover:text-red-700">
                         ×
                       </button>
                     </span>
                   </div>
                 </div>
-                
+
                 <!-- Dimensions filter -->
                 <div v-else-if="column.key === 'dimensions'" class="relative">
-                  <button
-                    @click="openDimensionsDialog"
-                    class="w-full font-normal text-sm text-gray-500 rounded-md mt-1 px-2 py-1 bg-white border border-green-300 hover:bg-gray-50"
-                  >
+                  <button @click="openDimensionsDialog"
+                    class="w-full font-normal text-sm text-gray-500 rounded-md mt-1 px-2 py-1 bg-white border border-green-300 hover:bg-gray-50">
                     Filter...
                   </button>
-                  
+
                   <!-- Show filter indicators if any dimension filter is applied -->
-                  <div v-if="filters.height || filters.width || filters.depth" class="mt-2 flex flex-wrap gap-2 font-normal">
-                    <span
-                      v-if="filters.height"
-                      class="inline-flex items-center pl-2 py-1 rounded-md text-xs bg-green-300 text-gray-900"
-                    >
+                  <div v-if="filters.height || filters.width || filters.depth"
+                    class="mt-2 flex flex-wrap gap-2 font-normal">
+                    <span v-if="filters.height"
+                      class="inline-flex items-center pl-2 py-1 rounded-md text-xs bg-green-300 text-gray-900">
                       H: {{ filters.height }}
-                      <button
-                        @click="clearFilter('height')"
-                        class="ml-1 mr-2 font-normal text-gray-500 hover:cursor-pointer hover:text-red-700"
-                      >
+                      <button @click="clearFilter('height')"
+                        class="ml-1 mr-2 font-normal text-gray-500 hover:cursor-pointer hover:text-red-700">
                         ×
                       </button>
                     </span>
-                    <span
-                      v-if="filters.width"
-                      class="inline-flex items-center pl-2 py-1 rounded-md text-xs bg-green-300 text-gray-900"
-                    >
+                    <span v-if="filters.width"
+                      class="inline-flex items-center pl-2 py-1 rounded-md text-xs bg-green-300 text-gray-900">
                       W: {{ filters.width }}
-                      <button
-                        @click="clearFilter('width')"
-                        class="ml-1 mr-2 font-normal text-gray-500 hover:cursor-pointer hover:text-red-700"
-                      >
+                      <button @click="clearFilter('width')"
+                        class="ml-1 mr-2 font-normal text-gray-500 hover:cursor-pointer hover:text-red-700">
                         ×
                       </button>
                     </span>
-                    <span
-                      v-if="filters.depth"
-                      class="inline-flex items-center pl-2 py-1 rounded-md text-xs bg-green-300 text-gray-900"
-                    >
+                    <span v-if="filters.depth"
+                      class="inline-flex items-center pl-2 py-1 rounded-md text-xs bg-green-300 text-gray-900">
                       D: {{ filters.depth }}
-                      <button
-                        @click="clearFilter('depth')"
-                        class="ml-1 mr-2 font-normal text-gray-500 hover:cursor-pointer hover:text-red-700"
-                      >
+                      <button @click="clearFilter('depth')"
+                        class="ml-1 mr-2 font-normal text-gray-500 hover:cursor-pointer hover:text-red-700">
                         ×
                       </button>
                     </span>
                   </div>
                 </div>
-                
+
                 <!-- Volume filter -->
-                <input v-else-if="column.key === 'volume'"
-                  type="number"
-                  v-model.number="filters.volume"
-                  @input="applyFilters"
-                  @keyup.esc="clearFilter('volume')"
+                <input v-else-if="column.key === 'volume'" type="number" v-model.number="filters.volume"
+                  @input="applyFilters" @keyup.esc="clearFilter('volume')"
                   class="w-full font-normal rounded-md px-2 py-1 bg-white text-gray-900 border-green-300 focus:border-green-500"
-                  placeholder="< L"
-                />
+                  placeholder="< L" />
               </th>
               <th class="px-3 py-3"></th>
             </tr>
           </thead>
 
-          <tbody
-            class="table-row-group w-full bg-white divide-y divide-gray-200"
-          >
-            <tr
-              class="hover:bg-gray-50 text-sm font-normal text-gray-800 transition-colors duration-1000"
-              v-for="(item, index) in displayedItems"
-              :key="index"
-              :id="'speaker-' + encodeURIComponent(item.name?.replace(/\s+/g, '-').toLowerCase() || index)"
-            >
-              <td  class="px-2 py-4">
-                <a
-                  v-if="item.image_url"
-                  :href="item.url"
-                  target="_blank"
-                  class=""
-                >
-                <div class="overflow-hidden rounded-sm">
-                <img v-if="item.image_url"
-                     :src="proxyImage(item.image_url)"
-                     :alt="item.name"
-                     class="hover:scale-105"/>
-                     </div>
-              </a>
+          <tbody class="table-row-group w-full bg-white divide-y divide-gray-200">
+            <tr class="hover:bg-gray-50 text-sm font-normal text-gray-800 transition-colors duration-1000"
+              v-for="(item, index) in displayedItems" :key="index"
+              :id="'speaker-' + encodeURIComponent(item.name?.replace(/\s+/g, '-').toLowerCase() || index)">
+              <td class="px-2 py-4">
+                <a v-if="item.image_url" :href="item.url" target="_blank" class="">
+                  <div class="overflow-hidden rounded-sm">
+                    <img v-if="item.image_url" :src="proxyImage(item.image_url)" :alt="item.name"
+                      class="hover:scale-105 max-h-[120px]" />
+                  </div>
+                </a>
               </td>
               <td class="px-2 py-4">
                 <div class="flex items-start gap-2">
                   <div class="min-w-0">
-                    <a
-                      :href="item.url"
-                      target="_blank"
-                      class="text-green-900 underline text-sm font-normal text-gray-800 hover:text-green-700"
-                    >
+                    <a :href="item.url" target="_blank"
+                      class="text-green-900 underline text-sm font-normal text-gray-800 hover:text-green-700">
                       {{ item.name }}
                     </a>
                   </div>
                   <div class="inline-block relative shrink-0">
-                    <a
-                      :href="createAnchor(item.name)"
-                      class="text-gray-400 hover:text-green-700 cursor-pointer"
-                      title="Copy link to this speaker"
-                      @click.prevent="copyAnchorToClipboard(item.name)"
-                    >
+                    <a :href="createAnchor(item.name)" class="text-gray-400 hover:text-green-700 cursor-pointer"
+                      title="Copy link to this speaker" @click.prevent="copyAnchorToClipboard(item.name)">
                       <svg class="h-4 w-4 inline" fill="none">
                         <use xlink:href="#anchor-icon" />
                       </svg>
                     </a>
 
-                    <transition
-                      leave-active-class="transition duration-500"
-                      leave-to-class="opacity-0"
-                    >
-                      <div
-                        v-if="copiedMessage && copiedSpeaker === item.name"
-                        class="absolute left-full top-0 ml-2 bg-green-100 text-green-700 text-xs px-2 py-1 rounded whitespace-nowrap"
-                      >
+                    <transition leave-active-class="transition duration-500" leave-to-class="opacity-0">
+                      <div v-if="copiedMessage && copiedSpeaker === item.name"
+                        class="absolute left-full top-0 ml-2 bg-green-100 text-green-700 text-xs px-2 py-1 rounded whitespace-nowrap">
                         {{ copiedMessage }}
                       </div>
                     </transition>
@@ -1011,11 +885,9 @@ export default {
                 <span v-if="!calculateVolume(item)" class="text-gray-400">N/A</span>
               </td>
               <td class="px-2 py-4 text-center">
-                <button
-                  @click="editItem(item)"
+                <button @click="editItem(item)"
                   class="p-1 text-gray-600 rounded-md cursor-pointer hover:bg-gray-100 hover:text-green-700"
-                  title="Edit"
-                >
+                  title="Edit">
                   <svg class="h-4 w-4" fill="currentColor">
                     <use xlink:href="#edit-icon" />
                   </svg>
@@ -1027,79 +899,58 @@ export default {
       </div>
 
       <!-- Dimensions Filter Dialog -->
-      <div
-        v-if="showDimensionsDialog"
-        class="fixed inset-0 flex items-center justify-center p-4 bg-gray-50 bg-opacity-75 z-10"
-      >
+      <div v-if="showDimensionsDialog"
+        class="fixed inset-0 flex items-center justify-center p-4 bg-gray-50 bg-opacity-75 z-10">
         <div class="bg-white text-green-900 rounded-md shadow-lg max-w-md w-full p-6">
           <h2 class="text-lg font-bold uppercase mb-4">Filter Dimensions</h2>
-          
+
           <div class="space-y-4">
             <div>
               <label class="block text-sm font-medium text-green-800 mb-2">
                 Height (mm)
               </label>
-              <input
-                type="number"
-                v-model.number="filters.height"
+              <input type="number" v-model.number="filters.height"
                 class="w-full font-normal rounded-md px-3 py-2 border border-green-300 focus:border-green-500 focus:outline-none"
-                placeholder="Maximum height"
-              />
+                placeholder="Maximum height" />
             </div>
-            
+
             <div>
               <label class="block text-sm font-medium text-green-800 mb-2">
                 Width (mm)
               </label>
-              <input
-                type="number"
-                v-model.number="filters.width"
+              <input type="number" v-model.number="filters.width"
                 class="w-full font-normal rounded-md px-3 py-2 border border-green-300 focus:border-green-500 focus:outline-none"
-                placeholder="Maximum width"
-              />
+                placeholder="Maximum width" />
             </div>
-            
+
             <div>
               <label class="block text-sm font-medium text-green-800 mb-2">
                 Depth (mm)
               </label>
-              <input
-                type="number"
-                v-model.number="filters.depth"
+              <input type="number" v-model.number="filters.depth"
                 class="w-full font-normal rounded-md px-3 py-2 border border-green-300 focus:border-green-500 focus:outline-none"
-                placeholder="Maximum depth"
-              />
+                placeholder="Maximum depth" />
             </div>
           </div>
-          
+
           <div class="mt-6 flex justify-end space-x-3">
-            <button
-              @click="showDimensionsDialog = false"
-              class="px-4 py-2 cursor-pointer bg-gray-200 border-gray-500 rounded-md text-gray-500 shadow-sm hover:bg-gray-100"
-            >
+            <button @click="showDimensionsDialog = false"
+              class="px-4 py-2 cursor-pointer bg-gray-200 border-gray-500 rounded-md text-gray-500 shadow-sm hover:bg-gray-100">
               Cancel
             </button>
-            <button
-              @click="applyDimensionsFilters"
-              class="px-4 py-2 text-sm font-medium text-green-900 bg-green-200 border-gray-500 rounded-md shadow-md cursor-pointer hover:bg-gray-100"
-            >
+            <button @click="applyDimensionsFilters"
+              class="px-4 py-2 text-sm font-medium text-green-900 bg-green-200 border-gray-500 rounded-md shadow-md cursor-pointer hover:bg-gray-100">
               Apply
             </button>
           </div>
         </div>
       </div>
-      
+
       <!-- Edit Dialog Component -->
-      <edit-item-dialog
-          :prop-show-dialog="showEditDialog"
-          :prop-editing-item="editingItem"
-          :is-new-entry="isNewEntry"
-          :available-enclosures="availableEnclosures"
-          :available-types-hifi="availableTypesHifi"
-          :available-types-pa="availableTypesPa"
-          :available-specialties="availableSpecialties" 
-          @reset-edit-dialog="resetEditDialog"
-      />
+      <edit-item-dialog :prop-show-dialog="showEditDialog" :prop-editing-item="editingItem" :is-new-entry="isNewEntry"
+        :available-enclosures="availableEnclosures" :available-types-hifi="availableTypesHifi"
+        :available-types-pa="availableTypesPa" :available-specialties="availableSpecialties"
+        @reset-edit-dialog="resetEditDialog" />
     </div>
   </div>
 </template>
