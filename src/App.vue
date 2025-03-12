@@ -1,11 +1,14 @@
 <script>
 import { proxyImage } from './utils/imageProxy';
 import EditItemDialog from './components/EditItemDialog.vue';
+import CompareWidget from './components/CompareWidget.vue';
+
 
 export default {
   name: "App",
   components: {
-    EditItemDialog
+    EditItemDialog,
+    CompareWidget
   },
   data() {
     return {
@@ -122,19 +125,20 @@ export default {
       selectedType: "",
       selectedSpecialty: "",
       cachedItems: {
-        hifi: [],
+        'hifi': [],
         'hifi-commercial': [],
-        pa: [],
+        'pa': [],
         'pa-commercial': []
       },
       tabCounts: {
-        hifi: 0,
+        'hifi': 0,
         'hifi-commercial': 0,
-        pa: 0,
+        'pa': 0,
         'pa-commercial': 0
       },
       copiedMessage: "",
-      copiedSpeaker: null
+      copiedSpeaker: null,
+      compareItems: []
     };
   }, // end data()
   computed: {
@@ -278,16 +282,16 @@ export default {
       }
     },
 
-    async loadData() {
+    async loadData(tab) {
       // If we have cached data, use it
-      if (this.cachedItems[this.activeTab].length > 0) {
-        this.items = [...this.cachedItems[this.activeTab]];
+      if (this.cachedItems[tab].length > 0) {
+        this.items = [...this.cachedItems[tab]];
         this.applyFilters();
       } else {
         // Otherwise, load it
         this.items = [];
-        await this.loadTabData(this.activeTab);
-        this.items = [...this.cachedItems[this.activeTab]];
+        await this.loadTabData(tab);
+        this.items = [...this.cachedItems[tab]];
         this.applyFilters();
       }
     },
@@ -296,7 +300,7 @@ export default {
       if (this.activeTab !== tab) {
         this.activeTab = tab;
         this.updateUrlWithTab(tab); // Update URL with the new tab
-        this.loadData();
+        this.loadData(this.activeTab);
       }
     },
 
@@ -465,6 +469,20 @@ export default {
       this.editingItem = {};
     },
 
+    addItemToComparison(item) {
+      if(!this.compareItems.includes(item)) {
+        this.compareItems.push(item);
+      }
+    },
+
+    startCompareItems(itemsToCompare) {
+      this.displayedItems = itemsToCompare;
+    },
+
+    endCompareItems() {
+      this.applyFilters();
+    },
+
     handleKeydown(event) {
       if (event.key === "Escape") {
         if (this.showDimensionsDialog) {
@@ -546,7 +564,7 @@ export default {
       const newTab = this.getInitialTab();
       if (this.activeTab !== newTab) {
         this.activeTab = newTab;
-        this.loadData();
+        this.loadData(this.activeTab);
       }
     });
   },
@@ -567,6 +585,19 @@ export default {
     <symbol id="anchor-icon" viewBox="0 0 24 24" stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
         d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+    </symbol>
+
+    <symbol id="compare-icon" viewBox="0 0 1024 896">
+      <path d="M832 721.75V320c0-192.5-192-192-192-192h-64V0L384 192l192 192V256c0 0 26.688 0 64 0 56.438 0 64 64 64 64v401.75c-38.125 22.188-64 62.875-64 110.25 0 70.625 57.375 128 128 128s128-57.375 128-128C896 784.75 870.125 743.938 832 721.75zM768 896c-35.312 0-64-28.625-64-64 0-35.312 28.688-64 64-64 35.375 0 64 28.688 64 64C832 867.375 803.375 896 768 896zM64 315.59400000000005v401.719c0 192.5 192 192 192 192h64v128l192-192-192-192v128c0 0-26.688 0-64 0-56.438 0-64-64-64-64V315.59400000000005c38.156-22.219 64-62.906 64-110.281 0-70.656-57.344-128-128-128s-128 57.344-128 128C0 252.59400000000005 25.844 293.375 64 315.59400000000005zM128 272c-35.312 0-64-28.594-64-64 0-35.312 28.688-64 64-64 35.406 0 64 28.688 64 64C192 243.40599999999995 163.406 272 128 272z"/>
+    </symbol>
+
+    <symbol id="trash-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="24" height="24" fill="white"/>
+      <path d="M5 7.5H19L18 21H6L5 7.5Z" stroke="#000000" stroke-linejoin="round"/>
+      <path d="M15.5 9.5L15 19" stroke="#000000" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M12 9.5V19" stroke="#000000" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M8.5 9.5L9 19" stroke="#000000" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M16 5H19C20.1046 5 21 5.89543 21 7V7.5H3V7C3 5.89543 3.89543 5 5 5H8M16 5L15 3H9L8 5M16 5H8" stroke="#000000" stroke-linejoin="round"/>
     </symbol>
   </svg>
 
@@ -892,6 +923,13 @@ export default {
                     <use xlink:href="#edit-icon" />
                   </svg>
                 </button>
+                <button @click="addItemToComparison(item)"
+                  class="p-1 text-gray-600 rounded-md cursor-pointer hover:bg-gray-100 hover:text-green-700"
+                  title="Compare">
+                  <svg class="h-4 w-4" fill="currentColor">
+                    <use xlink:href="#compare-icon" />
+                  </svg>
+                </button>
               </td>
             </tr>
           </tbody>
@@ -951,6 +989,11 @@ export default {
         :available-enclosures="availableEnclosures" :available-types-hifi="availableTypesHifi"
         :available-types-pa="availableTypesPa" :available-specialties="availableSpecialties"
         @reset-edit-dialog="resetEditDialog" />
+
+      <compare-widget
+        :items="compareItems"
+        @start-compare-items="startCompareItems"
+        @end-compare-items="endCompareItems" />
     </div>
   </div>
 </template>
