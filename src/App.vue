@@ -265,7 +265,9 @@ export default {
               width: item[12].length > 0 ? parseFloat(item[12]) : null,
               depth: item[13].length > 0 ? parseFloat(item[13]) : null,
               url: item[14],
-              image_url: item[15]
+              image_url: item[15],
+              score: item[16],
+              popular: item[17] === "TRUE",
             };
           }
 
@@ -907,7 +909,7 @@ export default {
                     </transition>
                   </div>
 
-                  <svg v-if="item.popular" class="h-4 w-4 inline" fill="currentColor">
+                  <svg v-if="item.popular" class="h-4 w-4 inline shrink-0" fill="currentColor">
                     <use xlink:href="#star-icon" />
                   </svg>
 
