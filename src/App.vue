@@ -24,7 +24,7 @@ export default {
       },
       columnConfigs: {
         hifi: [
-          { key: 'image', label: '', width: 'min-w-[70pt] w-[70pt]' },
+          { key: 'image', label: 'Popular', width: 'min-w-[70pt] w-[70pt]' },
           { key: 'name', label: 'Name', width: 'min-w-[120pt] w-[250pt]' },
           { key: 'developer', label: 'Developer', width: 'min-w-[100pt] w-[200pt]' },
           { key: 'price', label: 'Price', width: 'min-w-[70pt] w-[70pt]' },
@@ -37,7 +37,7 @@ export default {
           { key: 'volume', label: 'Volume', width: 'w-[30pt]' }
         ],
         'hifi-commercial': [
-          { key: 'image', label: '', width: 'min-w-[70pt] w-[70pt]' },
+          { key: 'image', label: 'Popular', width: 'min-w-[70pt] w-[70pt]' },
           { key: 'name', label: 'Name', width: 'min-w-[120pt] w-[250pt]' },
           { key: 'developer', label: 'Developer', width: 'min-w-[100pt] w-[200pt]' },
           { key: 'price', label: 'Price', width: 'min-w-[70pt] w-[70pt]' },
@@ -50,7 +50,7 @@ export default {
           { key: 'volume', label: 'Volume', width: 'w-[30pt]' }
         ],
         pa: [
-          { key: 'image', label: '', width: 'min-w-[70pt] w-[70pt]' },
+          { key: 'image', label: 'Popular', width: 'min-w-[70pt] w-[70pt]' },
           { key: 'name', label: 'Name', width: 'min-w-[120pt] w-[250pt]' },
           { key: 'developer', label: 'Developer', width: 'min-w-[100pt] w-[200pt]' },
           { key: 'price', label: 'Price', width: 'min-w-[40pt] w-[40pt]' },
@@ -66,7 +66,7 @@ export default {
           { key: 'volume', label: 'Volume', width: 'w-[30pt]' }
         ],
         'pa-commercial': [
-          { key: 'image', label: '', width: 'min-w-[70pt] w-[70pt]' },
+          { key: 'image', label: 'Popular', width: 'min-w-[70pt] w-[70pt]' },
           { key: 'name', label: 'Name', width: 'min-w-[120pt] w-[250pt]' },
           { key: 'developer', label: 'Developer', width: 'min-w-[100pt] w-[200pt]' },
           { key: 'price', label: 'Price', width: 'min-w-[40pt] w-[40pt]' },
@@ -100,6 +100,7 @@ export default {
       availableTypesPa: ["Subwoofer", "Top", "Line Array"],
       availableSpecialties: ["Koax", "Passive Membrane", "Broadband", "AMT", "D'Appolito"],
       filters: {
+        popular: false,
         name: "",
         price: null,
         enclosures: [],
@@ -240,7 +241,9 @@ export default {
               width: item[9].length > 0 ? parseFloat(item[9]) : null,
               depth: item[10].length > 0 ? parseFloat(item[10]) : null,
               url: item[11],
-              image_url: item[12]
+              image_url: item[12],
+              score:  item[13],
+              popular: item[14] === "TRUE",
             };
           }
 
@@ -323,6 +326,7 @@ export default {
       this.displayedItems = this.items.filter((item) => {
         if (!item) return false;
 
+        const popularMatch = (!this.filters.popular) || (this.filters.popular === item.popular);
         const nameMatch = (item.name || "")
           .toLowerCase()
           .includes((this.filters.name || "").toLowerCase());
@@ -366,6 +370,7 @@ export default {
           (item.dispersion && item.dispersion.toLowerCase().includes(this.filters.dispersion.toLowerCase()));
 
         return (
+          popularMatch && 
           nameMatch &&
           priceMatch &&
           enclosureMatch &&
@@ -591,7 +596,7 @@ export default {
       <path d="M832 721.75V320c0-192.5-192-192-192-192h-64V0L384 192l192 192V256c0 0 26.688 0 64 0 56.438 0 64 64 64 64v401.75c-38.125 22.188-64 62.875-64 110.25 0 70.625 57.375 128 128 128s128-57.375 128-128C896 784.75 870.125 743.938 832 721.75zM768 896c-35.312 0-64-28.625-64-64 0-35.312 28.688-64 64-64 35.375 0 64 28.688 64 64C832 867.375 803.375 896 768 896zM64 315.59400000000005v401.719c0 192.5 192 192 192 192h64v128l192-192-192-192v128c0 0-26.688 0-64 0-56.438 0-64-64-64-64V315.59400000000005c38.156-22.219 64-62.906 64-110.281 0-70.656-57.344-128-128-128s-128 57.344-128 128C0 252.59400000000005 25.844 293.375 64 315.59400000000005zM128 272c-35.312 0-64-28.594-64-64 0-35.312 28.688-64 64-64 35.406 0 64 28.688 64 64C192 243.40599999999995 163.406 272 128 272z"/>
     </symbol>
 
-    <symbol id="trash-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="trash-icon" viewBox="0 0 24 24" fill="none">
       <rect width="24" height="24" fill="white"/>
       <path d="M5 7.5H19L18 21H6L5 7.5Z" stroke="#000000" stroke-linejoin="round"/>
       <path d="M15.5 9.5L15 19" stroke="#000000" stroke-linecap="round" stroke-linejoin="round"/>
@@ -599,6 +604,13 @@ export default {
       <path d="M8.5 9.5L9 19" stroke="#000000" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M16 5H19C20.1046 5 21 5.89543 21 7V7.5H3V7C3 5.89543 3.89543 5 5 5H8M16 5L15 3H9L8 5M16 5H8" stroke="#000000" stroke-linejoin="round"/>
     </symbol>
+
+    <symbol id="star-icon" viewBox="0 0 256 256" xml:space="preserve">
+      <g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;" transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)" >
+        <path d="M 47.755 3.765 l 11.525 23.353 c 0.448 0.907 1.313 1.535 2.314 1.681 l 25.772 3.745 c 2.52 0.366 3.527 3.463 1.703 5.241 L 70.42 55.962 c -0.724 0.706 -1.055 1.723 -0.884 2.72 l 4.402 25.667 c 0.431 2.51 -2.204 4.424 -4.458 3.239 L 46.43 75.47 c -0.895 -0.471 -1.965 -0.471 -2.86 0 L 20.519 87.588 c -2.254 1.185 -4.889 -0.729 -4.458 -3.239 l 4.402 -25.667 c 0.171 -0.997 -0.16 -2.014 -0.884 -2.72 L 0.931 37.784 c -1.824 -1.778 -0.817 -4.875 1.703 -5.241 l 25.772 -3.745 c 1.001 -0.145 1.866 -0.774 2.314 -1.681 L 42.245 3.765 C 43.372 1.481 46.628 1.481 47.755 3.765 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,213,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+      </g>
+    </symbol>
+
   </svg>
 
   <div class="overflow-scroll h-screen">
@@ -665,10 +677,12 @@ export default {
 
             <!-- Filter Row -->
             <tr class="align-baseline text-sm">
-              <!-- Image column has no filter -->
               <th v-for="(column, index) in columnConfigs[activeTab]" :key="column.key" class="px-3 py-3">
-                <!-- Image column (no filter) -->
-                <template v-if="column.key === 'image'"></template>
+                <!-- Image column -->
+                 
+                <input v-if="column.key === 'image'" type="checkbox" v-model="filters.popular" @change="applyFilters"
+                  class="w-full rounded-md px-2 py-1 bg-white border-green-300 font-normal text-gray-900"
+                  placeholder="Popular"/>
 
                 <!-- Name filter -->
                 <input v-else-if="column.key === 'name'" type="text" v-model="filters.name" @input="applyFilters"
@@ -853,6 +867,7 @@ export default {
                       {{ item.name }}
                     </a>
                   </div>
+
                   <div class="inline-block relative shrink-0">
                     <a :href="createAnchor(item.name)" class="text-gray-400 hover:text-green-700 cursor-pointer"
                       title="Copy link to this speaker" @click.prevent="copyAnchorToClipboard(item.name)">
@@ -863,11 +878,16 @@ export default {
 
                     <transition leave-active-class="transition duration-500" leave-to-class="opacity-0">
                       <div v-if="copiedMessage && copiedSpeaker === item.name"
-                        class="absolute left-full top-0 ml-2 bg-green-100 text-green-700 text-xs px-2 py-1 rounded whitespace-nowrap">
+                        class="absolute left-full top-0 ml-2 bg-green-100 text-green-700 text-xs px-2 py-1 rounded whitespace-nowrap z-10">
                         {{ copiedMessage }}
                       </div>
                     </transition>
                   </div>
+                  
+                  <svg v-if="item.popular" class="h-4 w-4 inline" fill="currentColor">
+                    <use xlink:href="#star-icon" />
+                  </svg>
+
                 </div>
               </td>
               <td class="px-2 py-4">
