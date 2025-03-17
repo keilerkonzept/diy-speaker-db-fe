@@ -2,16 +2,19 @@
 import { proxyImage } from './utils/imageProxy';
 import EditItemDialog from './components/EditItemDialog.vue';
 import CompareWidget from './components/CompareWidget.vue';
+import ImprintDialog from './components/ImprintDialog.vue';
 
 
 export default {
   name: "App",
   components: {
     EditItemDialog,
-    CompareWidget
+    CompareWidget,
+    ImprintDialog
   },
   data() {
     return {
+      showImprint: false,
       items: [],
       displayedItems: [],
       proxyImage,
@@ -1038,5 +1041,18 @@ export default {
       <compare-widget :items="compareItems" @start-compare-items="startCompareItems"
         @end-compare-items="endCompareItems" />
     </div>
+
+    <!-- Footer -->
+    <footer class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-1 text-center text-sm text-gray-600">
+      <button @click="showImprint = true" class="hover:text-green-700 hover:underline">
+        Imprint
+      </button>
+    </footer>
+
+    <!-- Imprint Dialog -->
+    <imprint-dialog 
+      :visible="showImprint"
+      @close="showImprint = false"
+    />
   </div>
 </template>
