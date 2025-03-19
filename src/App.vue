@@ -882,7 +882,7 @@ export default {
               <td class="px-2 py-4">
                 <a v-if="item.image_url" :href="item.url" target="_blank" class="">
                   <div class="overflow-hidden rounded-sm">
-                    <img v-if="item.image_url" :src="proxyImage(item.image_url)" :alt="item.name"
+                    <img v-if="item.image_url" :src="'https://diyspeakerdb.com/cdn-cgi/image/height=120,format=auto,dpr=3/' + item.image_url" :alt="item.name"
                       class="hover:scale-105 max-h-[120px]" />
                   </div>
                 </a>
