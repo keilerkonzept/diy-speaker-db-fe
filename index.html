@@ -5,6 +5,13 @@
     <link rel="icon" href="/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DIY Speaker DB</title>
+    <script>
+      // Check if we're on the old domain
+      if (window.location.hostname !== 'localhost' && window.location.hostname !== 'diyspeakerdb.com') {
+        // Preserve the path and query parameters when redirecting
+        window.location.href = 'https://diyspeakerdb.com' + window.location.pathname + window.location.search + window.location.hash;
+      }
+    </script>
   </head>
   <body>
     <div id="app"></div>
