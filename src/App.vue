@@ -20,10 +20,10 @@ export default {
       proxyImage,
       activeTab: this.getInitialTab(), // Get tab from URL or default to 'hifi'
       dataSources: {
-        hifi: "https://sheets.googleapis.com/v4/spreadsheets/1PoYey8POjJOA-ucpMtjJpdDWmXww5tK5HlhHbNeUZrs/values/hifi-live?alt=json&key=AIzaSyCi5Azx-KvH8rfE3oTlRERkchMcSH-9dvA",
-        'hifi-commercial': "https://sheets.googleapis.com/v4/spreadsheets/1PoYey8POjJOA-ucpMtjJpdDWmXww5tK5HlhHbNeUZrs/values/hifi-commercial-live?alt=json&key=AIzaSyCi5Azx-KvH8rfE3oTlRERkchMcSH-9dvA",
-        pa: "https://sheets.googleapis.com/v4/spreadsheets/1PoYey8POjJOA-ucpMtjJpdDWmXww5tK5HlhHbNeUZrs/values/pa-live?alt=json&key=AIzaSyCi5Azx-KvH8rfE3oTlRERkchMcSH-9dvA",
-        'pa-commercial': "https://sheets.googleapis.com/v4/spreadsheets/1PoYey8POjJOA-ucpMtjJpdDWmXww5tK5HlhHbNeUZrs/values/pa-commercial-live?alt=json&key=AIzaSyCi5Azx-KvH8rfE3oTlRERkchMcSH-9dvA"
+        'hifi': "https://google-sheets-cache.mb-ad3.workers.dev/?tab=hifi-live",
+        'hifi-commercial': "https://google-sheets-cache.mb-ad3.workers.dev/?tab=hifi-commercial-live",
+        'pa': "https://google-sheets-cache.mb-ad3.workers.dev/?tab=pa-live",
+        'pa-commercial': "https://google-sheets-cache.mb-ad3.workers.dev/?tab=pa-commercial-live"
       },
       columnConfigs: {
         hifi: [
