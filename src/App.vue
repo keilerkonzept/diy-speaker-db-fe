@@ -28,61 +28,61 @@ export default {
       columnConfigs: {
         hifi: [
           { key: 'image', label: 'Popular', width: 'min-w-[70pt] w-[70pt]' },
-          { key: 'name', label: 'Name', width: 'min-w-[120pt] w-[250pt]' },
-          { key: 'developer', label: 'Developer', width: 'min-w-[100pt] w-[200pt]' },
+          { key: 'name', label: 'Name', width: 'min-w-[100pt] w-[200pt]' },
+          { key: 'developer', label: 'Developer', width: 'min-w-[80pt] w-[140pt]' },
           { key: 'price', label: 'Price', width: 'min-w-[70pt] w-[70pt]' },
           { key: 'enclosure', label: 'Enclosure', width: 'min-w-[80pt] w-[100pt]' },
           { key: 'type', label: 'Type', width: 'min-w-[80pt] w-[90pt]' },
+          { key: 'driver', label: 'driver', width: 'w-[140pt]' },
           { key: 'f3', label: 'F₃', width: 'min-w-[60pt] w-[60pt]' },
           { key: 'sensitivity', label: 'SPL', width: 'min-w-[60pt] w-[60pt]' },
           { key: 'specialty', label: 'Specialty', width: 'min-w-[80pt] w-[120pt]' },
-          { key: 'dimensions', label: 'H × W × D', width: 'min-w-[20pt] w-[20pt]' },
-          { key: 'volume', label: 'Volume', width: 'w-[30pt]' }
+          { key: 'dimensions', label: 'Size', width: 'min-w-[20pt] w-[20pt]' },
         ],
         'hifi-commercial': [
           { key: 'image', label: 'Popular', width: 'min-w-[70pt] w-[70pt]' },
-          { key: 'name', label: 'Name', width: 'min-w-[120pt] w-[250pt]' },
-          { key: 'developer', label: 'Developer', width: 'min-w-[100pt] w-[200pt]' },
+          { key: 'name', label: 'Name', width: 'min-w-[100pt] w-[200pt]' },
+          { key: 'developer', label: 'Developer', width: 'min-w-[80pt] w-[140pt]' },
           { key: 'price', label: 'Price', width: 'min-w-[70pt] w-[70pt]' },
           { key: 'enclosure', label: 'Enclosure', width: 'min-w-[80pt] w-[100pt]' },
           { key: 'type', label: 'Type', width: 'min-w-[80pt] w-[90pt]' },
+          { key: 'driver', label: 'driver', width: 'w-[140pt]' },
           { key: 'f3', label: 'F₃', width: 'min-w-[60pt] w-[60pt]' },
           { key: 'sensitivity', label: 'SPL', width: 'min-w-[60pt] w-[60pt]' },
           { key: 'specialty', label: 'Specialty', width: 'min-w-[80pt] w-[120pt]' },
-          { key: 'dimensions', label: 'H × W × D', width: 'min-w-[20pt] w-[20pt]' },
-          { key: 'volume', label: 'Volume', width: 'w-[30pt]' }
+          { key: 'dimensions', label: 'Size', width: 'min-w-[20pt] w-[20pt]' },
         ],
         pa: [
           { key: 'image', label: 'Popular', width: 'min-w-[70pt] w-[70pt]' },
-          { key: 'name', label: 'Name', width: 'min-w-[120pt] w-[250pt]' },
-          { key: 'developer', label: 'Developer', width: 'min-w-[100pt] w-[200pt]' },
+          { key: 'name', label: 'Name', width: 'min-w-[100pt] w-[200pt]' },
+          { key: 'developer', label: 'Developer', width: 'min-w-[80pt] w-[140pt]' },
           { key: 'price', label: 'Price', width: 'min-w-[40pt] w-[40pt]' },
           { key: 'enclosure', label: 'Enclosure', width: 'min-w-[80pt] w-[100pt]' },
           { key: 'type', label: 'Type', width: 'min-w-[80pt] w-[90pt]' },
+          { key: 'driver', label: 'driver', width: 'w-[140pt]' },
           { key: 'f3', label: 'F₃', width: 'min-w-[60pt] w-[60pt]' },
           { key: 'sensitivity', label: 'SPL', width: 'min-w-[60pt] w-[60pt]' },
           { key: 'power', label: 'Power', width: 'min-w-[60pt] w-[60pt]' },
           { key: 'range', label: 'Range', width: 'min-w-[80pt] w-[100pt]' },
           { key: 'dispersion', label: 'Dispersion', width: 'min-w-[80pt] w-[100pt]' },
           { key: 'specialty', label: 'Specialty', width: 'min-w-[80pt] w-[120pt]' },
-          { key: 'dimensions', label: 'H × W × D', width: 'min-w-[20pt] w-[20pt]' },
-          { key: 'volume', label: 'Volume', width: 'w-[30pt]' }
+          { key: 'dimensions', label: 'Size', width: 'min-w-[20pt] w-[20pt]' },
         ],
         'pa-commercial': [
           { key: 'image', label: 'Popular', width: 'min-w-[70pt] w-[70pt]' },
-          { key: 'name', label: 'Name', width: 'min-w-[120pt] w-[250pt]' },
-          { key: 'developer', label: 'Developer', width: 'min-w-[100pt] w-[200pt]' },
+          { key: 'name', label: 'Name', width: 'min-w-[100pt] w-[200pt]' },
+          { key: 'developer', label: 'Developer', width: 'min-w-[80pt] w-[140pt]' },
           { key: 'price', label: 'Price', width: 'min-w-[40pt] w-[40pt]' },
           { key: 'enclosure', label: 'Enclosure', width: 'min-w-[80pt] w-[100pt]' },
           { key: 'type', label: 'Type', width: 'min-w-[80pt] w-[90pt]' },
+          { key: 'driver', label: 'driver', width: 'w-[140pt]' },
           { key: 'f3', label: 'F₃', width: 'min-w-[60pt] w-[60pt]' },
           { key: 'sensitivity', label: 'SPL', width: 'min-w-[60pt] w-[60pt]' },
           { key: 'power', label: 'Power', width: 'min-w-[60pt] w-[60pt]' },
           { key: 'range', label: 'Range', width: 'min-w-[80pt] w-[100pt]' },
           { key: 'dispersion', label: 'Dispersion', width: 'min-w-[80pt] w-[100pt]' },
           { key: 'specialty', label: 'Specialty', width: 'min-w-[80pt] w-[120pt]' },
-          { key: 'dimensions', label: 'H × W × D', width: 'min-w-[20pt] w-[20pt]' },
-          { key: 'volume', label: 'Volume', width: 'w-[30pt]' }
+          { key: 'dimensions', label: 'Size', width: 'min-w-[20pt] w-[20pt]' },
         ]
       },
       showDimensionsDialog: false,
@@ -108,6 +108,7 @@ export default {
         price: null,
         enclosures: [],
         types: [],
+        driver: '',
         specialties: [],
         height: null,
         width: null,
@@ -346,6 +347,10 @@ export default {
         const typeMatch =
           this.filters.types.length === 0 ||
           this.filters.types.includes(item.type);
+        const f3Match = !this.filters.f3 || item.f3 <= this.filters.f3;
+        const driverMatch = (item.driver || "")
+          .toLowerCase()
+          .includes((this.filters.driver || "").toLowerCase());
         const specialtyMatch =
           this.filters.specialties.length === 0 ||
           this.filters.specialties.includes(item.specialty);
@@ -364,7 +369,6 @@ export default {
         const volumeMatch =
           !this.filters.volume || volumeInLiters <= this.filters.volume;
 
-        const f3Match = !this.filters.f3 || item.f3 <= this.filters.f3;
         const sensitivityMatch = !this.filters.sensitivity ||
           (item.sensitivity && item.sensitivity >= this.filters.sensitivity);
 
@@ -382,13 +386,14 @@ export default {
           priceMatch &&
           enclosureMatch &&
           typeMatch &&
+          driverMatch &&
+          f3Match &&
           specialtyMatch &&
           heightMatch &&
           widthMatch &&
           depthMatch &&
           volumeMatch &&
           developerMatch &&
-          f3Match &&
           sensitivityMatch &&
           powerMatch &&
           rangeMatch &&
@@ -498,6 +503,12 @@ export default {
     handleKeydown(event) {
       if (event.key === "Escape") {
         if (this.showDimensionsDialog) {
+          this.showDimensionsDialog = false;
+        }
+      }
+      else if (event.key === "Enter") {
+        if (this.showDimensionsDialog) {
+          this.applyFilters();
           this.showDimensionsDialog = false;
         }
       }
@@ -718,13 +729,13 @@ export default {
                 <input v-else-if="column.key === 'name'" type="text" v-model="filters.name" @input="applyFilters"
                   @keyup.esc="clearFilter('name')"
                   class="w-full font-normal rounded-md px-2 py-1 bg-white border-green-300 text-gray-900"
-                  placeholder="Filter by name" />
+                  placeholder="" />
 
                 <!-- Developer filter -->
                 <input v-else-if="column.key === 'developer'" type="text" v-model="filters.developer"
                   @input="applyFilters" @keyup.esc="clearFilter('developer')"
                   class="w-full font-normal rounded-md px-2 py-1 bg-white border-green-300 text-gray-900 focus:border-green-500"
-                  placeholder="Filter by developer" />
+                  placeholder="" />
 
                 <!-- Price filter -->
                 <input v-else-if="column.key === 'price'" type="number" v-model.number="filters.price"
@@ -778,6 +789,12 @@ export default {
                     </span>
                   </div>
                 </div>
+
+                <!-- Driver filter -->
+                <input v-else-if="column.key === 'driver'" type="text" v-model.number="filters.driver" @input="applyFilters"
+                  @keyup.esc="clearFilter('driver')"
+                  class="w-full font-normal text-gray-900 rounded-md px-2 py-1 bg-white border-green-300 focus:border-green-500"
+                  placeholder="" />
 
                 <!-- F3 filter -->
                 <input v-else-if="column.key === 'f3'" type="number" v-model.number="filters.f3" @input="applyFilters"
@@ -834,12 +851,20 @@ export default {
                 <div v-else-if="column.key === 'dimensions'" class="relative">
                   <button @click="openDimensionsDialog"
                     class="w-full font-normal text-sm text-gray-500 rounded-md mt-1 px-2 py-1 bg-white border border-green-300 hover:bg-gray-50">
-                    Filter...
+                    ...
                   </button>
 
                   <!-- Show filter indicators if any dimension filter is applied -->
-                  <div v-if="filters.height || filters.width || filters.depth"
+                  <div v-if="filters.height || filters.width || filters.depth || filters.volume"
                     class="mt-2 flex flex-wrap gap-2 font-normal">
+                    <span v-if="filters.volume"
+                      class="inline-flex items-center pl-2 py-1 rounded-md text-xs bg-green-300 text-gray-900">
+                      L: {{ filters.volume }}
+                      <button @click="clearFilter('volume')"
+                        class="ml-1 mr-2 font-normal text-gray-500 hover:cursor-pointer hover:text-red-700">
+                        ×
+                      </button>
+                    </span>
                     <span v-if="filters.height"
                       class="inline-flex items-center pl-2 py-1 rounded-md text-xs bg-green-300 text-gray-900">
                       H: {{ filters.height }}
@@ -867,11 +892,6 @@ export default {
                   </div>
                 </div>
 
-                <!-- Volume filter -->
-                <input v-else-if="column.key === 'volume'" type="number" v-model.number="filters.volume"
-                  @input="applyFilters" @keyup.esc="clearFilter('volume')"
-                  class="w-full font-normal rounded-md px-2 py-1 bg-white text-gray-900 border-green-300 focus:border-green-500"
-                  placeholder="< L" />
               </th>
               <th class="px-3 py-3"></th>
             </tr>
@@ -933,6 +953,13 @@ export default {
               <td class="px-2 py-4 whitespace-wrap">
                 {{ item.type }}
               </td>
+              <td class="px-2 py-4 whitespace-wrap">
+                <div class="grid grid-cols-1 divide-y divide-gray-200 text-xm">
+                  <div v-for="driver in item.driver?.split(' | ')" class="py-1">
+                    {{ driver }}
+                  </div>
+                </div>
+              </td>
               <td class="px-2 py-4 text-right whitespace-nowrap">
                 <span v-if="item.f3">{{ item.f3 }} Hz</span>
               </td>
@@ -954,16 +981,17 @@ export default {
                 {{ item.specialty }}
               </td>
               <td class="px-2 py-4 text-left">
-                <span v-if="item.height && item.width && item.depth">
-                  {{ item.height }} x<br>
-                  {{ item.width }} x<br>
-                  {{ item.depth }}
-                </span>
+                <div v-if="item.height && item.width && item.depth" class="grid grid-cols-1 divide-y divide-gray-200">
+                  <div class="py-1">
+                    {{ calculateVolume(item) }} L<br>
+                  </div>
+                  <div class="py-1">
+                    {{ item.height }} x<br>
+                    {{ item.width }} x<br>
+                    {{ item.depth }}
+                  </div>
+                </div>
                 <span v-if="!item.height" class="text-gray-400">N/A</span>
-              </td>
-              <td class="px-2 py-4 text-right">
-                <span v-if="calculateVolume(item)">{{ calculateVolume(item) }} L</span>
-                <span v-if="!calculateVolume(item)" class="text-gray-400">N/A</span>
               </td>
               <td class="px-2 py-4 text-center">
                 <button @click="editItem(item)"
@@ -993,6 +1021,15 @@ export default {
           <h2 class="text-lg font-bold uppercase mb-4">Filter Dimensions</h2>
 
           <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-green-800 mb-2">
+                Volume (L)
+              </label>
+              <input type="number" v-model.number="filters.volume"
+                class="w-full font-normal rounded-md px-3 py-2 border border-green-300 focus:border-green-500 focus:outline-none"
+                placeholder="Volume" />
+            </div>
+
             <div>
               <label class="block text-sm font-medium text-green-800 mb-2">
                 Height (mm)

@@ -161,6 +161,9 @@ export default {
         }
       }
     },
+    /**
+     * Be smart about '.' and ',' when filtering numbers.
+     */
     filterNumber(field, value) {
       if(value != null && (typeof value == 'string')) {
         let val = value.replace(/[^0-9.,]/g, ''); // Allow numbers, dot, comma
@@ -396,6 +399,18 @@ export default {
               {{ speciality }}
             </option>
           </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-green-800 mb-1">
+            Driver
+          </label>
+          <input
+            type="text"
+            name="driver"
+            v-model="editingItem.driver"
+            class="focus:outline-0 text-sm w-full border-b-1 border-gray-300 py-1"
+            @input="trackChange('driver', editingItem.driver)"
+          />
         </div>
         <div class="col-span-full">
           <label class="block text-sm font-medium text-green-800 mb-2"
