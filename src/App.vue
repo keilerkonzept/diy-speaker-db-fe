@@ -99,7 +99,7 @@ export default {
         "Open Baffle",
         "FAST"
       ],
-      availableTypesHifi: ["Floor", "Compact", "Subwoofer", "Wall"],
+      availableTypesHifi: ["Floor", "Compact", "Subwoofer", "Wall", "Portable"],
       availableTypesPa: ["Subwoofer", "Top", "Line Array"],
       availableSpecialties: ["Koax", "Passive Membrane", "Broadband", "AMT", "D'Appolito"],
       filters: {
@@ -235,20 +235,23 @@ export default {
             row = {
               name: item[0],
               developer: item[1],
-              price: item[2].length > 0 ? parseFloat(item[2]) : null,
-              enclosure: item[3],
-              type: item[4],
-              driver: item[5],
-              f3: item[6].length > 0 ? parseFloat(item[6]) : null,
-              sensitivity: item[7].length > 0 ? parseFloat(item[7]) : null,
-              specialty: item[8],
-              height: item[9].length > 0 ? parseFloat(item[9]) : null,
-              width: item[10].length > 0 ? parseFloat(item[10]) : null,
-              depth: item[11].length > 0 ? parseFloat(item[11]) : null,
-              url: item[12],
-              image_url: item[13],
-              score: item[14],
-              popular: item[15] === "TRUE",
+              released: item[2],
+              strengths: item[3],
+              description: item[4],
+              price: (item[5] && item[5].length > 0) ? parseFloat(item[5]) : null,
+              enclosure: item[6],
+              type: item[7],
+              driver: item[8],
+              f3: (item[9] && item[9].length > 0) ? parseFloat(item[9]) : null,
+              sensitivity: (item[10] && item[10].length > 0) ? parseFloat(item[10]) : null,
+              specialty: item[11],
+              height: (item[12] && item[12].length > 0) ? parseFloat(item[12]) : null,
+              width: (item[13] && item[13].length > 0) ? parseFloat(item[13]) : null,
+              depth: (item[14] && item[14].length > 0) ? parseFloat(item[14]) : null,
+              url: item[15],
+              image_url: item[16],
+              score: item[17],
+              popular: item[18] === "TRUE",
             };
           }
 
@@ -514,7 +517,7 @@ export default {
       }
     },
     createAnchor(name) {
-      return '#speaker-' + encodeURIComponent(name?.replace(/\s+/g, '-').toLowerCase() || index);
+      return '#speaker-' + encodeURIComponent(name?.replace(/\s+/g, '-').toLowerCase());
     },
     copyAnchorToClipboard(name) {
       const anchor = this.createAnchor(name);
