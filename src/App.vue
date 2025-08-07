@@ -101,7 +101,7 @@ export default {
       ],
       availableTypesHifi: ["Floor", "Compact", "Subwoofer", "Wall", "Portable"],
       availableTypesPa: ["Subwoofer", "Top", "Line Array"],
-      availableSpecialties: ["Koax", "Passive Membrane", "Broadband", "AMT", "D'Appolito"],
+      availableSpecialties: ["Koax", "Passive Membrane", "Broadband", "AMT", "D'Appolito", "Multiple Entry Horn"],
       filters: {
         popular: false,
         name: "",
